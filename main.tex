@@ -1,0 +1,208 @@
+\RequirePackage{fix-cm}
+\documentclass[oneside, a4paper]{book}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
+
+\title{Equation of State Solver for Smoothed Particle Hydrodynamics}
+\author{Julian Karrer}
+
+% Required for inserting images
+\usepackage{graphicx} 
+
+% misc
+\usepackage{caption}
+\DeclareCaptionType{equ}[][]
+%\captionsetup[equ]{labelformat=empty}
+
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{adjustbox} % oversized table
+
+% Default font to sans serif
+\renewcommand{\familydefault}{\sfdefault}
+\RequirePackage[T1]{fontenc} \RequirePackage[tt=false, type1=true]{libertine} \RequirePackage[varqu]{zi4} \RequirePackage[libertine]{newtxmath}
+
+% chapters and headers
+\usepackage[Conny]{fncychap}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\textsf{#1}}}{}}
+\renewcommand{\sectionmark}[1]{ \markright{\MakeUppercase{\textsf{\thesection\ #1}}}{} }
+
+% algorithms
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% FAT FONTS
+\usepackage{bm} % bold fonts in math mode
+\newcommand\fat[1]{{\boldmath{\textbf{#1}}}}
+\newcommand\emphasis[1]{{\scshape\bfseries#1}}
+
+% mathematical fonts and graphics
+\usepackage{mathtools}
+\usepackage{xfrac} % sfrac for diagonal slashes in fractions
+\usepackage{amsfonts} % math fonts
+\usepackage{dsfont} % math fonts
+\usepackage{bbm} % mathbb fonts
+\usepackage{mathrsfs} % fancy swirly font
+\usepackage{gensymb} % degree sign
+
+% draw graphs
+\usepackage[inline]{asymptote}
+\usepackage{qtree}
+\usepackage{tikz}
+
+% plots
+\usepackage{pgfplots}
+\usepgfplotslibrary{external}
+\tikzexternalize
+\pgfplotsset{compat=1.18} 
+
+% get width of given text
+\usepackage{calc}
+
+% define a horizontal spacer
+\newcommand\horizontalspacer[0]{\vspace{5pt}\noindent\textcolor{lightgray}{\rule{\textwidth}{1mm}}
+\vspace{5pt}}
+
+% abs value macro
+% \DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\newcommand\abs[1]{\left|#1\right|}
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\erf}{erf}
+
+% clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+% citations
+\usepackage[
+backend=biber,
+sorting=none,
+style=phys,
+]{biblatex}
+\addbibresource{refs.bib}
+
+% fancy chapter headings
+\makeatletter
+\def\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
+\def\@makechapterhead#1{%
+  %\vspace*{50\p@}%
+  \vspace*{10\p@}%
+  {\parindent \z@ \centering \reset@font
+        \thickhrulefill\quad
+        \scshape \@chapapp{} \thechapter
+        \quad \thickhrulefill
+        \par\nobreak
+        \vspace*{10\p@}%
+        \interlinepenalty\@M
+        \hrule
+        \vspace*{10\p@}%
+        \Huge {\textbf{#1}} \par\nobreak
+        \par
+        \vspace*{10\p@}%
+        \hrule
+    \vskip 40\p@
+    % \vskip 100\p@
+  }}
+\def\@makeschapterhead#1{%
+  %\vspace*{50\p@}%
+  \vspace*{10\p@}%
+  {\parindent \z@ \centering \reset@font
+        \thickhrulefill
+        \par\nobreak
+        \vspace*{10\p@}%
+        \interlinepenalty\@M
+        \hrule
+        \vspace*{10\p@}%
+        \Huge \bfseries #1\par\nobreak
+        \par
+        \vspace*{10\p@}%
+        \hrule
+    \vskip 40\p@
+    % \vskip 100\p@
+  }}
+
+
+
+% ~~~~~~~~~ START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\captionsetup[figure]{font=footnotesize,labelfont=footnotesize,justification=centering}
+\begin{document}
+\begin{titlepage}
+  \pagestyle{empty}
+  \begin{center}
+    \Huge\textbf{\@title}\\
+    \vspace{0.5cm}
+    \Large{\@author}\\
+    \vfill
+    \begin{figure*}[h!]
+      \centering
+      \includegraphics*[width=0.8\textwidth]{images/title/titleimage.jpg}
+      \caption{Colour coded velocity field of a simulation with 250000 particles, where the solver handles
+        complex boundary conditions, turbulent flow at low viscosity and a pronounced free surface with less than
+        0.1\% compression. \cite{ray-optics-book}}
+      \label{fig:title-image}
+    \end{figure*}
+    \vfill
+    \Large
+    Lab Course\\
+    Master of Science in Computer Science\\
+    \vspace{0.5cm}
+    \large
+    Faculty of Engineering\\
+    Department of Computer Science\\
+    Supervised by Prof. Dr.-Ing. Matthias Teschner\\
+    \vspace{0.5cm}
+    \includegraphics*[width=5cm]{images/title/ufr-logo.png}
+  \end{center}
+\end{titlepage}
+\captionsetup[figure]{font=normalsize,labelfont=normalsize}
+
+\tableofcontents
+\newpage
+
+
+\chapter{Introduction}
+
+\chapter{Governing Equations of Fluid Flow}
+\section{Continuity and Convservation Laws}
+\section{The Lagrangian Navier-Stokes equations}
+\section{Equations of State}
+
+\chapter{Smoothed Particle Hydrodynamics Discretization}
+\section{Kernel Functions}
+\section{Discretizations and Properties}
+
+\chapter{Solving for Incompressibility}
+\section{Weakly Compressible SPH}
+\section{Operator Splitting and Iterative Solver}
+
+\chapter{Boundary and Initial Conditions}
+\section{Non-Uniform Single Layer Boundaries}
+\section{Jittered Initialization and Lattices}
+\section{Solving for Equilibrated Density}
+
+
+\chapter{Analysis}
+\section{Oscillation Frequency and Error as a Function of Speed of Sound}
+\section{Stability as a Function of Viscosity, Stiffness and Timestep}
+\section{Stability over Viscosity and Stiffness}
+
+\chapter{Conclusion}
+
+
+
+\printbibliography[
+  heading=bibintoc,
+  title={Bibliography}
+]
+\end{document}
