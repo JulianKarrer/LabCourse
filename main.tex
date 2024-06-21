@@ -6,7 +6,7 @@
 \author{Julian Karrer}
 
 % Required for inserting images
-\usepackage{graphicx} 
+\usepackage{eso-pic,graphicx}
 
 % misc
 \usepackage{caption}
@@ -20,7 +20,10 @@
 
 % Default font to sans serif
 \renewcommand{\familydefault}{\sfdefault}
-\RequirePackage[T1]{fontenc} \RequirePackage[tt=false, type1=true]{libertine} \RequirePackage[varqu]{zi4} \RequirePackage[libertine]{newtxmath}
+\RequirePackage[T1]{fontenc} 
+\RequirePackage[tt=false, type1=true]{libertine} 
+\RequirePackage[varqu]{zi4} 
+% \RequirePackage[libertine]{newtxmath}
 
 % chapters and headers
 \usepackage[Conny]{fncychap}
@@ -67,13 +70,6 @@
 \newcommand\horizontalspacer[0]{\vspace{5pt}\noindent\textcolor{lightgray}{\rule{\textwidth}{1mm}}
 \vspace{5pt}}
 
-% abs value macro
-% \DeclarePairedDelimiter\abs{\lvert}{\rvert}
-\newcommand\abs[1]{\left|#1\right|}
-
-\DeclareMathOperator{\sgn}{sgn}
-\DeclareMathOperator{\erf}{erf}
-
 % clickable links
 \usepackage{hyperref}
 \hypersetup{
@@ -85,11 +81,14 @@
 }
 % citations
 \usepackage[
-backend=biber,
-sorting=none,
-style=phys,
+  backend=biber,
+  sorting=none,
+  style=phys,
 ]{biblatex}
 \addbibresource{refs.bib}
+
+% fancy boxes
+\usepackage{fancybox}
 
 % fancy chapter headings
 \makeatletter
@@ -131,14 +130,31 @@ style=phys,
     % \vskip 100\p@
   }}
 
+  
+\usepackage[pdftex,outline]{contour}
+
+% ~~~~~~~~~ MATH MACROS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+% abs value macro
+% \DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\newcommand\abs[1]{\left|#1\right|}
+
+% define the laplace operator 
+\newcommand*\Laplace{\mathop{}\!\mathbin\nabla^2}
+\newcommand\vek[1]{\vec{\bm{#1}}}
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\erf}{erf}
 
 
-% ~~~~~~~~~ START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ~~~~~~~~~ START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 \captionsetup[figure]{font=footnotesize,labelfont=footnotesize,justification=centering}
 \begin{document}
 \begin{titlepage}
   \pagestyle{empty}
+
+  \AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{images/title/titlesim.jpg}}
   \begin{center}
     \Huge\textbf{\@title}\\
     \vspace{0.5cm}
@@ -146,39 +162,38 @@ style=phys,
     \vfill
     \begin{figure*}[h!]
       \centering
-      \includegraphics*[width=0.8\textwidth]{images/title/titleimage.jpg}
-      \caption{Colour coded velocity field of a simulation with 250000 particles, where the solver handles
-        complex boundary conditions, turbulent flow at low viscosity and a pronounced free surface with less than
-        0.1\% compression. \cite{ray-optics-book}}
+      \resizebox{10cm}{!}{$\frac{D\vek{u}}{Dt} = \nu \Laplace \vek{u} -\frac{1}{\rho} \nabla p + \vek{F}^{ext}$}
+      \caption*{The Navier-Stokes equation for incompressible flow. This tile page itself is used as a simulation domain in which this equation is solved, highlighting the solver's ability to handle complex boundary conditions and resolve details while maintaining low levels of compression (here: $\rho^{max}_{err}<0.1\%$ for $N>250k$ particles)}
+      % \caption{Colour coded velocity field of a simulation with 250000 particles, where the solver handles
+      %   complex boundary conditions, turbulent flow at low viscosity and a pronounced free surface with less than
+      %   0.1\% compression. \cite{ray-optics-book}}
       \label{fig:title-image}
     \end{figure*}
     \vfill
     \Large
-    Lab Course\\
-    Master of Science in Computer Science\\
-    \vspace{0.5cm}
-    \large
-    Faculty of Engineering\\
-    Department of Computer Science\\
-    Supervised by Prof. Dr.-Ing. Matthias Teschner\\
-    \vspace{0.5cm}
-    \includegraphics*[width=5cm]{images/title/ufr-logo.png}
+    % \contour{black}{\textcolor{white}{Lab Course}}\\
+    % \contour{black}{\textcolor{white}{Master of Science in Computer Science}}\\
+
+    \vspace{5.2cm}
+    % \vspace{0.5cm}
+    % \large
+    % Faculty of Engineering\\
+    % Department of Computer Science\\
+    % Supervised by Prof. Dr.-Ing. Matthias Teschner\\
+    % \vspace{0.5cm}
+    % % \includegraphics*[width=5cm]{images/title/ufr-?logo.png}
   \end{center}
 \end{titlepage}
-\captionsetup[figure]{font=normalsize,labelfont=normalsize}
+% \captionsetup[figure]{font=normalsize,labelfont=normalsize}
 
 \tableofcontents
 \newpage
 
 
 \chapter{Introduction}
+\include{01-governing-equations}
 
-\chapter{Governing Equations of Fluid Flow}
-\section{Continuity and Convservation Laws}
-\section{The Lagrangian Navier-Stokes equations}
-\section{Equations of State}
-
-\chapter{Smoothed Particle Hydrodynamics Discretization}
+\chapter{Smoothed Particle Hydrodynamics Discretization}\label{chp:sph-discretization}
 \section{Kernel Functions}
 \section{Discretizations and Properties}
 

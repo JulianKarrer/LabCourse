@@ -1,0 +1,72 @@
+\chapter{Governing Equations of Fluid Flow}\label{chp:governing-equations}
+In an attempt to create a numerical solver for fluid dynamics problems, the governing equations of the underlying physical process must first be understood and formulated. Only then can an appropriate discretization be applied to numerically solve for desired properties of a system. In this chapter, the abstractions of continuum mechanics are used as a framework to describe incompressible flow. Physical principles such as conservation of mass and momentum are used to derive the continuity and momentum equations which encode them, then augmented by constitutive relations which describe properties of Newtonian fluids to finally yield the Navier-Stokes equations as governing equations.
+\autocite*{anderson}\autocite*{tutorial}
+
+The particular form of these equations will favour a Lagrangian view of the system, in which the frame of reference in which quantities are described is advected along with the flow of the fluid itself, which will seamlessly integrate with the discretization scheme later used to derive workable numerical algorithms.
+
+
+
+\section{Lagrangian and Eulerian Continuum Mechanics}
+The purpose of our mathematical modelling of fluids is to simulate fluid dynamics at macroscopic scales with numerical methods. We know that fluids consist of innumerable molecules, and smaller yet quarks, interacting in complex ways, which give rise to emergent properties that we observe on a macroscopic scale. Instead of resolving all scales and simulating from quantum mechanical principles up, we content with modelling the emergent properties themselves, focusing on the question of how fluids behave instead of asking why. Our macroscopic scale is so many orders of magnitude larger than the discrete, physical reality, that we can reasonably assume quantities describing the fluid to be continuous and tackle them with the tools of calculus. This gives rise to the field of \emphasis{Continuum Mechanics}.\\
+In the following derivations, two major points of view can be taken, which produce different but equivalent forms of equations: the Eulerian or conservation forms, and the Lagrangian or nonconservation forms of the equations\autocite*{anderson}.
+
+Using the assumption from continuum mechanics that quantities of our fluid are continuously distributed in space and asserting that they be differentiable, we can define derivatives on them. The two major forms of equations arise from a different interpretation of the so-called substantial derivative\autocite*{anderson} or material derivative\autocite*{tutorial} $\frac{D}{Dt}$. This operator describes the instantaneous time rate of change of a quantity of a continuum element as it moves through space \autocite*{anderson}. This movement through space however can be observed from different frames of reference:
+\begin{itemize}
+  \item a frame that is advected along with the flow of the fluid, in which the continuum element observed is constant
+  \item a frame that is constant in space at a fixed point, observing the flow of the fluid as continuum elements move through it
+\end{itemize}
+
+For both frames of reference, it can be derived that the material derivative in vector notation is \autocite*{anderson}:
+
+\begin{align}
+  \frac{D}{Dt} = \underbrace{\frac{\partial }{\partial t}}_{\text{local derivative}} + \underbrace{(\vek{v}\cdot \nabla)}_{\text{convective derivative}}
+\end{align}
+where $\vek{v}$ is the velocity of the element and $\nabla$ denotes the differential operator $\left(\frac{\partial}{\partial x_0}, \frac{\partial}{\partial x_1}, \dots,  \frac{\partial}{\partial x_n}\right)^T$ in $n$ dimensions \autocite*{anderson}. If an Eulerian view is chosen, there is an additional term for the convective derivate, which describes a rate of change of a quantity at a fixed point due to movement of the fluid. If a Lagrangian view is taken, the velocity of the fluid element in the advected frame of reference is always zero, the convective derivative drops out and the material derivative simply becomes the total time derivative of a quantity.
+Whether this simplification can be used largely depends on the later choice of discretization: discretizing space and tracking the fluid that moves through it results in an Eulerian framework, while discretizing the continuum into particles and sampling quantities only at particle positions makes the Lagrangian view applicable.\\
+As is common for SPH discretizations, we will elect the Lagrangian view since it holds additional desirable properties such as making conservation of mass trivial to implement. We state all following equations in the Lagrangian, nonconservation form.
+
+\section{The Continuity and Momentum Equations}
+Using the Lagrangian view of continuum mechanics, we can apply laws of conservation to derive equations that express invariants of each fluid element with respect to time, which is an important step towards describing the dynamics of the system as time evolves. One such equation is the \emphasis{continuity equation}, which expresses conservation of mass:\\
+Consider an infinitesimally small volume element $\delta \mathcal{V}$ with density $\rho$. The mass of the volume $\delta m$ is simply\autocite*{anderson}:
+\begin{equation}\delta m = \rho \delta\mathcal{V}\label{eq:infintitesimal_volume}\end{equation}
+and is invariant under the material derivative in the Lagrangian reference frame \autocite*{anderson}:
+\begin{align}
+  \frac{D\delta m}{D t} & = 0                                                                                                 & \textit{conservation of mass}                     \\
+                        & = \frac{D \rho \delta\mathcal{V}}{Dt}                                                               & \textit{identity \ref*{eq:infintitesimal_volume}} \\
+                        & = \delta\mathcal{V} \frac{D \rho}{Dt} + \rho \frac{D \delta\mathcal{V}}{Dt}                         & \textit{product rule of calculus}                 \\\label{eq:cont-eq-unfinished}
+                        & =  \frac{D \rho}{Dt} + \rho \left(\frac{1}{\delta\mathcal{V}} \frac{D \delta\mathcal{V}}{Dt}\right) & \textit{divide by $\delta \mathcal{V}$}
+\end{align}
+
+We can now apply the divergence theorem to relate $\frac{D\mathcal{V}}{D t}$ to the divergence of the velocity across the volume of the element:
+
+\begin{equation}\label{eq:div-theorem}
+  \frac{D\mathcal{V}}{D t} = \int_{\mathcal{V}} \left( \nabla\cdot \vek{v}\right)\,d\mathcal{V}
+\end{equation}
+
+As the volume $\mathcal{V}$ approaches the infinitesimal volume element $\delta \mathcal{V}$ of interest, the velocity in the volume becomes constant, the integral vanishes, and it holds that \autocite*{anderson}:
+
+
+\begin{equation}\label{eq:div-theorem-on-dV}
+  \frac{D(\delta \mathcal{V})}{D t} = \left( \nabla\cdot \vec{v}\right) \delta \mathcal{V}
+\end{equation}
+
+Substituting \autoref{eq:div-theorem-on-dV} into \autoref{eq:cont-eq-unfinished} we finally obtain the continuity equation:
+
+\begin{equation}
+  \text{\fbox{$\frac{D\rho}{D t} + \rho\left( \nabla \cdot \vek{v} \right) = 0$}}
+\end{equation}
+
+This is one of the Navier-Stokes equations in its derivative form, as opposed to the more general integral form \autocite*{anderson}. When we additionally assume that the fluid is incompressible across a wide range of pressures, as is often done when simulating hydrodynamics, we can assert that the density of the fluid element in a Lagrangian reference frame is constant, meaning $\frac{D\rho}{D t} = 0$ and therefore the velocity field of the flow is divergence-free\autocite*{continuum-intro}:
+\begin{equation}
+  \nabla\cdot \vek{v} = 0
+\end{equation}
+
+
+\horizontalspacer
+
+The rest of the Navier Stokes equations is chiefly concerned with
+
+
+\newpage
+\section{The Lagrangian Navier-Stokes equations}
+\section{Equations of State}
