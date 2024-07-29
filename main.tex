@@ -2,8 +2,6 @@
 \documentclass[oneside, a4paper]{book}
 \usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
 
-\title{Equation of State Solver for Smoothed Particle Hydrodynamics}
-\author{Julian Karrer}
 
 % Required for inserting images
 \usepackage{eso-pic,graphicx}
@@ -57,6 +55,9 @@
 \usepackage{qtree}
 \usepackage{tikz}
 
+% nicer fractions
+\usepackage{xfrac}
+
 % plots
 \usepackage{pgfplots}
 \usepgfplotslibrary{external}
@@ -90,7 +91,21 @@
 % fancy boxes
 \usepackage{fancybox}
 
-% fancy chapter headings
+% labels to enum items
+\usepackage{enumitem}
+
+% make empty lines skip
+% \usepackage{parskip}
+
+% ~~~~~~~~~ TYPESETTING AND OTHER MACROS ~~~~~~~~~~~~~~~~~~~~~
+
+\newenvironment{absolutelynopagebreak}
+  {\par\nobreak\vfil\penalty0\vfilneg
+   \vtop\bgroup}
+  {\par\xdef\tpd{\the\prevdepth}\egroup
+   \prevdepth=\tpd}
+
+% ~~~~~~~~~ AFANCY CHAPTER HEADINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \makeatletter
 \def\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
 \def\@makechapterhead#1{%
@@ -133,15 +148,42 @@
   
 \usepackage[pdftex,outline]{contour}
 
+% ~~~~~~~~~ ALGORITHM MACROS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\newcommand{\var}[1]{\text{\texttt{#1}}}
+\newcommand{\func}[1]{\text{\textsl{#1}}}
+
+\makeatletter
+\newcounter{phase}[algorithm]
+\newlength{\phaserulewidth}
+\newcommand{\setphaserulewidth}{\setlength{\phaserulewidth}}
+\newcommand{\Phase}[1]{%
+  \vspace{-1.25ex}
+  % Top phase rule
+  \Statex\leavevmode\llap{\rule{\dimexpr\labelwidth+\labelsep}{\phaserulewidth}}\rule{\linewidth}{\phaserulewidth}
+  \Statex\strut\refstepcounter{phase}\textit{Step ~\thephase~--~#1}% Phase text
+  % Bottom phase rule
+  % \vspace{-1.25ex}\Statex\leavevmode\llap{\rule{\dimexpr\labelwidth+\labelsep}{\phaserulewidth}}\rule{\linewidth}{\phaserulewidth}
+  }
+
+\makeatother
+\makeatother
+
+\setphaserulewidth{.1pt}
+
 % ~~~~~~~~~ MATH MACROS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 % abs value macro
 % \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 \newcommand\abs[1]{\left|#1\right|}
 
+\newcommand\dist[1]{\left|\left|#1\right|\right|}
+\newcommand\arr[1]{\left\langle#1\right\rangle}
+
 % define the laplace operator 
 \newcommand*\Laplace{\mathop{}\!\mathbin\nabla^2}
 \newcommand\vek[1]{\vec{\bm{#1}}}
+\newcommand\mat[1]{{\mathds{#1}}}
+\newcommand\br[1]{\left(#1\right)}
 
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\erf}{erf}
@@ -156,14 +198,14 @@
 
   \AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{images/title/titlesim.jpg}}
   \begin{center}
-    \Huge\textbf{\@title}\\
+    \Huge\textbf{Equation of State Solvers for Smoothed Particle Hydrodynamics}\\
     \vspace{0.5cm}
-    \Large{\@author}\\
+    \Large{Julian Karrer}\\
     \vfill
     \begin{figure*}[h!]
       \centering
-      \resizebox{10cm}{!}{$\frac{D\vek{u}}{Dt} = \nu \Laplace \vek{u} -\frac{1}{\rho} \nabla p + \vek{F}^{ext}$}
-      \caption*{The Navier-Stokes equation for incompressible flow. This tile page itself is used as a simulation domain in which this equation is solved, highlighting the solver's ability to handle complex boundary conditions and resolve details while maintaining low levels of compression (here: $\rho^{max}_{err}<0.1\%$ for $N>250k$ particles)}
+      \resizebox{10cm}{!}{$\frac{D\vek{v}}{Dt} = -\frac{1}{\rho} \nabla p + \nu \Laplace \vek{v} +\vek{b}^{ext}$}
+      \caption*{The Navier-Stokes momentum equation for incompressible flow. This tile page itself is used as a simulation domain in which this equation is solved, highlighting the solver's ability to handle complex boundary conditions and resolve details while maintaining low levels of compression (here: $\rho^{max}_{err}<0.1\%$ for $N>250k$ particles).}
       % \caption{Colour coded velocity field of a simulation with 250000 particles, where the solver handles
       %   complex boundary conditions, turbulent flow at low viscosity and a pronounced free surface with less than
       %   0.1\% compression. \cite{ray-optics-book}}
@@ -191,28 +233,19 @@
 
 
 \chapter{Introduction}
+
 \include{01-governing-equations}
-
-\chapter{Smoothed Particle Hydrodynamics Discretization}\label{chp:sph-discretization}
-\section{Kernel Functions}
-\section{Discretizations and Properties}
-
-\chapter{Solving for Incompressibility}
-\section{Weakly Compressible SPH}
-\section{Operator Splitting and Iterative Solver}
-
-\chapter{Boundary and Initial Conditions}
-\section{Non-Uniform Single Layer Boundaries}
-\section{Jittered Initialization and Lattices}
-\section{Solving for Equilibrated Density}
+\include{02-sph-discretization}
+\include{03-solver}
+\include{04-boundary-initial}
 
 
-\chapter{Analysis}
+\chapter{Analysis}\label{chp:analysis}
 \section{Oscillation Frequency and Error as a Function of Speed of Sound}
 \section{Stability as a Function of Viscosity, Stiffness and Timestep}
 \section{Stability over Viscosity and Stiffness}
 
-\chapter{Conclusion}
+\chapter{Conclusion and Future Work}
 
 
 

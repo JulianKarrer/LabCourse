@@ -1,0 +1,245 @@
+
+\chapter{Solving the Navier-Stokes equations}\label{chp:solvers}
+
+Having derived the Navier-Stokes equations as the governing equations of fluid flow in \autoref{chp:governing-equations} and a method for discretizing these equations in \autoref{chp:sph-discretization}, we can go about actually implementing a numerical solver for the equations. Two types of solvers in particular will be discussed here: a simple solver using the equation of state to simulate weakly compressible flow and an iterative solver that uses a nearly identical formulation but can strongly enforce incompressibility. The concept of operator splitting will be key to turning a weakly compressible SPH formulation into a scheme that can be iterated to solve the pressure Poisson equation and yield incompressible flow - a task that appears rather non-trivial - using an implementation that is not much more complex than a regular state equation solver.
+
+\section{Equation of State SPH Solver}
+To construct a solver for the Navier-Stokes equation, we assume for now that an initial state and boundary conditions are given and focus on propagating the time-dependent solution into the future - details on boundaries and initialization will follow in \autoref{chp:boundary-and-initial}. Suffice it for now to know that in the approach chosen, boundaries are discretized in much the same way as the fluid and treated as tough they were fluid particles, only their positions are static.
+
+In order to implement the kernel sum in \autoref{eq:sph-any-quantity} and similar SPH sums, one needs to iterate over a set of samples denoted as subscript $j$. Since a kernel with compact support was chosen in \autoref{eq:kernel-function}, all samples with non-zero contributions to the approximation of fields at $\vek{x}_i$ lie within a radius of $\hbar$ around $\vek{x}_i$, with $\hbar=2h$ being a global constant since the fluid is chosen to be sampled at uniform resolution in this case. The sum $\sum_j$ therefore only has to iterate over the set of neighbouring fluid particles $\mathcal{N}_{f}(\vek{x}_i) = \{\vek{x}_j: \dist{\vek{x}_i-\vek{x}_j}\leq\hbar\}$ and similarly for boundary particles that will be denoted with subscript $k$, making the computation of the sum an instance of a fixed-radius near neighbour problem\autocite*{tutorial}.
+
+A uniform grid with a cell side-length of $\hbar$ is chosen to compute this set in linear time, since only a constant number of cells ($3^d$ in $d$ dimensions) must be searched to find all possible neighbours of $\vek{x}_i$. An implicit memory representation of such a grid is can be obtained by:
+\begin{enumerate}
+  \item Computing a cell index per particle that uniquely identifies the cell containing the particle. Space-filling curves such as the Z-curve are popular for computing these indices since they rely on little prior information and yield good cache coherence\autocite*{2014-sph-sruvey-eurographics}.
+  \item Creating a list of handles which each store the particle's cell index together with its index in attribute buffers (positions, velocities, masses, etc.)
+  \item Sorting the list of handles with respect to the cell index. In this instance, a multithreaded, parallel radix sort is chosen for its linear runtime complexity on the discrete indices
+\end{enumerate}
+Then, the particles in the desired cell can be looked up by performing a search for the first handle with the cell's index in the sorted array and including subsequent particles until the index does not match. Since the array is sorted, a binary search can be used to find particles in a given cell with logarithmic time complexity. For details and more optimized implementations, we refer to corresponding \cite[Literature]{compressed-neighbour-lists}.
+
+With these technicalities out of the way, the discrete versions of the governing equations can be formalized. The Navier-Stokes momentum equation as stated in \autoref{eq:navier-stokes-momentum} reads as follows, annotated for a particle of interest $i$:
+\begin{equation}
+  \underbrace{\frac{D\vek{v}}{Dt}}_{\text{total acceleration }\vek{a}_i}=\underbrace{-\frac{1}{\rho}\nabla p}_{\text{pressure acceleration } \vek{a}_i^{p}}+\underbrace{\nu\Laplace\vek{v}}_{\text{viscous acceleration } \vek{a}_i^{vis}}+\underbrace{\vek{b}^{ext}}_{\text{external accelerations } \vek{a}_i^{ext}}
+\end{equation}
+
+\begin{itemize}
+  \item Firstly, the only \emphasis{external body force} $\vek{b}_i^{ext}$ per unit mass acting on the fluid is gravity, which is equal to the gravitational acceleration $\vek{g} \approx \left(0, -9.81\right)^T$, where a 2D setting, SI units and a y-axis facing up in the positive direction are assumed in the following.
+  \item Secondly, the \emphasis{viscous acceleration} may be discretized. For this, an SPH approximation of the Laplacian is required, but using the less smooth and more detailed second derivative of the kernel function directly to implement this can lead to inaccurate results when sampling quality happens to be suboptimal. Instead, operating on the kernel gradient in a manner similar to a finite difference, the following discretization can be derived\autocite*{tutorial}:
+        \begin{equation}\label{eq:viscosity-sph}
+          \Laplace\vek{v} \approx 2(d+2)\sum_j  \frac{m_j}{\rho_j} \frac{\vek{v}_{ij}\cdot\vek{x}_{ij}}{\dist{\vek{x}_{ij}}^2 + 0.01h^2}\nabla W_{ij}
+        \end{equation}
+        where $d=2$ is the number of dimensions and a double subscript indicates a difference as in $A_{ij} = A_j - A_i$, while the small value $0.01h^2$ is in place purely for avoiding divisions by zero and divergences if particle positions coincide\autocite*{price-2012}.
+
+        From \autoref{eq:viscosity-sph} it is apparent that pairwise viscous accelerations are modelled to align with the axis spanned by the two positions of the pair and that they are symmetric, since all but the scalar quantities are projected onto $\vek{x}_{ij}$ by virtue of the dot product and $\nabla W_{ij}$ being a scalar multiple of $\vek{x}_{ij}$, which gives an intuition for why this formulation conserves momentum\autocite*{tutorial}. The masses $m_j$ used in the equation are set when initializing the system and remain constant as previously mentioned, the current density $\rho_j$ however should be calculated as outlined in \autoref{eq:density-sph}:
+        \begin{equation} \rho_i \approx \sum_j m_j W_{ij}\end{equation}
+  \item  Lastly, the \emphasis{pressure acceleration } must be discretized. For this, a symmetric formula that also conserves linear and angular momentum is chosen, since these properties are critical for robust simulations\autocite*{tutorial}:
+        \begin{equation}\label{eq:sph-pressure-acceleration}
+          -\nabla p \approx -\sum_j m_j\left(\frac{p_i}{\rho_i^2} + \frac{p_j}{\rho_j^2}\right)\nabla W_{ij}
+        \end{equation}
+        To compute the pressures $p_i, p_j$, we use the equation of state from \autoref{eq:state-equation}:
+        \begin{equation}
+          p_i=\max\left(0, k\left(\frac{\rho_i}{\rho_0}-1\right)\right)
+        \end{equation}
+        for some uniform rest density $\rho_0$ of the fluid, a stiffness parameter $k$ that will be discussed later and the calculated densities $\rho_i$.
+\end{itemize}
+
+
+Having discretized the right-hand side of the Navier-Stokes momentum equation and weakly enforced incompressibility by linking pressure accelerations to the density deviations they are correcting through the equation of state, a procedure for calculating accelerations at some point in time $t$ is obtained. With this, Newton's second law can be solved for the updated position $\vek{x}_i(t+\Delta t)$ of each particle, yielding an equation of motion that is discretized in time and solved using the symplectic Euler scheme as outlined in \autoref{eq:symplectic-euler}:
+\begin{align}
+  \vek{v}_i(t+\Delta t) & = \vek{v}_i(t) + \Delta t \vek{a}_i(t)          \\
+  \vek{x}_i(t+\Delta t) & = \vek{x}_i(t) + \Delta t \vek{v}_i(t+\Delta t)
+\end{align}
+The time step $\Delta t$ must be chosen to ensure a temporal resolution fine enough to resolve processes that happen on a length scale of $h$, which motivates the \emphasis{Courant-Friedrichs-Lewy} condition or \textit{CFL condition} for short: a particle shall not move further than its radius $h$ in one time step, or:
+\begin{equation}\label{eq:cfl-condition}
+  \dist{\vek{x}_i(t+\Delta t)-\vek{x}_i(t+)}\leq \lambda h
+\end{equation}
+where $0<\lambda\leq 1$ describes the time step size relative to the maximum time step allowed by the condition. Since the same time step is used for all particles for simplicity, $\Delta t$ must be estimated conservatively by approximating the distance the fastest particle might move in the current time step, based on the highest velocity observed in the previous time step. Further, including a maximum time step that avoids divergences when the fastest velocity is very small, such as when the simulation is initialized with zero velocities, the formulation used in this report is:
+\begin{equation}\label{eq:update-dt}
+  \Delta t = \min\left(\Delta t_{max}\,,\,\lambda \frac{h}{\max_i \dist{\vek{v}_i}}\right)
+\end{equation}
+
+This completes the simulation loop, allowing solutions to be propagated through time and solving the dynamics of the system. A summary of the algorithm is given in \hyperref[alg:eossph]{algorithm \ref{alg:eossph}}.
+
+
+\begin{algorithm}
+  \caption{Equation of State SPH Fluid Solver \textit{EOSSPH}}
+  \label{alg:eossph}
+  \begin{algorithmic}[1]
+    \Function{EOSSPH}{$
+        \arr{\vek{x}_i(t)},
+        \arr{\vek{v}_i(t)},
+        \arr{m_i},
+        \vek{g}, \nu, k, \lambda, \rho_0
+      $}
+    \Phase{Fixed Radius Neighbour Search}
+    \State $\mathcal{N}_f(\vek{x}_i) \gets \left\{\vek{x}_j: \dist{\vek{x}_i-\vek{x}_j}\leq\hbar\right\}$
+
+    \Phase{Iteration: compute quantities with dependency on inputs}
+    \State $\rho_i \gets \sum_j m_j W_{ij}$ \Comment{update density \autoref{eq:density-sph}}
+
+    \State $a_i^{ext}\gets \vek{g}$ \Comment{external body forces}
+
+    \Phase{Iteration: compute quantities  with dependency on $\arr{\rho_i}$}
+    \State $a_i^{vis}\gets 2\nu(d+2)\sum_j  \frac{m_j}{\rho_j} \frac{\vek{v}_{ij}\cdot\vek{x}_{ij}}{\dist{\vek{x}_{ij}}^2 + 0.01h^2}\nabla W_{ij}$ \Comment{viscous acceleration \autoref{eq:viscosity-sph}}
+    \State $p_i \gets \max\left(0, k\left(\frac{\rho_i}{\rho_0}-1\right)\right)$\Comment{update pressure \autoref{eq:state-equation}}
+    \State $a_i^{p}\gets -\sum_j m_j\left(\frac{p_i}{\rho_i^2} + \frac{p_j}{\rho_j^2}\right)\nabla W_{ij}$ \Comment{pressure acceleration \autoref{eq:sph-pressure-acceleration}}
+
+
+    \Phase{Numerical Time Integration}
+    \State $\Delta t \gets \min\left(\Delta t_{max}\,,\,\lambda \frac{h}{\max_i \dist{\vek{v}_i}}
+      \right)$ \Comment{CFL condition \autoref{eq:update-dt}}
+    \State $\vek{v}_i(t+\Delta t) \gets \vek{v}_i(t) + \Delta t \left(a_i^{ext} + a_i^{vis} + a_i^{p}\right)$ \Comment{explicit velocity update \autoref{eq:symplectic-euler}}
+    \State $\vek{x}_i(t+\Delta t) \gets \vek{x}_i(t) + \Delta t \vek{v}_i(t+\Delta t)$ \Comment{implicit position update \autoref{eq:symplectic-euler}}
+    \State\Return $\arr{\vek{x}_i(t+\Delta t)} \arr{\vek{v}_i(t+\Delta t)}$
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+\newpage
+\section{Operator Splitting}
+
+In order to move towards a solver that more strongly enforces incompressibility, the update to the velocity in \hyperref[alg:eossph]{algorithm \ref{alg:eossph}} must be inspected more closely. A main focus of fluid solvers that simulate hydrodynamics is the pressure force, since viscosity is not typically dominant and pressure forces are critical to ensure incompressibility\autocite*{tutorial}. These pressure forces are functions of the current position of all particles, which yield some density and pressure - the more accurate the estimated positions are, the more accurately can the pressure force be calculated. Note how the update to the velocity in \hyperref[alg:eossph]{algorithm \ref{alg:eossph}} integrates a sum of accelerations to a sum of velocities that are added to the current velocity, with one component of the sum being caused by pressure and two by non-pressure forces. One can equivalently compute these parts of the sum in sequence, as in:
+\begin{align}
+  \vek{v}_i(t)'         & \gets \vek{v}_i(t) + \Delta t \left(a_i^{ext} + a_i^{vis}\right) \\
+  \vek{v}_i(t+\Delta t) & \gets \vek{v}_i(t)' + \Delta t a_i^{p}
+\end{align}
+
+So far, nothing is lost and nothing is gained through this transformation, but things change if the pressure can be formulated in direct functional dependence of the current velocity: by the time that pressure accelerations are computed, a better estimate for the velocity $\vek{v}_i(t+\Delta t)$ is available in the form of $\vek{v}_i(t)'$, which incorporates how gravity and viscous forces will affect the particle movement in the current time step. In order to make use of this additional knowledge, positions could be updated to yield $\vek{x}_i'(t)$, a neighbour search could be executed and updated densities and pressure could be found as a result, however this can be inefficient, since the neighbour search already occupies a significant, if not dominant, part of the computation time of each simulation step.
+
+Instead, an approximation can be applied at the current position that estimates a predicted density $\rho_i^*$ using the updated velocities $\vek{v}_i^*$ without actually advecting the particles yet. The velocities are used to approximate the time rate of change of density $\frac{D\rho_i}{Dt}$ due to the viscous and external forces, which can then be multiplied by the time step size $\Delta t$ to integrate it with respect to time and obtain a change in density $\Delta\rho$ \autocite*{teschner-lecture}:
+\begin{align}\label{eq:predicted-density-from-v-star}
+  \rho_i^*  = \rho_i        & +\Delta\rho                                            \\
+  \approx \rho_i            & + \Delta t \frac{D}{Dt}\rho_i                          \\
+  \approx \sum_j m_j W_{ij} & + \Delta t \sum_j m_j \vek{v}^*_{ij}\cdot\nabla W_{ij}
+\end{align}
+
+The second term can be interpreted as a change in density caused by velocity divergence which is caused by the viscous and external accelerations - it can be derived by applying one possible SPH discretization of the divergence operator for a vector quantity $\vek{a}$\autocite*{2014-sph-sruvey-eurographics}:
+\begin{equation}\label{eq:sph-divergence}
+  \nabla \cdot \vek{a}_i = -\frac{1}{\rho}\sum_j m_j\vek{a}_{ij}\cdot\nabla W_{ij}
+\end{equation}
+to the $\frac{D\rho}{D t}$ term in the continuity equation as seen in \ref{eq:continuity-eq}:
+\begin{align}
+  \frac{D\rho_i}{D t} & = -\rho_i(\nabla\cdot \vek{v}_i)                                                      & \textit{Continuity, \autoref{eq:continuity-eq}}      \\
+                      & \approx -\rho_i\left(-\frac{1}{\rho_i}\sum_j m_j\vek{v}_{ij}\cdot\nabla W_{ij}\right) & \textit{SPH divergence, \autoref{eq:sph-divergence}} \\
+                      & = \sum_j m_j\vek{v}_{ij}\cdot\nabla W_{ij}                                            & \textit{simplify}
+\end{align}
+
+
+
+With this approximation, the updated velocity $\vek{v}^*$ can be used, resulting in a technique referred to as \emphasis{operator splitting}\autocite{tutorial}. The original partial differential equations are split up into a sequence of sub-problems: one that solves for accelerations caused by non-pressure forces and second one that uses the result of the first problem to solve for pressure accelerations which attempt to enforce incompressibility\autocite*{tutorial}. The first problem updates velocities to $\vek{v}_i^*$ in an explicit manner, while the second problem performs a somewhat 'implicit' update using the updated $\vek{v}^*$, in the hopes of improving stability\autocite*{tutorial}. This may be thought of as akin to the semi-implicit Euler update for time integration, in which an explicit velocity update allows for an implicit update to positions, in hopes of improving stability and accuracy. Stiffer sub-problems are computed at a later point in the sequence, such that they can make use of better approximations\autocite*{tutorial}.
+
+For an incompressible fluid, the time rate of change of density in a Lagrangian frame of reference ought to be zero in accordance with \autoref{eq:continuity-means-density-dt-zero}. This means that in order to enforce incompressibility, pressures should be computed such that $\frac{D\rho}{D t}=0$ and $\rho_i = \rho_0$ or in other words the predicted density $\rho_i^*$ should be $\rho_0$. This insight will become the connection from operator splitting to an SPH formulation that solves a Pressure Poisson Equation in \autoref{sec:incompressible-sph}.
+
+An updated algorithm that includes operator splitting is shown in \hyperref[alg:ssph]{algorithm \ref{alg:ssph}}. What changes in comparison to \hyperref[alg:eossph]{algorithm \ref{alg:eossph}} is the density estimation before pressure accelerations are calculated and the fact that the time step size must be fixed at that point. The numerical time integration that was previously an appendix to the actual computation is now a relevant part of the density estimation, since the predicted density depends on the method with which the predicted velocity $\vek{v}^*$ is integrated, and since the integration method across now split-up summands of the total acceleration is to be consistent.
+
+
+\begin{algorithm}
+  \caption{Equation of State SPH Fluid Solver with Operator Splitting \textit{SplitSPH}}
+  \label{alg:ssph}
+  \begin{algorithmic}[2]
+    \Function{SplitSPH}{$
+        \arr{\vek{x}_i(t)},
+        \arr{\vek{v}_i(t)},
+        \arr{m_i},
+        \vek{g}, \nu, k, \lambda, \rho_0
+      $}
+    \Phase{Fixed Radius Neighbour Search}
+    \State $\mathcal{N}_f(\vek{x}_i) \gets \left\{\vek{x}_j: \dist{\vek{x}_i-\vek{x}_j}\leq\hbar\right\}$
+
+    \Phase{Compute density $\rho$}
+    \State $\rho_i \gets \sum_j m_j W_{ij}$ \Comment{update density \autoref{eq:density-sph}}
+
+    \Phase{Compute non-pressure accelerations }
+    \State $a_i^{ext}\gets \vek{g}$ \Comment{external body forces}
+    \State $a_i^{vis}\gets 2\nu(d+2)\sum_j  \frac{m_j}{\rho_j} \frac{\vek{v}_{ij}\cdot\vek{x}_{ij}}{\dist{\vek{x}_{ij}}^2 + 0.01h^2}\nabla W_{ij}$ \Comment{viscous acceleration \autoref{eq:viscosity-sph}}
+
+    \Phase{Predict densities $\rho_i^*$ that take non-pressure accelerations into account}
+    \State $\Delta t \gets \min\left(\Delta t_{max}\,,\,\lambda \frac{h}{\max_i \dist{\vek{v}_i}}
+      \right)$ \Comment{CFL condition \autoref{eq:update-dt}}
+    \State $\vek{v}_i^* \gets \vek{v}_i(t) + \Delta t \left(a_i^{ext} + a_i^{vis}\right)$ \Comment{estimated velocity \autoref{eq:symplectic-euler}}
+    \State $\rho_i^* \gets \sum_j m_j W_{ij} + \Delta t \sum_j m_j \vek{v}^*_{ij}\cdot\nabla W_{ij}$  \Comment{predicted density \autoref{eq:predicted-density-from-v-star}}
+
+    \Phase{Compute pressure accelerations}
+    \State $p_i \gets \max\left(0, k\left(\frac{\rho_i^*}{\rho_0}-1\right)\right)$\Comment{update pressure\autoref{eq:state-equation}}
+    \State $a_i^{p}\gets -\sum_j m_j\left(\frac{p_i}{(\rho_i^*)^2} + \frac{p_j}{(\rho_j^*)^2}\right)\nabla W_{ij}$ \Comment{pressure acceleration \autoref{eq:sph-pressure-acceleration}}
+
+
+    \Phase{Numerical Time Integration}
+    \State $\vek{v}_i(t+\Delta t) \gets \vek{v}_i(t) + \Delta t \left(a_i^{ext} + a_i^{vis} + a_i^{p}\right)$ \Comment{explicit velocity update \autoref{eq:symplectic-euler}}
+    \State $\vek{x}_i(t+\Delta t) \gets \vek{x}_i(t) + \Delta t \vek{v}_i(t+\Delta t)$ \Comment{implicit position update \autoref{eq:symplectic-euler}}
+    \State\Return $\arr{\vek{x}_i(t+\Delta t)} \arr{\vek{v}_i(t+\Delta t)}$
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+\newpage
+\section{Incompressible SPH Solver}\label{sec:incompressible-sph}
+Having derived a solver that uses both the Equation of State and operator splitting, the step towards a solver that enforces incompressibility is surprisingly simple: instead of predicting densities and computing pressures accelerations once, the same operations can be iterated and $\vek{v}^*$ refined until the predicted density is the rest density and the fluid is under as little compression as desired. Each iteration of computing pressure accelerations that minimize the density error can be interpreted as an attempt at projection of the predicted velocity field onto a divergence-free state\autocite*{2014-sph-sruvey-eurographics}. This projection is actualized if the \emphasis{pressure Poisson equation} is solved, which, depending on whether density invariance or zero-divergence of velocity is chosen as a source term, can read\autocite*{2014-sph-sruvey-eurographics}:
+\begin{align}\label{eq:ppe}
+  \Laplace p_i^2 & = \frac{1}{\Delta t}\rho_0\nabla\cdot\vek{v}_i^*   & \textit{divergence-free source term}   \\
+  \Laplace p_i^2 & = \frac{1}{\Delta t^2}\left(\rho_0-\rho_i^*\right) & \textit{density invariant source term}
+\end{align}
+
+Either way, this can be read as a system of $N$ equations in $N$ unknown pressure values that realizes a Poisson equation $\Laplace a=s$ for some unknown quantity $a$ and known source term $s$, since $\rho_i^*, \rho_0, \vek{v}_i^*$ are known at this point. Instead of simply evaluating an equation of state once to explicitly obtain pressures, pressures are now chosen such that the pressure accelerations resulting from them cause the fluid to remain in an uncompressed or divergence-free state.
+
+Many methods to solve for these pressures and achieve incompressible SPH exist, varying in aspects such as:
+
+\begin{itemize}
+  \item Whether they use a solver like relaxed Jacobi or Conjugate Gradients to compute solutions to the global system of equations, as is done in implicit incompressible SPH \textit{(IISPH)}\autocite*{2014-sph-sruvey-eurographics}\autocite*{iisph}, or if they iteratively solve for pressures using a specialized equation of state, such as in local Poisson SPH \textit{(LPSPH)}\autocite*{lpsph} or predictive-corrective SPH \textit{(PCISPH)}\autocite*{pcisph}
+  \item In what variable they accumulate the changes computed in each iteration. PCISPH\autocite*{pcisph} and IISPH\autocite*{iisph} accumulate pressures, while LPSPH refines predicted velocities and positions\autocite*{lpsph}
+\end{itemize}
+
+In any case, these methods typically employ an optimized scheme to compute a relation between density error and pressure that is hoped to lead to faster convergence and therefore fewer solver iterations, instead of relying on a hand-tuned and user-defined parameter $k$. Instead, only the convergence criterion is specified by the user, often in terms of a maximum predicted average density error $\eta_{avg}$\autocite*{pcisph}\autocite*{lpsph}\autocite*{iisph}.
+
+While it can be shown that PCISPH and IISPH are 'essentially equal'\autocite*{tutorial}, suggesting they belong to a similar class of solvers, they might be differentiated by the fact that PCISPH computes a single, global stiffness constant $k$ that is motivated by the geometric setting of a template particle, while IISPH computes an optimized stiffness $k$ at each particle individually (which can be used to implement a relaxed Jacobi iteration etc.), such that faster convergence may be achieved\autocite*{tutorial}.
+
+
+In this report, the simplest option for an iterative solver is chosen and a single, global stiffness constant $k$ is left open as a parameter and analysed in \autoref{chp:analysis}. We choose to accumulate changes between iterations in the predicted velocities $\vek{v}_i^*$, reusing the greatest part of \hyperref[alg:ssph]{algorithm \ref{alg:ssph}} and following \cite[this description]{teschner-lecture}, which loosely resembles the LPSPH\autocite*{lpsph}, except it does not perform a neighbour search in every iteration and uses a different equation of state to compute pressures, namely \autoref{eq:state-equation}. This results in \hyperref[alg:iter-ssph]{algorithm \ref{alg:iter-ssph}}, which implements a density invariant source term but approximates the predicted density $\rho^*$ within it using the divergence of the estimated velocity $\vek{v}_i^*$.
+
+
+
+\begin{algorithm}
+  \caption{Iterative SPH Fluid Solver using Operator Splitting \textit{IterSPH}}
+  \label{alg:iter-ssph}
+  \begin{algorithmic}[2]
+    \Function{IterSPH}{$
+        \arr{\vek{x}_i(t)},
+        \arr{\vek{v}_i(t)},
+        \arr{m_i},
+        \vek{g}, \nu, k, \lambda, \rho_0, \eta
+      $}
+    \Phase{Fixed Radius Neighbour Search}
+    \State $\mathcal{N}_f(\vek{x}_i) \gets \left\{\vek{x}_j: \dist{\vek{x}_i-\vek{x}_j}\leq\hbar\right\}$
+
+    \Phase{Compute density $\rho$}
+    \State $\rho_i \gets \sum_j m_j W_{ij}$ \Comment{update density \autoref{eq:density-sph}}
+
+    \Phase{Compute non-pressure accelerations and determine time step}
+    \State $a_i^{ext}\gets \vek{g}$ \Comment{external body forces}
+    \State $a_i^{vis}\gets 2\nu(d+2)\sum_j  \frac{m_j}{\rho_j} \frac{\vek{v}_{ij}\cdot\vek{x}_{ij}}{\dist{\vek{x}_{ij}}^2 + 0.01h^2}\nabla W_{ij}$ \Comment{viscous acceleration \autoref{eq:viscosity-sph}}
+    \State $\Delta t \gets \min\left(\Delta t_{max}\,,\,\lambda \frac{h}{\max_i \dist{\vek{v}_i}}
+      \right)$ \Comment{CFL condition \autoref{eq:update-dt}}
+
+    \Phase{Iteratively refine $\vek{v}_i^*$ based on $\rho_i^*$ after applying pressure forces}
+    \State $\vek{a}_i^* \gets \vek{a}_i^{ext} + \vek{a}_i^{vis}$
+    \State $\vek{v}_i^* \gets \vek{v}_i(t)$
+    \State $\rho_{avg}^{err} \gets 0$
+    \State $l \gets 0$
+
+    \While{$l<300 \land\br{\br{l<5} \lor \br{\rho_{avg}^{err} \geq \eta_{avg}}}$}
+    \State $\vek{v}_i^* \gets \vek{v}_i^*(t) + \Delta t \vek{a}_i^*$ \Comment{refine estimated velocity \autoref{eq:symplectic-euler}}
+    \State $\rho_i^* \gets \sum_j m_j W_{ij} + \Delta t \sum_j m_j \vek{v}^*_{ij}\cdot\nabla W_{ij}$  \Comment{predicted density \autoref{eq:predicted-density-from-v-star}}
+    \State $p_i \gets \max\left(0, k\left(\frac{\rho_i^*}{\rho_0}-1\right)\right)$\Comment{update pressure \autoref{eq:state-equation}}
+    \State $\vek{a}_i^*\gets -\sum_j m_j \left(\frac{p_i}{(\rho_i^*)^2} + \frac{p_j}{(\rho_j^*)^2}\right)\nabla W_{ij}$ \Comment{pressure acceleration \autoref{eq:sph-pressure-acceleration}}
+    \item[]
+    \State $\rho_{avg}^{err} \gets \max\left[0\,,\,\left(\frac{1}{N}\sum_{i=1}^N\rho_i^*\right) - \rho_0\right] $\Comment{compute \textit{estimated} (!) density error}
+    \State $l \gets l+1$
+    \EndWhile
+
+
+    \Phase{Numerical Time Integration}
+    \State $\vek{v}_i(t+\Delta t) \gets \vek{v}_i^* + \Delta t \vek{a}_i^*$ \Comment{explicit velocity update \autoref{eq:symplectic-euler}}
+    \State $\vek{x}_i(t+\Delta t) \gets \vek{x}_i(t) + \Delta t \vek{v}_i(t+\Delta t)$ \Comment{implicit position update \autoref{eq:symplectic-euler}}
+    \State\Return $\arr{\vek{x}_i(t+\Delta t)} \arr{\vek{v}_i(t+\Delta t)}$
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}

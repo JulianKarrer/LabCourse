@@ -1,2 +1,9 @@
 Karrer
 Eulerian
+Eurographics
+deviatoric
+discretizations
+Gingold
+expressivity
+PCISPH
+IISPH

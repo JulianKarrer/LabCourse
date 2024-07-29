@@ -16,5 +16,1076 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{anderson}{book}{}
+      \name{author}{1}{}{%
+        {{hash=f0d9242fa046369d671c4e0f0bcd1b3d}{%
+           family={Anderson},
+           familyi={A\bibinitperiod},
+           given={John\bibnamedelima David.},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY}%
+      }
+      \strng{namehash}{f0d9242fa046369d671c4e0f0bcd1b3d}
+      \strng{fullhash}{f0d9242fa046369d671c4e0f0bcd1b3d}
+      \strng{bibnamehash}{f0d9242fa046369d671c4e0f0bcd1b3d}
+      \strng{authorbibnamehash}{f0d9242fa046369d671c4e0f0bcd1b3d}
+      \strng{authornamehash}{f0d9242fa046369d671c4e0f0bcd1b3d}
+      \strng{authorfullhash}{f0d9242fa046369d671c4e0f0bcd1b3d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{McGrawhill Inc}
+      \field{month}{5}
+      \field{series}{McGraw-Hill series in mechanical engineering}
+      \field{title}{{Computational Fluid Dynamics: The Basics with Applications.}}
+      \field{year}{1995}
+    \endentry
+    \entry{tutorial}{article}{}
+      \name{author}{4}{}{%
+        {{hash=7eeee4e139c191f894f671090763c1bf}{%
+           family={Koschier},
+           familyi={K\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=97874e24e149ca0ddbd194fb257ea4c5}{%
+           family={Bender},
+           familyi={B\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=1b2149ad300f2fa2543ab0292070bf34}{%
+           family={Solenthaler},
+           familyi={S\bibinitperiod},
+           given={Barbara},
+           giveni={B\bibinitperiod}}}%
+        {{hash=f11935ee15f7a87cffdf63cabfe0954f}{%
+           family={Teschner},
+           familyi={T\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {The Eurographics Association}%
+      }
+      \strng{namehash}{bc703fca7ae0fd10e0ccda1b0269386c}
+      \strng{fullhash}{6fd2243e61977610fa99d47f2b42ff2b}
+      \strng{bibnamehash}{6fd2243e61977610fa99d47f2b42ff2b}
+      \strng{authorbibnamehash}{6fd2243e61977610fa99d47f2b42ff2b}
+      \strng{authornamehash}{bc703fca7ae0fd10e0ccda1b0269386c}
+      \strng{authorfullhash}{6fd2243e61977610fa99d47f2b42ff2b}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Eurographics 2019 - Tutorials}
+      \field{title}{{Smoothed Particle Hydrodynamics Techniques for the Physics Based Simulation of Fluids and Solids}}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://sph-tutorial.physics-simulation.org/
+      \endverb
+      \verb{url}
+      \verb https://sph-tutorial.physics-simulation.org/
+      \endverb
+    \endentry
+    \entry{continuum-intro}{book}{}
+      \name{author}{4}{}{%
+        {{hash=3f556eb546568785898a07f60f4d5528}{%
+           family={Lai},
+           familyi={L\bibinitperiod},
+           given={W\bibnamedelima Michael},
+           giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=e38b170d5ed77da75d512d7dd937340a}{%
+           family={Rubin},
+           familyi={R\bibinitperiod},
+           given={David\bibnamedelima H},
+           giveni={D\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=ee767b8f0d33929827e812d9448a9e7f}{%
+           family={Rubin},
+           familyi={R\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=0fc195e8600fafc7d5eb9b56577b0dfe}{%
+           family={Krempl},
+           familyi={K\bibinitperiod},
+           given={Erhard},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Butterworth-Heinemann}%
+      }
+      \strng{namehash}{a3aecd0213852614f3555ebd350231bf}
+      \strng{fullhash}{b3a5dedcb51883b7aad552e1c210bdb3}
+      \strng{bibnamehash}{b3a5dedcb51883b7aad552e1c210bdb3}
+      \strng{authorbibnamehash}{b3a5dedcb51883b7aad552e1c210bdb3}
+      \strng{authornamehash}{a3aecd0213852614f3555ebd350231bf}
+      \strng{authorfullhash}{b3a5dedcb51883b7aad552e1c210bdb3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{Third}
+      \field{title}{{Introduction to continuum mechanics}}
+      \field{year}{1999}
+    \endentry
+    \entry{incompressible-flow-volker}{book}{}
+      \name{author}{1}{}{%
+        {{hash=df1dd24cf267f12c16a8359b89b67681}{%
+           family={John},
+           familyi={J\bibinitperiod},
+           given={Volker},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{df1dd24cf267f12c16a8359b89b67681}
+      \strng{fullhash}{df1dd24cf267f12c16a8359b89b67681}
+      \strng{bibnamehash}{df1dd24cf267f12c16a8359b89b67681}
+      \strng{authorbibnamehash}{df1dd24cf267f12c16a8359b89b67681}
+      \strng{authornamehash}{df1dd24cf267f12c16a8359b89b67681}
+      \strng{authorfullhash}{df1dd24cf267f12c16a8359b89b67681}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3-319-45749-9}
+      \field{month}{01}
+      \field{number}{51}
+      \field{series}{Springer Series in Computational Mathematics}
+      \field{title}{{Finite Element Methods for Incompressible Flow Problems}}
+      \field{volume}{51}
+      \field{year}{2016}
+      \verb{doi}
+      \verb 10.1007/978-3-319-45750-5
+      \endverb
+    \endentry
+    \entry{course-notes-12800}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=170160769894775c2410746d3ca3cf45}{%
+           family={Pedlosky},
+           familyi={P\bibinitperiod},
+           given={Joe},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Woods Hole Oceanographic Institution}%
+      }
+      \strng{namehash}{170160769894775c2410746d3ca3cf45}
+      \strng{fullhash}{170160769894775c2410746d3ca3cf45}
+      \strng{bibnamehash}{170160769894775c2410746d3ca3cf45}
+      \strng{authorbibnamehash}{170160769894775c2410746d3ca3cf45}
+      \strng{authornamehash}{170160769894775c2410746d3ca3cf45}
+      \strng{authorfullhash}{170160769894775c2410746d3ca3cf45}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{7}
+      \field{title}{{12.800: Fluid Dynamics of the Atmosphere and Ocean (Course Notes)}}
+      \field{year}{2014}
+      \verb{urlraw}
+      \verb https://www.whoi.edu/cms/files/12.800_Chapter_3_%2706_25330.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.whoi.edu/cms/files/12.800_Chapter_3_%2706_25330.pdf
+      \endverb
+    \endentry
+    \entry{derivation-ns-undergrad}{article}{}
+      \name{author}{1}{}{%
+        {{hash=da4860e76d2a271fc3162fcff82ecbbb}{%
+           family={Coleman},
+           familyi={C\bibinitperiod},
+           given={Neal},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Ball State University}%
+      }
+      \strng{namehash}{da4860e76d2a271fc3162fcff82ecbbb}
+      \strng{fullhash}{da4860e76d2a271fc3162fcff82ecbbb}
+      \strng{bibnamehash}{da4860e76d2a271fc3162fcff82ecbbb}
+      \strng{authorbibnamehash}{da4860e76d2a271fc3162fcff82ecbbb}
+      \strng{authornamehash}{da4860e76d2a271fc3162fcff82ecbbb}
+      \strng{authorfullhash}{da4860e76d2a271fc3162fcff82ecbbb}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1550-1736}
+      \field{journaltitle}{Ball State Undergraduate Mathematics Exchange}
+      \field{title}{{A Derivation of the Navier-Stokes Equations}}
+      \field{volume}{7}
+      \field{year}{2010}
+      \verb{urlraw}
+      \verb https://digitalresearch.bsu.edu/mathexchange/volume-7/
+      \endverb
+      \verb{url}
+      \verb https://digitalresearch.bsu.edu/mathexchange/volume-7/
+      \endverb
+    \endentry
+    \entry{vorticity-micropolar}{article}{}
+      \name{author}{4}{}{%
+        {{hash=97874e24e149ca0ddbd194fb257ea4c5}{%
+           family={Bender},
+           familyi={B\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=7eeee4e139c191f894f671090763c1bf}{%
+           family={Koschier},
+           familyi={K\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=7e4ef790aa26de911aeeb323eac1f674}{%
+           family={Kugelstadt},
+           familyi={K\bibinitperiod},
+           given={Tassilo},
+           giveni={T\bibinitperiod}}}%
+        {{hash=f5e9fb03de9a3dc7158b0bb22d5ee303}{%
+           family={Weiler},
+           familyi={W\bibinitperiod},
+           given={Marcel},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{b8f82d543c815b2d6503e08cacd681c5}
+      \strng{fullhash}{43ba21225355ecaad0547882b45c4ec6}
+      \strng{bibnamehash}{43ba21225355ecaad0547882b45c4ec6}
+      \strng{authorbibnamehash}{43ba21225355ecaad0547882b45c4ec6}
+      \strng{authornamehash}{b8f82d543c815b2d6503e08cacd681c5}
+      \strng{authorfullhash}{43ba21225355ecaad0547882b45c4ec6}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Visualization and Computer Graphics}
+      \field{number}{6}
+      \field{title}{{Turbulent Micropolar SPH Fluids with Foam}}
+      \field{volume}{25}
+      \field{year}{2019}
+      \field{pages}{2284\bibrangedash 2295}
+      \range{pages}{12}
+    \endentry
+    \entry{wcsph}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=289f7783ec708dc87fc345ccf5c8fb25}{%
+           family={Becker},
+           familyi={B\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=f11935ee15f7a87cffdf63cabfe0954f}{%
+           family={Teschner},
+           familyi={T\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Diego, California}%
+      }
+      \list{publisher}{1}{%
+        {Eurographics Association}%
+      }
+      \strng{namehash}{85db3254c458a47ee735fd18c5ed0d7b}
+      \strng{fullhash}{85db3254c458a47ee735fd18c5ed0d7b}
+      \strng{bibnamehash}{85db3254c458a47ee735fd18c5ed0d7b}
+      \strng{authorbibnamehash}{85db3254c458a47ee735fd18c5ed0d7b}
+      \strng{authornamehash}{85db3254c458a47ee735fd18c5ed0d7b}
+      \strng{authorfullhash}{85db3254c458a47ee735fd18c5ed0d7b}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2007 ACM SIGGRAPH/Eurographics Symposium on Computer Animation}
+      \field{isbn}{9781595936240}
+      \field{series}{SCA '07}
+      \field{title}{{Weakly compressible SPH for free surface flows}}
+      \field{year}{2007}
+      \field{pages}{209\bibrangedash 217}
+      \range{pages}{9}
+      \keyw{Tait equation,fluid dynamics,physically-based simulation,smoothed particle hydrodynamics,surface tension,volume preservation}
+    \endentry
+    \entry{moanghan-2012-sph-and-its-diverse-applications}{article}{}
+      \name{author}{1}{}{%
+        {{hash=441fe88aa55fb5b33be74d8641d0d091}{%
+           family={Monaghan},
+           familyi={M\bibinitperiod},
+           given={J.J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Annual Reviews}%
+      }
+      \strng{namehash}{441fe88aa55fb5b33be74d8641d0d091}
+      \strng{fullhash}{441fe88aa55fb5b33be74d8641d0d091}
+      \strng{bibnamehash}{441fe88aa55fb5b33be74d8641d0d091}
+      \strng{authorbibnamehash}{441fe88aa55fb5b33be74d8641d0d091}
+      \strng{authornamehash}{441fe88aa55fb5b33be74d8641d0d091}
+      \strng{authorfullhash}{441fe88aa55fb5b33be74d8641d0d091}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This review focuses on the applications of smoothed particle hydrodynamics (SPH) to incompressible or nearly incompressible flow. In the past 17 years, the range of applications has increased as researchers have realized the ability of SPH algorithms to handle complex physical problems. These include the disruption of free surfaces when a wave hits a rocky beach, multifluid problems that may involve the motion of rigid and elastic bodies, non-Newtonian fluids, virtual surgery, and chemical precipitation from fluids moving through fractured media. SPH provides a fascinating tool that has some of the properties of molecular dynamics while retaining the attributes of the macroscopic equations of continuum mechanics.}
+      \field{issn}{1545-4479}
+      \field{journaltitle}{Annual Review of Fluid Mechanics}
+      \field{number}{Volume 44, 2012}
+      \field{title}{Smoothed Particle Hydrodynamics and Its Diverse Applications}
+      \field{type}{Journal Article}
+      \field{volume}{44}
+      \field{year}{2012}
+      \field{pages}{323\bibrangedash 346}
+      \range{pages}{24}
+      \keyw{impact}
+    \endentry
+    \entry{macdonald-state-equations-murnaghan}{article}{}
+      \name{author}{1}{}{%
+        {{hash=e0223414f426c22ef35912ba39d1b642}{%
+           family={MACDONALD},
+           familyi={M\bibinitperiod},
+           given={J.\bibnamedelimi ROSS},
+           giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {American Physical Society}%
+      }
+      \strng{namehash}{e0223414f426c22ef35912ba39d1b642}
+      \strng{fullhash}{e0223414f426c22ef35912ba39d1b642}
+      \strng{bibnamehash}{e0223414f426c22ef35912ba39d1b642}
+      \strng{authorbibnamehash}{e0223414f426c22ef35912ba39d1b642}
+      \strng{authornamehash}{e0223414f426c22ef35912ba39d1b642}
+      \strng{authorfullhash}{e0223414f426c22ef35912ba39d1b642}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{2}
+      \field{journaltitle}{Rev. Mod. Phys.}
+      \field{month}{4}
+      \field{title}{Review of Some Experimental and Analytical Equations of State}
+      \field{volume}{41}
+      \field{year}{1969}
+      \field{pages}{316\bibrangedash 349}
+      \range{pages}{34}
+    \endentry
+    \entry{pcisph}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=4c8b66a7103feb7b35505079b5a882a6}{%
+           family={Solenthaler},
+           familyi={S\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+        {{hash=ba70ae93e1d4e4bdbdba98d26bcbd956}{%
+           family={Pajarola},
+           familyi={P\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New Orleans, Louisiana}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{5274c78f22b52b36f4e982cca136e931}
+      \strng{fullhash}{5274c78f22b52b36f4e982cca136e931}
+      \strng{bibnamehash}{5274c78f22b52b36f4e982cca136e931}
+      \strng{authorbibnamehash}{5274c78f22b52b36f4e982cca136e931}
+      \strng{authornamehash}{5274c78f22b52b36f4e982cca136e931}
+      \strng{authorfullhash}{5274c78f22b52b36f4e982cca136e931}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We present a novel, incompressible fluid simulation method based on the Lagrangian Smoothed Particle Hydrodynamics (SPH) model. In our method, incompressibility is enforced by using a prediction-correction scheme to determine the particle pressures. For this, the information about density fluctuations is actively propagated through the fluid and pressure values are updated until the targeted density is satisfied. With this approach, we avoid the computational expenses of solving a pressure Poisson equation, while still being able to use large time steps in the simulation. The achieved results show that our predictive-corrective incompressible SPH (PCISPH) method clearly outperforms the commonly used weakly compressible SPH (WCSPH) model by more than an order of magnitude while the computations are in good agreement with the WCSPH results.}
+      \field{booktitle}{ACM SIGGRAPH 2009 Papers}
+      \field{isbn}{9781605587264}
+      \field{series}{SIGGRAPH '09}
+      \field{title}{{Predictive-corrective incompressible SPH}}
+      \field{year}{2009}
+      \verb{doi}
+      \verb 10.1145/1576246.1531346
+      \endverb
+      \keyw{incompressibility,fluid simulation,SPH}
+    \endentry
+    \entry{sph-lucy-77}{article}{}
+      \name{author}{1}{}{%
+        {{hash=4cb84dd858c4ec9dae881405f13f0f58}{%
+           family={{Lucy}},
+           familyi={L\bibinitperiod},
+           given={L.\bibnamedelimi B.},
+           giveni={L\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{4cb84dd858c4ec9dae881405f13f0f58}
+      \strng{fullhash}{4cb84dd858c4ec9dae881405f13f0f58}
+      \strng{bibnamehash}{4cb84dd858c4ec9dae881405f13f0f58}
+      \strng{authorbibnamehash}{4cb84dd858c4ec9dae881405f13f0f58}
+      \strng{authornamehash}{4cb84dd858c4ec9dae881405f13f0f58}
+      \strng{authorfullhash}{4cb84dd858c4ec9dae881405f13f0f58}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Astronomical Journal}
+      \field{month}{12}
+      \field{title}{{A numerical approach to the testing of the fission hypothesis.}}
+      \field{volume}{82}
+      \field{year}{1977}
+      \field{pages}{1013\bibrangedash 1024}
+      \range{pages}{12}
+      \keyw{Binary Stars,Hypotheses,Nuclear Fission,Numerical Analysis,Protostars,Stellar Evolution,Astronomical Models,Difference Equations,Gas Dynamics,Monte Carlo Method,Numerical Stability,Particle Motion,Stellar Rotation,Astrophysics}
+    \endentry
+    \entry{sph-monaghan-gingold-77}{article}{}
+      \name{author}{2}{}{%
+        {{hash=2d190aa1e11b8cda30e12d48640fb104}{%
+           family={{Gingold}},
+           familyi={G\bibinitperiod},
+           given={R.\bibnamedelimi A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=441fe88aa55fb5b33be74d8641d0d091}{%
+           family={{Monaghan}},
+           familyi={M\bibinitperiod},
+           given={J.\bibnamedelimi J.},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{44d73f60ae2252d9ae9c531ec4faaceb}
+      \strng{fullhash}{44d73f60ae2252d9ae9c531ec4faaceb}
+      \strng{bibnamehash}{44d73f60ae2252d9ae9c531ec4faaceb}
+      \strng{authorbibnamehash}{44d73f60ae2252d9ae9c531ec4faaceb}
+      \strng{authornamehash}{44d73f60ae2252d9ae9c531ec4faaceb}
+      \strng{authorfullhash}{44d73f60ae2252d9ae9c531ec4faaceb}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Monthly Notices of the Royal Astronomical Society}
+      \field{month}{11}
+      \field{title}{{Smoothed particle hydrodynamics: theory and application to non-spherical stars.}}
+      \field{volume}{181}
+      \field{year}{1977}
+      \field{pages}{375\bibrangedash 389}
+      \range{pages}{15}
+      \keyw{Hydrodynamics,Particle Theory,Stellar Models,Astrophysics,Stellar Rotation,Stellar Structure,Astrophysics}
+    \endentry
+    \entry{signal-processing-falaschi}{book}{}
+      \name{author}{1}{}{%
+        {{hash=c242c996806ccf94fa17b6da281e430c}{%
+           family={Falaschi},
+           familyi={F\bibinitperiod},
+           given={Alessandro},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c242c996806ccf94fa17b6da281e430c}
+      \strng{fullhash}{c242c996806ccf94fa17b6da281e430c}
+      \strng{bibnamehash}{c242c996806ccf94fa17b6da281e430c}
+      \strng{authorbibnamehash}{c242c996806ccf94fa17b6da281e430c}
+      \strng{authornamehash}{c242c996806ccf94fa17b6da281e430c}
+      \strng{authorfullhash}{c242c996806ccf94fa17b6da281e430c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{1}
+      \field{month}{7}
+      \field{title}{{Signal Processing and Information Theory}}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://teoriadeisegnali.it/story/pub/bioinf/Signal_Processing_and_Information_Theory.pdf
+      \endverb
+      \verb{url}
+      \verb https://teoriadeisegnali.it/story/pub/bioinf/Signal_Processing_and_Information_Theory.pdf
+      \endverb
+    \endentry
+    \entry{surface-tension-akinci-2013}{article}{}
+      \name{author}{3}{}{%
+        {{hash=424ea18033d75ffa4805ffdd50d6a7f7}{%
+           family={Akinci},
+           familyi={A\bibinitperiod},
+           given={Nadir},
+           giveni={N\bibinitperiod}}}%
+        {{hash=88d0410c76319343a0d13de971b52fdc}{%
+           family={Akinci},
+           familyi={A\bibinitperiod},
+           given={Gizem},
+           giveni={G\bibinitperiod}}}%
+        {{hash=f11935ee15f7a87cffdf63cabfe0954f}{%
+           family={Teschner},
+           familyi={T\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{3a7f41f17992ebed348aa4dc6072b06a}
+      \strng{fullhash}{70ad414566f154a361c30ce5be673c61}
+      \strng{bibnamehash}{70ad414566f154a361c30ce5be673c61}
+      \strng{authorbibnamehash}{70ad414566f154a361c30ce5be673c61}
+      \strng{authornamehash}{3a7f41f17992ebed348aa4dc6072b06a}
+      \strng{authorfullhash}{70ad414566f154a361c30ce5be673c61}
+      \field{extraname}{1}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Realistic handling of fluid-air and fluid-solid interfaces in SPH is a challenging problem. The main reason is that some important physical phenomena such as surface tension and adhesion emerge as a result of inter-molecular forces in a microscopic scale. This is different from scalar fields such as fluid pressure, which can be plausibly evaluated on a macroscopic scale using particles. Although there exist techniques to address this problem for some specific simulation scenarios, there does not yet exist a general approach to reproduce the variety of effects that emerge in reality from fluid-air and fluid-solid interactions. In order to address this problem, we present a new surface tension force and a new adhesion force. Different from the existing work, our surface tension force can handle large surface tensions in a realistic way. This property lets our approach handle challenging real scenarios, such as water crown formation, various types of fluid-solid interactions, and even droplet simulations. Furthermore, it prevents particle clustering at the free surface where inter-particle pressure forces are incorrect. Our adhesion force allows plausible two-way attraction of fluids and solids and can be used to model different wetting conditions. By using our forces, modeling surface tension and adhesion effects do not require involved techniques such as generating a ghost air phase or surface tracking. The forces are applied to the neighboring fluid-fluid and fluid-boundary particle pairs in a symmetric way, which satisfies momentum conservation. We demonstrate that combining both forces allows simulating a variety of interesting effects in a plausible way.}
+      \field{issn}{0730-0301}
+      \field{journaltitle}{ACM Trans. Graph.}
+      \field{month}{11}
+      \field{number}{6}
+      \field{title}{{Versatile surface tension and adhesion for SPH fluids}}
+      \field{volume}{32}
+      \field{year}{2013}
+      \keyw{surface tension,smoothed particle hydrodynamics,physically-based animation,fluid simulation,adhesion}
+    \endentry
+    \entry{price-2012}{article}{}
+      \name{author}{1}{}{%
+        {{hash=340cb81de3083cb72b2a4659af3a734f}{%
+           family={{Price}},
+           familyi={P\bibinitperiod},
+           given={Daniel\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{340cb81de3083cb72b2a4659af3a734f}
+      \strng{fullhash}{340cb81de3083cb72b2a4659af3a734f}
+      \strng{bibnamehash}{340cb81de3083cb72b2a4659af3a734f}
+      \strng{authorbibnamehash}{340cb81de3083cb72b2a4659af3a734f}
+      \strng{authornamehash}{340cb81de3083cb72b2a4659af3a734f}
+      \strng{authorfullhash}{340cb81de3083cb72b2a4659af3a734f}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{astro-ph.IM}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{Journal of Computational Physics}
+      \field{month}{2}
+      \field{number}{3}
+      \field{title}{{Smoothed particle hydrodynamics and magnetohydrodynamics}}
+      \field{volume}{231}
+      \field{year}{2012}
+      \field{pages}{759\bibrangedash 794}
+      \range{pages}{36}
+      \verb{eprint}
+      \verb 1012.1885
+      \endverb
+      \keyw{Astrophysics - Instrumentation and Methods for Astrophysics,Astrophysics - Cosmology and Extragalactic Astrophysics,Astrophysics - Solar and Stellar Astrophysics,Physics - Fluid Dynamics,Physics - Plasma Physics}
+    \endentry
+    \entry{gauss-convolution-survey}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6e462d64fe044650bdc7cd2de7499a79}{%
+           family={Getreuer},
+           familyi={G\bibinitperiod},
+           given={Pascal},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{6e462d64fe044650bdc7cd2de7499a79}
+      \strng{fullhash}{6e462d64fe044650bdc7cd2de7499a79}
+      \strng{bibnamehash}{6e462d64fe044650bdc7cd2de7499a79}
+      \strng{authorbibnamehash}{6e462d64fe044650bdc7cd2de7499a79}
+      \strng{authornamehash}{6e462d64fe044650bdc7cd2de7499a79}
+      \strng{authorfullhash}{6e462d64fe044650bdc7cd2de7499a79}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{{Image Processing On Line}}
+      \field{title}{{A Survey of Gaussian Convolution Algorithms}}
+      \field{volume}{3}
+      \field{year}{2013}
+      \field{pages}{286\bibrangedash 310}
+      \range{pages}{25}
+    \endentry
+    \entry{gauss-eigenfunction}{article}{}
+      \name{author}{1}{}{%
+        {{hash=e5e0d2888d2c2e92f13144abe325cb49}{%
+           family={Vaidyanathan},
+           familyi={V\bibinitperiod},
+           given={P\bibnamedelima P},
+           giveni={P\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{e5e0d2888d2c2e92f13144abe325cb49}
+      \strng{fullhash}{e5e0d2888d2c2e92f13144abe325cb49}
+      \strng{bibnamehash}{e5e0d2888d2c2e92f13144abe325cb49}
+      \strng{authorbibnamehash}{e5e0d2888d2c2e92f13144abe325cb49}
+      \strng{authornamehash}{e5e0d2888d2c2e92f13144abe325cb49}
+      \strng{authorfullhash}{e5e0d2888d2c2e92f13144abe325cb49}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IETE Journal of Education}
+      \field{number}{2}
+      \field{title}{{Eigenfunctions of the Fourier Transform}}
+      \field{volume}{49}
+      \field{year}{2008}
+      \field{pages}{51\bibrangedash 58}
+      \range{pages}{8}
+    \endentry
+    \entry{gauss-unique-preserve-local-extrema}{article}{}
+      \name{author}{4}{}{%
+        {{hash=3042dc358f601acc224f1549f79b8852}{%
+           family={Babaud},
+           familyi={B\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+        {{hash=44155a0ddcfd558a665a16833a7cfca7}{%
+           family={Witkin},
+           familyi={W\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=80bef697d0fb7c64ca5bfbdca918df93}{%
+           family={Baudin},
+           familyi={B\bibinitperiod},
+           given={Michel},
+           giveni={M\bibinitperiod}}}%
+        {{hash=7088e590227b0c282f09c67eae07310f}{%
+           family={Duda},
+           familyi={D\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{888f843264b7af046303d65f0e41241e}
+      \strng{fullhash}{b01de05ddad1ae29f822da36b00733d9}
+      \strng{bibnamehash}{b01de05ddad1ae29f822da36b00733d9}
+      \strng{authorbibnamehash}{b01de05ddad1ae29f822da36b00733d9}
+      \strng{authornamehash}{888f843264b7af046303d65f0e41241e}
+      \strng{authorfullhash}{b01de05ddad1ae29f822da36b00733d9}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Pattern Analysis and Machine Intelligence, IEEE Transactions on}
+      \field{month}{02}
+      \field{title}{{Uniqueness of the Gaussian Kernel for Scale-Space Filtering}}
+      \field{volume}{8}
+      \field{year}{1986}
+      \field{pages}{26\bibrangedash 33}
+      \range{pages}{8}
+    \endentry
+    \entry{hammersley-monte-carlo}{book}{}
+      \name{author}{2}{}{%
+        {{hash=08a376882401bc1c10ca00e178fdc184}{%
+           family={Hammersley},
+           familyi={H\bibinitperiod},
+           given={J.\bibnamedelimi M.},
+           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=9107260f0630d5462ad22456606accc5}{%
+           family={Handscomb},
+           familyi={H\bibinitperiod},
+           given={D.\bibnamedelimi C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {London}%
+      }
+      \list{publisher}{1}{%
+        {Methuen}%
+      }
+      \strng{namehash}{435af7830706b42b926fad1ff0e20a10}
+      \strng{fullhash}{435af7830706b42b926fad1ff0e20a10}
+      \strng{bibnamehash}{435af7830706b42b926fad1ff0e20a10}
+      \strng{authorbibnamehash}{435af7830706b42b926fad1ff0e20a10}
+      \strng{authornamehash}{435af7830706b42b926fad1ff0e20a10}
+      \strng{authorfullhash}{435af7830706b42b926fad1ff0e20a10}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Monte Carlo} Methods}
+      \field{year}{1964}
+    \endentry
+    \entry{smoothed-density-parzen-62}{article}{}
+      \name{author}{1}{}{%
+        {{hash=3538e72c10a2ef29e8444e94614376a0}{%
+           family={Parzen},
+           familyi={P\bibinitperiod},
+           given={Emanuel},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Institute of Mathematical Statistics}%
+      }
+      \strng{namehash}{3538e72c10a2ef29e8444e94614376a0}
+      \strng{fullhash}{3538e72c10a2ef29e8444e94614376a0}
+      \strng{bibnamehash}{3538e72c10a2ef29e8444e94614376a0}
+      \strng{authorbibnamehash}{3538e72c10a2ef29e8444e94614376a0}
+      \strng{authornamehash}{3538e72c10a2ef29e8444e94614376a0}
+      \strng{authorfullhash}{3538e72c10a2ef29e8444e94614376a0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Annals of Mathematical Statistics}
+      \field{number}{3}
+      \field{title}{{On Estimation of a Probability Density Function and Mode}}
+      \field{volume}{33}
+      \field{year}{1962}
+      \field{pages}{1065\bibrangedash 1076}
+      \range{pages}{12}
+    \endentry
+    \entry{teschner-lecture}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=f11935ee15f7a87cffdf63cabfe0954f}{%
+           family={Teschner},
+           familyi={T\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {University of Freiburg}%
+      }
+      \strng{namehash}{f11935ee15f7a87cffdf63cabfe0954f}
+      \strng{fullhash}{f11935ee15f7a87cffdf63cabfe0954f}
+      \strng{bibnamehash}{f11935ee15f7a87cffdf63cabfe0954f}
+      \strng{authorbibnamehash}{f11935ee15f7a87cffdf63cabfe0954f}
+      \strng{authornamehash}{f11935ee15f7a87cffdf63cabfe0954f}
+      \strng{authorfullhash}{f11935ee15f7a87cffdf63cabfe0954f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{7}
+      \field{note}{(lecture slides)}
+      \field{title}{Simulation in Computer Graphics: Particle Fluids}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://cg.informatik.uni-freiburg.de/course_notes/sim_03_particleFluids.pdf
+      \endverb
+      \verb{url}
+      \verb https://cg.informatik.uni-freiburg.de/course_notes/sim_03_particleFluids.pdf
+      \endverb
+    \endentry
+    \entry{2014-sph-sruvey-eurographics}{article}{}
+      \name{author}{5}{}{%
+        {{hash=6d8a96e06d334e1b81b365d17e231c81}{%
+           family={Ihmsen},
+           familyi={I\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8fdd1ff93bc81d069bfba3c057431baa}{%
+           family={Orthmann},
+           familyi={O\bibinitperiod},
+           given={Jens},
+           giveni={J\bibinitperiod}}}%
+        {{hash=1b2149ad300f2fa2543ab0292070bf34}{%
+           family={Solenthaler},
+           familyi={S\bibinitperiod},
+           given={Barbara},
+           giveni={B\bibinitperiod}}}%
+        {{hash=f4195dc26f57b130791772dba2a6d789}{%
+           family={Kolb},
+           familyi={K\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f11935ee15f7a87cffdf63cabfe0954f}{%
+           family={Teschner},
+           familyi={T\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{256c6b960914648f2c3218526f81bbf6}
+      \strng{fullhash}{cb701de92cff513bc950c4597c2061e6}
+      \strng{bibnamehash}{cb701de92cff513bc950c4597c2061e6}
+      \strng{authorbibnamehash}{cb701de92cff513bc950c4597c2061e6}
+      \strng{authornamehash}{256c6b960914648f2c3218526f81bbf6}
+      \strng{authorfullhash}{cb701de92cff513bc950c4597c2061e6}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Eurographics 2014 STAR - State of The Art Report}
+      \field{month}{01}
+      \field{title}{{SPH Fluids in Computer Graphics}}
+      \field{year}{2014}
+    \endentry
+    \entry{compressed-neighbour-lists}{article}{}
+      \name{author}{3}{}{%
+        {{hash=d33ae330fb2b8f9ac186784bb203a654}{%
+           family={Band},
+           familyi={B\bibinitperiod},
+           given={Stefan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=759b38951fea067455b23c89fc8a3518}{%
+           family={Gissler},
+           familyi={G\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+        {{hash=f11935ee15f7a87cffdf63cabfe0954f}{%
+           family={Teschner},
+           familyi={T\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{2c49be37e5f661576cbbced5f5a0e7e6}
+      \strng{fullhash}{3efc4493e650e8ad83fb2183a2afc065}
+      \strng{bibnamehash}{3efc4493e650e8ad83fb2183a2afc065}
+      \strng{authorbibnamehash}{3efc4493e650e8ad83fb2183a2afc065}
+      \strng{authornamehash}{2c49be37e5f661576cbbced5f5a0e7e6}
+      \strng{authorfullhash}{3efc4493e650e8ad83fb2183a2afc065}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Abstract We propose a novel compression scheme to store neighbour lists for iterative solvers that employ Smoothed Particle Hydrodynamics (SPH). The compression scheme is inspired by Stream VByte, but uses a non-linear mapping from data to data bytes, yielding memory savings of up to 87\%. It is part of a novel variant of the Cell-Linked-List (CLL) concept that is inspired by compact hashing with an improved processing of the cell-particle relations. We show that the resulting neighbour search outperforms compact hashing in terms of speed and memory consumption. Divergence-Free SPH (DFSPH) scenarios with up to 1.3 billion SPH particles can be processed on a 24-core PC using 172 GB of memory. Scenes with more than 7 billion SPH particles can be processed in a Message Passing Interface (MPI) environment with 112 cores and 880 GB of RAM. The neighbour search is also useful for interactive applications. A DFSPH simulation step for up to 0.2 million particles can be computed in less than 40 ms on a 12-core PC.}
+      \field{journaltitle}{Computer Graphics Forum}
+      \field{number}{1}
+      \field{title}{Compressed Neighbour Lists for SPH}
+      \field{volume}{39}
+      \field{year}{2020}
+      \field{pages}{531\bibrangedash 542}
+      \range{pages}{12}
+      \verb{eprint}
+      \verb https://onlinelibrary.wiley.com/doi/pdf/10.1111/cgf.13890
+      \endverb
+      \keyw{physically based animation,data compression,fluid modelling,smoothed particle hydrodynamics,I.3.7 Computer Graphics: Three-Dimensional Graphics and Realism – Animation; • Computing methodologies → Physical simulation,Massively parallel and high-performance simulations}
+    \endentry
+    \entry{iisph}{article}{}
+      \name{author}{5}{}{%
+        {{hash=6d8a96e06d334e1b81b365d17e231c81}{%
+           family={Ihmsen},
+           familyi={I\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=1ad9d987c68d148016f99cf21ab481fc}{%
+           family={Cornelis},
+           familyi={C\bibinitperiod},
+           given={Jens},
+           giveni={J\bibinitperiod}}}%
+        {{hash=1b2149ad300f2fa2543ab0292070bf34}{%
+           family={Solenthaler},
+           familyi={S\bibinitperiod},
+           given={Barbara},
+           giveni={B\bibinitperiod}}}%
+        {{hash=c2413419ede90830c79d56abe1ff8979}{%
+           family={Horvath},
+           familyi={H\bibinitperiod},
+           given={Christopher},
+           giveni={C\bibinitperiod}}}%
+        {{hash=f11935ee15f7a87cffdf63cabfe0954f}{%
+           family={Teschner},
+           familyi={T\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{256c6b960914648f2c3218526f81bbf6}
+      \strng{fullhash}{b2dcd3056593cfcace21e4c5211a9804}
+      \strng{bibnamehash}{b2dcd3056593cfcace21e4c5211a9804}
+      \strng{authorbibnamehash}{b2dcd3056593cfcace21e4c5211a9804}
+      \strng{authornamehash}{256c6b960914648f2c3218526f81bbf6}
+      \strng{authorfullhash}{b2dcd3056593cfcace21e4c5211a9804}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Visualization and Computer Graphics}
+      \field{number}{3}
+      \field{title}{Implicit Incompressible SPH}
+      \field{volume}{20}
+      \field{year}{2014}
+      \field{pages}{426\bibrangedash 435}
+      \range{pages}{10}
+      \keyw{Earth Observing System;Jacobian matrices;Equations;Convergence;Force;Mathematical model;Computational modeling;Physically based simulation;fluid dynamics;smoothed particle hydrodynamics;incompressibility;implicit integration}
+    \endentry
+    \entry{lpsph}{article}{}
+      \name{author}{5}{}{%
+        {{hash=be87b2f5c53558a29acde81250ac218f}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Xiaowei},
+           giveni={X\bibinitperiod}}}%
+        {{hash=c98b8df825976ea7cb8362592da21cc7}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Ning},
+           giveni={N\bibinitperiod}}}%
+        {{hash=d8125976d0f2f0c4fddc5c4adeda313d}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Sheng},
+           giveni={S\bibinitperiod}}}%
+        {{hash=ed1f4db1d87834a0f89df4cf6d9739df}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Hongan},
+           giveni={H\bibinitperiod}}}%
+        {{hash=05b1429e3e7042372c9109a5da28ecd4}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Guoping},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{4f80eefab696c995cac348198adb4799}
+      \strng{fullhash}{4eb90b11d95cb771e0474c1de0d19eed}
+      \strng{bibnamehash}{4eb90b11d95cb771e0474c1de0d19eed}
+      \strng{authorbibnamehash}{4eb90b11d95cb771e0474c1de0d19eed}
+      \strng{authornamehash}{4f80eefab696c995cac348198adb4799}
+      \strng{authorfullhash}{4eb90b11d95cb771e0474c1de0d19eed}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Abstract Enforcing fluid incompressibility is one of the time-consuming aspects in SPH. In this paper, we present a local Poisson SPH (LPSPH) method to solve incompressibility for particle based fluid simulation. Considering the pressure Poisson equation, we first convert it into an integral form, and then apply a discretization to convert the continuous integral equation to a discretized summation over all the particles in the local pressure integration domain determined by the local geometry. To control the approximation error, we further integrate our local pressure solver into the predictive-corrective framework to avoid the computational cost of solving a pressure Poisson equation globally. Our method can effectively eliminate the large density deviations mainly caused by the solid boundary treatment and free surface topological change, and show advantage of a higher convergence rate over the predictive-corrective incompressible SPH (PCISPH).}
+      \field{journaltitle}{Computer Graphics Forum}
+      \field{number}{6}
+      \field{title}{Local Poisson SPH For Viscous Incompressible Fluids}
+      \field{volume}{31}
+      \field{year}{2012}
+      \field{pages}{1948\bibrangedash 1958}
+      \range{pages}{11}
+      \keyw{Local Poisson SPH,fluid simulation,incompressibility,I.3.7 Computer Graphics: Three-Dimensional Graphics and RealismAnimation}
+    \endentry
+    \entry{versatile-boundary-akinci12}{article}{}
+      \name{author}{5}{}{%
+        {{hash=424ea18033d75ffa4805ffdd50d6a7f7}{%
+           family={Akinci},
+           familyi={A\bibinitperiod},
+           given={Nadir},
+           giveni={N\bibinitperiod}}}%
+        {{hash=6d8a96e06d334e1b81b365d17e231c81}{%
+           family={Ihmsen},
+           familyi={I\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=88d0410c76319343a0d13de971b52fdc}{%
+           family={Akinci},
+           familyi={A\bibinitperiod},
+           given={Gizem},
+           giveni={G\bibinitperiod}}}%
+        {{hash=1b2149ad300f2fa2543ab0292070bf34}{%
+           family={Solenthaler},
+           familyi={S\bibinitperiod},
+           given={Barbara},
+           giveni={B\bibinitperiod}}}%
+        {{hash=f11935ee15f7a87cffdf63cabfe0954f}{%
+           family={Teschner},
+           familyi={T\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{3a7f41f17992ebed348aa4dc6072b06a}
+      \strng{fullhash}{a5e6b8ec54712e29f25f1441719025fa}
+      \strng{bibnamehash}{a5e6b8ec54712e29f25f1441719025fa}
+      \strng{authorbibnamehash}{a5e6b8ec54712e29f25f1441719025fa}
+      \strng{authornamehash}{3a7f41f17992ebed348aa4dc6072b06a}
+      \strng{authorfullhash}{a5e6b8ec54712e29f25f1441719025fa}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We propose a momentum-conserving two-way coupling method of SPH fluids and arbitrary rigid objects based on hydrodynamic forces. Our approach samples the surface of rigid bodies with boundary particles that interact with the fluid, preventing deficiency issues and both spatial and temporal discontinuities. The problem of inhomogeneous boundary sampling is addressed by considering the relative contribution of a boundary particle to a physical quantity. This facilitates not only the initialization process but also allows the simulation of multiple dynamic objects. Thin structures consisting of only one layer or one line of boundary particles, and also non-manifold geometries can be handled without any additional treatment. We have integrated our approach into WCSPH and PCISPH, and demonstrate its stability and flexibility with several scenarios including multiphase flow.}
+      \field{issn}{0730-0301}
+      \field{journaltitle}{ACM Trans. Graph.}
+      \field{month}{7}
+      \field{number}{4}
+      \field{title}{Versatile rigid-fluid coupling for incompressible SPH}
+      \field{volume}{31}
+      \field{year}{2012}
+      \keyw{fluid simulation,fluid-solid coupling,physically-based animation,smoothed particle hydrodynamics}
+    \endentry
+    \entry{density-maps-koschier}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=7eeee4e139c191f894f671090763c1bf}{%
+           family={Koschier},
+           familyi={K\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=97874e24e149ca0ddbd194fb257ea4c5}{%
+           family={Bender},
+           familyi={B\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Los Angeles, California}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{c3a8eec3430943cec89e6938c200bf15}
+      \strng{fullhash}{c3a8eec3430943cec89e6938c200bf15}
+      \strng{bibnamehash}{c3a8eec3430943cec89e6938c200bf15}
+      \strng{authorbibnamehash}{c3a8eec3430943cec89e6938c200bf15}
+      \strng{authornamehash}{c3a8eec3430943cec89e6938c200bf15}
+      \strng{authorfullhash}{c3a8eec3430943cec89e6938c200bf15}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In this paper, we present the novel concept of density maps for robust handling of static and rigid dynamic boundaries in fluid simulations based on Smoothed Particle Hydrodynamics (SPH). In contrast to the vast majority of existing approaches, we use an implicit discretization for a continuous extension of the density field throughout solid boundaries. Using the novel representation we enhance accuracy and efficiency of density and density gradient evaluations in boundary regions by computationally efficient lookups into our density maps. The map is generated in a preprocessing step and discretizes the density contribution in the boundary's near-field. In consequence of the high regularity of the continuous boundary density field, we use cubic Lagrange polynomials on a narrow-band structure of a regular grid for discretization. This strategy not only removes the necessity to sample boundary surfaces with particles but also decouples the particle size from the number of sample points required to represent the boundary. Moreover, it solves the ever-present problem of particle deficiencies near the boundary. In several comparisons we show that the representation is more accurate than particle samplings, especially for smooth curved boundaries. We further demonstrate that our approach robustly handles scenarios with highly complex boundaries and even outperforms one of the most recent sampling based techniques.}
+      \field{booktitle}{Proceedings of the ACM SIGGRAPH / Eurographics Symposium on Computer Animation}
+      \field{isbn}{9781450350914}
+      \field{series}{SCA '17}
+      \field{title}{Density maps for improved SPH boundary handling}
+      \field{year}{2017}
+      \keyw{smoothed particle hydrodynamics,incompressible fluids,implicit representation,boundary handling}
+    \endentry
+    \entry{initialization-lattices-optimal-initial}{article}{}
+      \name{author}{5}{}{%
+        {{hash=7cb6fa973f75594c5ef33dba617b8106}{%
+           family={Diehl},
+           familyi={D\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=99da72ff642fdab91f2072104b5dd964}{%
+           family={Rockefeller},
+           familyi={R\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=b50c887dabc9b2f54fa64ac12b68d2e8}{%
+           family={Fryer},
+           familyi={F\bibinitperiod},
+           given={C.\bibnamedelimi L.},
+           giveni={C\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=65340d33ccfe62975242121ee05d9355}{%
+           family={Riethmiller},
+           familyi={R\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=351798d765c862b6351cbaae0ac72682}{%
+           family={Statler},
+           familyi={S\bibinitperiod},
+           given={T.\bibnamedelimi S.},
+           giveni={T\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{f95b993e19108fe398c5aad32ea3bb32}
+      \strng{fullhash}{c9637c8353ce22ac1ddec5702b2ab0b5}
+      \strng{bibnamehash}{c9637c8353ce22ac1ddec5702b2ab0b5}
+      \strng{authorbibnamehash}{c9637c8353ce22ac1ddec5702b2ab0b5}
+      \strng{authornamehash}{f95b993e19108fe398c5aad32ea3bb32}
+      \strng{authorfullhash}{c9637c8353ce22ac1ddec5702b2ab0b5}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Publications of the Astronomical Society of Australia}
+      \field{title}{Generating Optimal Initial Conditions for Smoothed Particle Hydrodynamics Simulations}
+      \field{volume}{32}
+      \field{year}{2015}
+      \field{pages}{e048}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1017/pasa.2015.50
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 
