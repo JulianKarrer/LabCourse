@@ -1,5 +1,8 @@
 ## File CC0 at https://github.com/github/gitignore/blob/main/TeX.gitignore
 
+tikz*
+*.asy
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

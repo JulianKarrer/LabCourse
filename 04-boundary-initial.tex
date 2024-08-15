@@ -414,7 +414,7 @@ These two-dimensional lattices are illustrated in \autoref{fig:lattices}.
     \caption{hexagonal lattice}
   \end{subfigure}
 
-  \caption{A square, oblique and hexagonal lattice in 2D are shown, including their respective mirror lines in red and the $A=h^2$ Vornoi cell surrounding the central lattice point in light blue.}
+  \caption{A square, oblique and hexagonal lattice in 2D are shown, including their respective mirror lines in red and the $A=h^2$ Voronoi cell surrounding the central lattice point in light blue.}
   \label{fig:lattices}
 \end{figure}
 
@@ -457,7 +457,7 @@ Since the rest volume of each fluid particle was fixed when designing the lattic
   \frac{m_i^*}{m_i^l} = \frac{\rho_0}{\rho_i^l} = \frac{\rho_0}{\sum_j m_j^l W_{ij} + \sum_k m_k W_{ik}}
 \end{equation}
 
-However, this does not equilibrate the system  to rest density immediately, since the mass of each particle depends on the mass of its neighbours. Imagine, for example, a particle at a free surface that experiences particle deficiency and therefore needs to increase its mass to ensure rest density: its immediate neighbours inside the fluid that had their neighbourhood filled with particles of equal masses $m_0$ now need to reduce their masses to ensure rest density, and so on. An iterative scheme is instead chosen to ease the system into a state of uniform density everywhere using:
+However, this does not equilibrate the system  to rest density immediately, since the mass of each particle depends on the mass of its neighbours. Imagine, for example, a particle at a free surface that experiences particle deficiency and therefore needs to increase its mass to ensure rest density: its immediate neighbours inside the fluid that had their neighbourhood filled with particles of equal masses $m_0$ now need to reduce their masses to ensure rest density, and so on. An iterative scheme is instead chosen to ease the system into a state of uniform density everywhere using:nse making the crystal configuration 'too stable' when low viscosities are actually desired, and having preferred directions that it is easier to move in. If instead particles vary in mass, which introduces defects and results in fewer or no crystal structures forming, then moving a particle along any direction might be expected to be equally difficult and easier on avera
 \begin{align}
   m_i^0     & = \rho_0 h^d                                                     \\
   m_i^{l+i} & = \frac{1}{2}m_i^l + \frac{1}{2}\br{m_i^l \frac{\rho_0}{\rho_i}}
@@ -465,75 +465,47 @@ However, this does not equilibrate the system  to rest density immediately, sinc
 where the ideal mass $\rho_0 h^d$ is the initial guess. Since this computation is a one-time cost at the beginning of the simulation and has no runtime cost, a relatively strict convergence criterion may be used here. In this implementation, either a maximum absolute density deviation less than $10^{-3}\rho_0$ in $100\leq l \leq 1000$ iterations was chosen as a stopping criterion.
 
 
-A more efficient scheme could also be investigated, for example by choosing a parameter $\omega$ different from $\sfrac{1}{2}$ in the interpolation towards $m_i^l \frac{\rho_0}{\rho_i}$. Anyhow, this scheme does result in a uniform rest density at all fluid particles, irrespective of how exactly the fluid volume was discretized, while keeping the average mass of the particles around $\rho_0 h^d$ (altough a slightly higher value is expected for small simulations, where the fraction of particles at surfaces that must compensate for neighbour deficiencies is higher). The effect can be observed in \autoref{fig:akljsdhflkajshdflkjhasldkjfhlkjdh}
+A more efficient scheme could also be investigated, for example by choosing a parameter $\omega$ different from $\sfrac{1}{2}$ in the interpolation towards $m_i^l \frac{\rho_0}{\rho_i}$. Anyhow, this scheme does result in a uniform rest density at all fluid particles, irrespective of how exactly the fluid volume was discretized, while keeping the average mass of the particles around $\rho_0 h^d$ (although a slightly higher value is expected for small simulations, where the fraction of particles at surfaces that must compensate for neighbour deficiencies is higher). The effect of the uniform initial density on sampling artefacts can be observed in \autoref{fig:jitter-and-uniform-density}.
 
-\section{Lowering Viscosity by Breaking Crystals}
 
-A particularly interesting observation that ties the topic of lattices, random jitter and uniform densities together is the fact that for a uniform initial density combined with a jitter, the mass of the particles is necessarily non-uniform and varies pseudo-randomly. This actually appears to lead to defects in the formation of the crystalline structures that otherwise naturally form, as seen in \autoref{fig:natural-hexagons}, resulting instead in a more amorhpus structure. This could have desireable effects, such as increasing isotropy or perhaps reducing artificial viscosity. Intuitively, a particle in a crystalline structure may be expected to require more energy to be moved along an arbitrary direction, in a sense making the crystal configuration 'too stable' when low viscosities are actually desired, and having preferred directions that it is easier to move in. If instead particles vary in mass, which introduces defects and results in fewer or no crystal structures forming, then moving a particle along any direction might be expected to be equally difficult and easier on average than if it had settled into a more rigid structure.
-
-To test this hypothosis, a scene very similar to the Taylor-Green vortex was used, where fluid is initialized at rest density using some lattice as described above, but given a varying degree of pseudo-random jitter in the initial positions. The fluid is contained in a box with no gravity, where all viscosities are in this case set to zero in order to measure only the undesired loss in kinetic energy inherent to the simulation method. The particles are initialized with a velocity that varies according to a sine and cosine function of positions $\vek{x}_i$ such that four opposing vortices form in each of the four quadrants of a $[0;2\pi]^2$ domain, using in this case\autocite*{taylor-green-arxiv}:
-
-\begin{equation}
-  \vek{v}(t=0)_i = 2\begin{pmatrix}
-    \sin(x_i) \cos(y_i) \\
-    -\cos(x_i) \sin(y_i)
-  \end{pmatrix}
-\end{equation}
-where $\vek{x}_i = (x_i, y_i)^T$. The setting is visulaized in \autoref{fig:taylor-green-vortex}, where colour coded particles are advected.
-
-\begin{figure}
+\begin{figure}[hbt]
   \centering
-  \begin{subfigure}[t]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{images/density/taylorgreen_t0.jpg}
-    \caption{$t=0s$}
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \includegraphics*[width=\textwidth]{images/density/0.5shex0j.jpg}
+    \caption{$t=0.5s$, no jitter, no uniform density}
+    \label{fig:jitter-and-uniform-density-njndt0.5}
   \end{subfigure}
-  \begin{subfigure}[t]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{images/density/taylorgreen_t4_70.jpg}
-    \caption{$t=4.7s$}
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \includegraphics*[width=\textwidth]{images/density/0.5shex2.5j.jpg}
+    \caption{$t=0.5s$, jitter, no uniform density}
   \end{subfigure}
-  \caption{$95 500$ colour coded particles are advected by a Taylor-Green vortex on a $[0;2\pi]$ domain, with four vertices each spinning in directions opposite to their respectivly adjacent vortices.}
-  \label{fig:taylor-green-vortex}
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \includegraphics*[width=\textwidth]{images/density/0.5shex2.5jequi.jpg}
+    \caption{$t=0.5s$, jitter and uniform density}
+    \label{fig:jitter-and-uniform-density-jdt0.5}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \includegraphics*[width=\textwidth]{images/density/0.0shex0j.jpg}
+    \caption{$t=0$, no jitter, no uniform density}
+    \label{fig:jitter-and-uniform-density-njndt0}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \includegraphics*[width=\textwidth]{images/density/0.0shex2.5j.jpg}
+    \caption{$t=0$, jitter, no uniform density}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \includegraphics*[width=\textwidth]{images/density/0.0shex2.5jequi.jpg}
+    \caption{$t=0$, jitter and uniform density}
+    \label{fig:jitter-and-uniform-density-jdt0}
+  \end{subfigure}
+  \caption*{\begin{tiny}$N=13532, h=0.02m, \lambda=0.1, k=1000, \nu=0, \gamma_1=\gamma_2=1,$ \texttt{SplitSPH} Solver\end{tiny}}
+  \caption{Simulation frames of a large, round drop falling into a filled, circular basin are shown for a hexagonal initial sampling. The first row uses velocities while the zoomed-in second row uses density to colour-code particles. As can be seen in \autoref{fig:jitter-and-uniform-density-njndt0}, naively initializing all particles to equal mass with no jitter can cause over- and underestimated densities at the boundaries of each fluid volume, causing artefacts as observed in \autoref{fig:jitter-and-uniform-density-njndt0.5}. Using jittered initial positions with $\sigma=0.025h$ actually aggravates this effect as observed in the second column, since the density inside the fluid is now also erroneously sampled. The last column shows the effect of solving a system for uniform initial densities in conjunction with jittered positions: all particles in \autoref{fig:jitter-and-uniform-density-jdt0} are initially at rest density and the artefacts at $t=0.5s$ in \autoref{fig:jitter-and-uniform-density-jdt0.5} are reduced, despite the challenging choice of parameter $\nu=0$.}
+  \label{fig:jitter-and-uniform-density}
 \end{figure}
-
-The rate at which the velocity of the Taylor-Green vortex on a periodic domain decays in relation to the viscosity of a fluid is analytically known to be in $\mathcal{O}br{e^{-\nu t}}$\autocite*{taylor-green-arxiv}. Despite this instance not exactly being a Taylor-Green vortex and the exact analytic solution not holding, the scenario still allows the comparison of decay of the average kinetic energy in the system for different initial samplings of the fluid, where a slower decay is more desireable in reaching lower effective viscosities. A $\frac{1}{N}E_{kin}(t)$ curve can be plotted for different initial sampling lattices and amounts of jitter in conjunction with uniform initial density, as seen in \autoref{fig:taylor-green-result}
-
-
-\begin{figure}
-  \centering
-  \includegraphics*[width=\textwidth]{images/density/taylor-green-results.png}
-  \caption*{\begin{tiny}$\nu=\nu_2=0, k=1000, \lambda=0.1, N=90500K, \vec{x}\in[0;2\pi]^2, v_{x_0} = 2\sin (x)\cos (y), v_{y,0} = -2\cos (x)\sin (y), \rho_0 = 1$ \texttt{SplitSPH}\end{tiny}}
-  \caption{Time evolution of $E_{kin}$ in Taylor-Green vortex for varying amounts of initial jitter and initial sampling lattices. As the initial Jitter approaches a standard deviation of 5\% of the particle spacing, there is a continuous decrease in undesired viscosity. The hexagonal lattice being the most stable in many a sense is detrimental in this case, where to achieve low viscosities, a small jitter and a initial square-lattice sampling seem more effective.}
-  \label{fig:taylor-green-result}
-\end{figure}
-
-\begin{samepage}
-
-
-  \autoref{fig:taylor-green-result} suggests that viscosity does in fact decrease as the mass density varies more intensly, at least up to a reasonable amount of initial jitter.
-  In order to empirically examine whether this is actually due to fewer rigid, crystalline structures forming, a metric for the degree of crystallinity or amourphousness of a material is required. For this, a metric from the study of two-dimensional melting in condensed matter physics may be borrowed: the Nelson-Halperin 2D bond orientational order parameter\autocite*{bond-orientational-parameter-pis-6} $\Psi_6$. It is defined as\autocite{nicer-psi-6-bond-orientational}:
-  \begin{equation}
-    \Psi_6^k = \frac{1}{6} \sum_{l\in\mathcal{N}(k)}e^{6i\Theta_{k,l}}
-  \end{equation}
-  where the sum is over the six nearest neighbours $k\neq l$ to the particle of index $k$, $\Theta_{k,l}$ is the angle between particles $k,l$ measured from an arbitrary, fixed axis and the index $i$ was avoided to not cause confusion with the imaginary unit in the exponent \autocite*{nicer-psi-6-bond-orientational}. Basically, crystals mostly form in hexagonal lattices in two dimensions since in this dimensionality, it is the unique closest packing - how close to crystalline a material is can therefore be measured by how close on average the angles between neighbouring particles are to forming a hexagon. The value $0 \leq \abs{\Psi_6} \leq 1$ is maximized for a hexagonal grid and decreases as the material becomes less 'well-packed'\autocite*{nicer-psi-6-bond-orientational}.
-
-  If there was a relation between jittered masses, lower viscosity and preventing crystal structures, one would expect the average magnitude of the bond orientation parameter $\Psi_6^{avg} = \frac{1}{N}\sum_i \abs{\Psi_6^i}$ to decrease as the jitter increases and the material becomes more disorderly. To test this, $\Psi_6^{avg}$ was measured at $t=30$ for all of the configurations in \autoref{fig:taylor-green-result}, as long as possible after the initialization:
-
-  \begin{center}
-    \begin{tabular}{|c | c || c|}
-      \hline
-      Lattice   & Jitter $\sigma$ & $\Psi_6^{avg}$ \\ [0.5ex]
-      \hline\hline
-      Hexagonal & 0               & 0.522          \\\hline
-      Hexagonal & 0.01h           & 0.511          \\\hline
-      Hexagonal & 0.05h           & 0.459          \\\hline
-      Square    & 0.01h           & 0.478          \\\hline
-      Square    & 0.05h           & 0.444          \\\hline
-    \end{tabular}
-  \end{center}
-\end{samepage}
-
-As can be seen, irrespective of which lattice is used to sample the fluid, there are more defects, less order and therefore lower values of $\Psi_6^{avg}$ as the jitter increases, even long after the initial conditions should have no more bearing on the behaviour of the fluid.
-
-In sources on melting of condensed matter in two dimensions, the hexatic phase is discussed, creating a middle ground between the solid and liquid phases and bearing a surface-level resemblance to structures as seen in \autoref{fig:natural-hexagons} - it might be interesting to draw from knowledge about these physical processes in order to combat undesired visocsity in SPH fluid simulation and reach higher Reynolds numbers, analysing for example the time evolution of translational and orientational order throughout a simulation and how masses and kernel support radii that vary per particle or resampling of fields can influence these phenomena - however those analyses are not conducted in this report.
-
-Instead of focusing on $\Psi_6$ as a metric, the Vornoi tesselation of the particle configuration could also be analysed, counting for example the distribution of particles with five, six or seven nearest neighbours - generally, more amorphous structures that may better physically represent a fluid would be expected to less often have a hexagon as their associated Vornoi cell. On the other hand, especially for small kernel support radii, the SPH approximation quality might suffer from excessive particle disorder.

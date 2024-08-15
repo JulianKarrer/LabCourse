@@ -7,3 +7,8 @@ Gingold
 expressivity
 PCISPH
 IISPH
+hexatic
+Vornoi
+Voronoi
+Nelson-Halperin
+Delaunay

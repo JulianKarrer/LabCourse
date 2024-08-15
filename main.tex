@@ -58,11 +58,49 @@
 % nicer fractions
 \usepackage{xfrac}
 
+% units
+\usepackage{siunitx}
+
 % plots
 \usepackage{pgfplots}
+\usepackage{pgfplotstable}
 \usepgfplotslibrary{external}
-\tikzexternalize
+\usepgfplotslibrary{patchplots}
+\usepgfplotslibrary{groupplots}
 \pgfplotsset{compat=1.18} 
+\tikzexternalize[prefix=tikz,optimize=false]
+
+
+% define the Spectral_r color scheme
+\usepackage{xcolor}
+\definecolor{Spectral0}{RGB}{158, 1, 66}
+\definecolor{Spectral1}{RGB}{213, 62, 79}
+\definecolor{Spectral2}{RGB}{244, 109, 67}
+\definecolor{Spectral3}{RGB}{253, 174, 97}
+\definecolor{Spectral4}{RGB}{254,224,139}
+
+\definecolor{Spectral5}{RGB}{255,255,191}
+\definecolor{Spectral6}{RGB}{230,245,152}
+\definecolor{Spectral7}{RGB}{171,221,164}
+\definecolor{Spectral8}{RGB}{102,204,204}
+\definecolor{Spectral9}{RGB}{50,136,189}
+\definecolor{Spectral10}{RGB}{94,79,162}
+\pgfplotsset{
+  colormap={Spectral_r}{
+    rgb255(0cm)=(94,79,162)         % 0.0
+    rgb255(1cm)=(50,136,189)        % 0.1
+    rgb255(2cm)=(102,204,204)       % 0.2
+    rgb255(3cm)=(171,221,164)       % 0.3
+    rgb255(4cm)=(230,245,152)       % 0.4
+    rgb255(5cm)=(255,255,191)       % 0.5
+    rgb255(6cm)=(254,224,139)       % 0.6
+    rgb255(7cm)=(253,174,97)        % 0.7
+    rgb255(8cm)=(244,109,67)        % 0.8
+    rgb255(9cm)=(213,62,79)         % 0.9
+    rgb255(10cm)=(158,1,66)         % 1.0
+    }
+}
+
 
 % get width of given text
 \usepackage{calc}
@@ -188,6 +226,8 @@
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\erf}{erf}
 
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\DeclareMathOperator*{\argmin}{\arg\!\min}
 
 % ~~~~~~~~~ START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -196,7 +236,8 @@
 \begin{titlepage}
   \pagestyle{empty}
 
-  \AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{images/title/titlesim.jpg}}
+  % \AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{images/title/titlesim.jpg}}
+
   \begin{center}
     \Huge\textbf{Equation of State Solvers for Smoothed Particle Hydrodynamics}\\
     \vspace{0.5cm}
@@ -232,20 +273,13 @@
 \newpage
 
 
-\chapter{Introduction}
-
+\include{00-introduction}
 \include{01-governing-equations}
 \include{02-sph-discretization}
 \include{03-solver}
 \include{04-boundary-initial}
-
-
-\chapter{Analysis}\label{chp:analysis}
-\section{Oscillation Frequency and Error as a Function of Speed of Sound}
-\section{Stability as a Function of Viscosity, Stiffness and Timestep}
-\section{Stability over Viscosity and Stiffness}
-
-\chapter{Conclusion and Future Work}
+\include{05-analysis}
+\include{06-conclusion}
 
 
 

@@ -1076,7 +1076,7 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Publications of the Astronomical Society of Australia}
-      \field{title}{Generating Optimal Initial Conditions for Smoothed Particle Hydrodynamics Simulations}
+      \field{title}{{Generating Optimal Initial Conditions for Smoothed Particle Hydrodynamics Simulations}}
       \field{volume}{32}
       \field{year}{2015}
       \field{pages}{e048}
@@ -1084,6 +1084,238 @@
       \verb{doi}
       \verb 10.1017/pasa.2015.50
       \endverb
+    \endentry
+    \entry{taylor-green-arxiv}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2b4cb970767e33e9e2919f185c2b3753}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Xinyu},
+           giveni={X\bibinitperiod}}}%
+        {{hash=e850f0fcb55bf47bbac36f3e066a833e}{%
+           family={Protas},
+           familyi={P\bibinitperiod},
+           given={Bartosz},
+           giveni={B\bibinitperiod}}}%
+        {{hash=5952a521b9e978c6fb4ba0a4d2e6aedb}{%
+           family={Shvydkoy},
+           familyi={S\bibinitperiod},
+           given={Roman},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{7a2ace778bb110beccb6a7378f66ea49}
+      \strng{fullhash}{d79fbdefbf3178aaa9a21d381c084199}
+      \strng{bibnamehash}{d79fbdefbf3178aaa9a21d381c084199}
+      \strng{authorbibnamehash}{d79fbdefbf3178aaa9a21d381c084199}
+      \strng{authornamehash}{7a2ace778bb110beccb6a7378f66ea49}
+      \strng{authorfullhash}{d79fbdefbf3178aaa9a21d381c084199}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ArXiv}
+      \field{month}{4}
+      \field{title}{{On instability of the Taylor-Green vortex in 2D Euler flows}}
+      \field{year}{2024}
+    \endentry
+    \entry{bond-orientational-parameter-pis-6}{article}{}
+      \name{author}{2}{}{%
+        {{hash=d886f62f517aa5252d70986b2aa65340}{%
+           family={Halperin},
+           familyi={H\bibinitperiod},
+           given={B.\bibnamedelimi I.},
+           giveni={B\bibinitperiod\bibinitdelim I\bibinitperiod}}}%
+        {{hash=294629d11874a3be18093081b35a934e}{%
+           family={Nelson},
+           familyi={N\bibinitperiod},
+           given={David\bibnamedelima R.},
+           giveni={D\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {American Physical Society}%
+      }
+      \strng{namehash}{b33a023ac1b490ef666d47d769fea3f9}
+      \strng{fullhash}{b33a023ac1b490ef666d47d769fea3f9}
+      \strng{bibnamehash}{b33a023ac1b490ef666d47d769fea3f9}
+      \strng{authorbibnamehash}{b33a023ac1b490ef666d47d769fea3f9}
+      \strng{authornamehash}{b33a023ac1b490ef666d47d769fea3f9}
+      \strng{authorfullhash}{b33a023ac1b490ef666d47d769fea3f9}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{2}
+      \field{journaltitle}{Phys. Rev. Lett.}
+      \field{month}{7}
+      \field{title}{{Theory of Two-Dimensional Melting}}
+      \field{volume}{41}
+      \field{year}{1978}
+      \field{pages}{121\bibrangedash 124}
+      \range{pages}{4}
+    \endentry
+    \entry{nature-psi-6-bond-orientational}{article}{}
+      \name{author}{3}{}{%
+        {{hash=8299b74311c68181884f055430dfb0bf}{%
+           family={Ledesma-Motolinía},
+           familyi={L\bibinithyphendelim M\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=19b3b5bed9c6a9c01988c7e60951a2a5}{%
+           family={Carrillo-Estrada},
+           familyi={C\bibinithyphendelim E\bibinitperiod},
+           given={J.\bibnamedelimi L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=1cbe681c161d102c434b9a34c85a6be2}{%
+           family={Donado},
+           familyi={D\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+      }
+      \list{publisher}{2}{%
+        {Springer Science}%
+        {Business Media LLC}%
+      }
+      \strng{namehash}{4478bea9f53c1bebe114831e3f4aea70}
+      \strng{fullhash}{78a348aa5ff58092a94d6dc8ed9bc0e0}
+      \strng{bibnamehash}{78a348aa5ff58092a94d6dc8ed9bc0e0}
+      \strng{authorbibnamehash}{78a348aa5ff58092a94d6dc8ed9bc0e0}
+      \strng{authornamehash}{4478bea9f53c1bebe114831e3f4aea70}
+      \strng{authorfullhash}{78a348aa5ff58092a94d6dc8ed9bc0e0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{2045-2322}
+      \field{journaltitle}{Scientific Reports}
+      \field{month}{8}
+      \field{number}{1}
+      \field{title}{Crystallisation in a two-dimensional granular system at constant temperature}
+      \field{volume}{11}
+      \field{year}{2021}
+      \verb{doi}
+      \verb 10.1038/s41598-021-96099-9
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1038/s41598-021-96099-9
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1038/s41598-021-96099-9
+      \endverb
+    \endentry
+    \entry{nicer-psi-6-bond-orientational}{article}{}
+      \name{author}{5}{}{%
+        {{hash=94870cb99b38b4306c39ce9dce7597a7}{%
+           family={Pantelopulos},
+           familyi={P\bibinitperiod},
+           given={George\bibnamedelima A},
+           giveni={G\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=4c6aff769d7c477ed435facf04821eb3}{%
+           family={Nagai},
+           familyi={N\bibinitperiod},
+           given={Tetsuro},
+           giveni={T\bibinitperiod}}}%
+        {{hash=83b4ccbc4631830e79d237e6160befd8}{%
+           family={Bandara},
+           familyi={B\bibinitperiod},
+           given={Asanga},
+           giveni={A\bibinitperiod}}}%
+        {{hash=1da8889a5a04a1a328951a54e62a788c}{%
+           family={Panahi},
+           familyi={P\bibinitperiod},
+           given={Afra},
+           giveni={A\bibinitperiod}}}%
+        {{hash=25082328ced64d81cf51be36448e193f}{%
+           family={Straub},
+           familyi={S\bibinitperiod},
+           given={John\bibnamedelima E},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \list{location}{1}{%
+        {United States}%
+      }
+      \strng{namehash}{a2dff7d9aa679d1e564715b2f3f5b80f}
+      \strng{fullhash}{e742accf076ec901af7240f103926a8e}
+      \strng{bibnamehash}{e742accf076ec901af7240f103926a8e}
+      \strng{authorbibnamehash}{e742accf076ec901af7240f103926a8e}
+      \strng{authornamehash}{a2dff7d9aa679d1e564715b2f3f5b80f}
+      \strng{authorfullhash}{e742accf076ec901af7240f103926a8e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{J Chem Phys}
+      \field{month}{9}
+      \field{number}{9}
+      \field{title}{Critical size dependence of domain formation observed in coarse-grained simulations of bilayers composed of ternary lipid mixtures}
+      \field{volume}{147}
+      \field{year}{2017}
+      \field{pages}{095101}
+      \range{pages}{1}
+    \endentry
+    \entry{speed-of-sound-k}{article}{}
+      \name{author}{2}{}{%
+        {{hash=aa781373e1d76633172fad31a63a591a}{%
+           family={Isik},
+           familyi={I\bibinitperiod},
+           given={Doruk},
+           giveni={D\bibinitperiod}}}%
+        {{hash=8b2b96f6ea2a7011de1ae69c6261c0c6}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Zhaoming},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{66f3b57f4e586902d021426dcada2491}
+      \strng{fullhash}{66f3b57f4e586902d021426dcada2491}
+      \strng{bibnamehash}{66f3b57f4e586902d021426dcada2491}
+      \strng{authorbibnamehash}{66f3b57f4e586902d021426dcada2491}
+      \strng{authornamehash}{66f3b57f4e586902d021426dcada2491}
+      \strng{authorfullhash}{66f3b57f4e586902d021426dcada2491}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Migration pattern of a neutrally buoyant object is primarily controlled by the lateral pressure gradient displaying high sensitivity to pressure disturbances in the flow field. Smoothed particle hydrodynamics (SPH) in its standard form is known to exhibit spurious oscillations in the pressure field. A commonly used approach is to introduce numerical diffusion inside the continuity equation for a smoother pressure field creating the popular {\$}{\$}{\backslash}delta {\$}{\$}-SPH variant. This study focuses on the dependence of lateral pressure gradient evolution on numerical speed of sound and density diffusion for a neutrally buoyant circular cylinder in plane Poiseuille flow. Simulations with and without numerical density diffusion are compared for different numerical speeds of sound in weakly compressible SPH (WCSPH) framework. The {\$}{\$}{\backslash}delta {\$}{\$}-SPH formulation is observed to display increased pressure oscillations for higher speeds of sound resulting in loss of equilibrium. A scaling correction to the free parameter in {\$}{\$}{\backslash}delta {\$}{\$}-SPH formulation is proposed. The proposed correction is noted to reduce the pressure oscillations as well as density gradients across the fluid--structure interface significantly, increase overall stability of the scheme and as a result, assist the rigid body to achieve steady motion regardless of the release position.}
+      \field{issn}{2196-4386}
+      \field{journaltitle}{Computational Particle Mechanics}
+      \field{month}{6}
+      \field{number}{3}
+      \field{title}{Effect of numerical speed of sound and density diffusion on SPH modeling of rigid body migration in plane Poiseuille flow}
+      \field{volume}{10}
+      \field{year}{2023}
+      \field{pages}{503\bibrangedash 517}
+      \range{pages}{15}
+    \endentry
+    \entry{speed-of-sound}{article}{}
+      \name{author}{1}{}{%
+        {{hash=de8ff2dd331665223fc8b971a84984c1}{%
+           family={Finn},
+           familyi={F\bibinitperiod},
+           given={Bernard},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {University of Chicago Press}%
+      }
+      \strng{namehash}{de8ff2dd331665223fc8b971a84984c1}
+      \strng{fullhash}{de8ff2dd331665223fc8b971a84984c1}
+      \strng{bibnamehash}{de8ff2dd331665223fc8b971a84984c1}
+      \strng{authorbibnamehash}{de8ff2dd331665223fc8b971a84984c1}
+      \strng{authornamehash}{de8ff2dd331665223fc8b971a84984c1}
+      \strng{authorfullhash}{de8ff2dd331665223fc8b971a84984c1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Isis}
+      \field{title}{{Laplace and the Speed of Sound}}
+      \field{volume}{55}
+      \field{year}{1963}
+      \field{pages}{7\bibrangedash 19}
+      \range{pages}{13}
     \endentry
   \enddatalist
 \endrefsection

@@ -353,7 +353,7 @@
   issn       = {0730-0301},
   abstract   = {We propose a momentum-conserving two-way coupling method of SPH fluids and arbitrary rigid objects based on hydrodynamic forces. Our approach samples the surface of rigid bodies with boundary particles that interact with the fluid, preventing deficiency issues and both spatial and temporal discontinuities. The problem of inhomogeneous boundary sampling is addressed by considering the relative contribution of a boundary particle to a physical quantity. This facilitates not only the initialization process but also allows the simulation of multiple dynamic objects. Thin structures consisting of only one layer or one line of boundary particles, and also non-manifold geometries can be handled without any additional treatment. We have integrated our approach into WCSPH and PCISPH, and demonstrate its stability and flexibility with several scenarios including multiphase flow.},
   journal    = {ACM Trans. Graph.},
-  month      = {jul},
+  month      = {7},
   articleno  = {62},
   numpages   = {8},
   keywords   = {fluid simulation, fluid-solid coupling, physically-based animation, smoothed particle hydrodynamics}
@@ -376,7 +376,7 @@
 }
 
 @article{initialization-lattices-optimal-initial,
-  title   = {Generating Optimal Initial Conditions for Smoothed Particle Hydrodynamics Simulations},
+  title   = {{Generating Optimal Initial Conditions for Smoothed Particle Hydrodynamics Simulations}},
   volume  = {32},
   doi     = {10.1017/pasa.2015.50},
   journal = {Publications of the Astronomical Society of Australia},
@@ -420,4 +420,59 @@
   year     = 2017,
   address  = {United States},
   language = {en}
+}
+
+@article{nature-psi-6-bond-orientational,
+  title     = {Crystallisation in a two-dimensional granular system at constant temperature},
+  volume    = {11},
+  issn      = {2045-2322},
+  url       = {http://dx.doi.org/10.1038/s41598-021-96099-9},
+  doi       = {10.1038/s41598-021-96099-9},
+  number    = {1},
+  journal   = {Scientific Reports},
+  publisher = {Springer Science and Business Media LLC},
+  author    = {Ledesma-Motolinía,  M. and Carrillo-Estrada,  J. L. and Donado,  F.},
+  year      = {2021},
+  month     = aug
+}
+﻿@article{Isik2023,
+  author   = {Isik, Doruk
+              and He, Zhaoming},
+  title    = {Effect of numerical speed of sound and density diffusion on SPH modeling of rigid body migration in plane Poiseuille flow},
+  journal  = {Computational Particle Mechanics},
+  year     = {2023},
+  month    = {Jun},
+  day      = {01},
+  volume   = {10},
+  number   = {3},
+  pages    = {503-517},
+  abstract = {Migration pattern of a neutrally buoyant object is primarily controlled by the lateral pressure gradient displaying high sensitivity to pressure disturbances in the flow field. Smoothed particle hydrodynamics (SPH) in its standard form is known to exhibit spurious oscillations in the pressure field. A commonly used approach is to introduce numerical diffusion inside the continuity equation for a smoother pressure field creating the popular {\$}{\$}{\backslash}delta {\$}{\$}-SPH variant. This study focuses on the dependence of lateral pressure gradient evolution on numerical speed of sound and density diffusion for a neutrally buoyant circular cylinder in plane Poiseuille flow. Simulations with and without numerical density diffusion are compared for different numerical speeds of sound in weakly compressible SPH (WCSPH) framework. The {\$}{\$}{\backslash}delta {\$}{\$}-SPH formulation is observed to display increased pressure oscillations for higher speeds of sound resulting in loss of equilibrium. A scaling correction to the free parameter in {\$}{\$}{\backslash}delta {\$}{\$}-SPH formulation is proposed. The proposed correction is noted to reduce the pressure oscillations as well as density gradients across the fluid--structure interface significantly, increase overall stability of the scheme and as a result, assist the rigid body to achieve steady motion regardless of the release position.},
+  issn     = {2196-4386},
+  doi      = {10.1007/s40571-022-00511-8},
+  url      = {https://doi.org/10.1007/s40571-022-00511-8}
+}
+
+@article{speed-of-sound-k,
+  author   = {Isik, Doruk
+              and He, Zhaoming},
+  title    = {Effect of numerical speed of sound and density diffusion on SPH modeling of rigid body migration in plane Poiseuille flow},
+  journal  = {Computational Particle Mechanics},
+  year     = {2023},
+  month    = {Jun},
+  day      = {01},
+  volume   = {10},
+  number   = {3},
+  pages    = {503-517},
+  abstract = {Migration pattern of a neutrally buoyant object is primarily controlled by the lateral pressure gradient displaying high sensitivity to pressure disturbances in the flow field. Smoothed particle hydrodynamics (SPH) in its standard form is known to exhibit spurious oscillations in the pressure field. A commonly used approach is to introduce numerical diffusion inside the continuity equation for a smoother pressure field creating the popular {\$}{\$}{\backslash}delta {\$}{\$}-SPH variant. This study focuses on the dependence of lateral pressure gradient evolution on numerical speed of sound and density diffusion for a neutrally buoyant circular cylinder in plane Poiseuille flow. Simulations with and without numerical density diffusion are compared for different numerical speeds of sound in weakly compressible SPH (WCSPH) framework. The {\$}{\$}{\backslash}delta {\$}{\$}-SPH formulation is observed to display increased pressure oscillations for higher speeds of sound resulting in loss of equilibrium. A scaling correction to the free parameter in {\$}{\$}{\backslash}delta {\$}{\$}-SPH formulation is proposed. The proposed correction is noted to reduce the pressure oscillations as well as density gradients across the fluid--structure interface significantly, increase overall stability of the scheme and as a result, assist the rigid body to achieve steady motion regardless of the release position.},
+  issn     = {2196-4386}
+}
+
+@article{speed-of-sound,
+  author    = {Bernard Finn},
+  journal   = {Isis},
+  pages     = {7--19},
+  publisher = {University of Chicago Press},
+  title     = {{Laplace and the Speed of Sound}},
+  volume    = {55},
+  year      = {1963}
 }
