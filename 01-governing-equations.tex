@@ -7,13 +7,13 @@ The particular form of these equations will favour a Lagrangian view of the syst
 
 
 \section{Lagrangian and Eulerian Continuum Mechanics}
-The purpose of our mathematical modelling of fluids is to simulate fluid dynamics at macroscopic scales with numerical methods. We know that fluids consist of innumerable molecules, and smaller yet quarks, interacting in complex ways, which give rise to emergent properties that we observe on a macroscopic scale. Instead of resolving all scales and simulating from quantum mechanical principles up, we content with modelling the emergent properties themselves, focusing on the question of how fluids behave instead of asking why. Our macroscopic scale is so many orders of magnitude larger than the discrete, physical reality, that we can reasonably assume quantities describing the fluid to be continuous and tackle them with the tools of calculus. This gives rise to the field of \emphasis{Continuum Mechanics}.\\
+The purpose of our mathematical modelling of fluids is to simulate fluid dynamics at macroscopic scales with numerical methods. We know that fluids consist of innumerable molecules, and smaller particles yet, interacting in complex ways, which give rise to emergent properties that we observe on a macroscopic scale. Instead of resolving all scales and simulating from quantum mechanical principles up, we content with modelling the emergent properties themselves, focusing on the question of how fluids behave on our desired scales instead of what gives rise to such effects. Our macroscopic scale is so many orders of magnitude larger than the quantized world of particles, that we can reasonably assume quantities describing the fluid to be continuous and tackle them with the tools of calculus. This gives rise to the field of \emphasis{Continuum Mechanics}.\\
 In the following derivations, two major points of view can be taken, which produce different but equivalent forms of equations: the Eulerian or conservation forms, and the Lagrangian or nonconservation forms of the equations\autocite*{anderson}.
 
 Using the assumption from continuum mechanics that quantities of our fluid are continuously distributed in space and asserting that they be differentiable, we can define derivatives on them. The two major forms of equations arise from a different interpretation of the so-called substantial derivative\autocite*{anderson} or material derivative\autocite*{tutorial} $\frac{D}{Dt}$. This operator describes the instantaneous time rate of change of a quantity of a continuum element as it moves through space \autocite*{anderson}. This movement through space however can be observed from different frames of reference:
 \begin{itemize}
-    \item a frame that is advected along with the flow of the fluid, in which the continuum element observed is constant
-    \item a frame that is constant in space at a fixed point, observing the flow of the fluid as continuum elements move through it
+    \item a frame that is advected along with the flow of the fluid, in which the continuum element observed appears unmoving
+    \item a frame that is unmoving in space and located at a fixed point, observing the flow of the fluid as continuum elements move through it
 \end{itemize}
 
 For both frames of reference, it can be derived that the material derivative in vector notation is \autocite*{anderson}:
@@ -23,8 +23,8 @@ For both frames of reference, it can be derived that the material derivative in 
 \end{align}
 where $\vek{v}$ is the velocity of the element and $\nabla$ denotes the differential operator $\left(\frac{\partial}{\partial x_0}, \frac{\partial}{\partial x_1}, \dots,  \frac{\partial}{\partial x_n}\right)^T$ in $n$ dimensions \autocite*{anderson}. If an Eulerian view is chosen, there is an additional term for the convective derivate, which describes a rate of change of a quantity at a fixed point due to movement of the fluid. If a Lagrangian view is taken, the reference frame is advected with the velocity $\vek{v}$, precisely such that the convective derivative is zero and the material derivative simply becomes the total time derivative of a quantity. The difference between the two views is illustrated in \autoref{fig:lagrange-euler-1d}. In a way, the Lagrangian frame of reference is chosen precisely such that only local derivatives suffice to describe material derivatives by using a coordinate transformation defined by the velocity field.
 
-How this simpler, Lagrangian form can be used largely depends on the later choice of discretization: discretizing space and tracking the fluid that moves through it favours an Eulerian framework, while discretizing the continuum into particles and sampling quantities only at advected particle positions makes the Lagrangian view applicable.\\
-As is common for SPH discretizations, we will elect the Lagrangian view since it holds additional desirable properties such as making conservation of mass trivial to implement and enables solving the Navier-Stokes equations for primitive quantities instead of flux quantities that may cause drift instead of oscillations due to numerical inaccuracy. We state all following equations in the Lagrangian, nonconservation form.
+How this simpler, Lagrangian form can be used largely depends on the later choice of discretization: discretizing space and tracking the fluid that moves through it favours an Eulerian framework, while discretizing the continuum into particles and sampling quantities only at advected particle positions makes the Lagrangian view convenient.\\
+As is common for SPH discretizations, we will elect the Lagrangian view since it not only harmonizes well with particle-based discretizations but holds additional desirable properties such as making conservation of mass trivial to implement and enabling solving the Navier-Stokes equations for primitive quantities instead of flux quantities that may cause drift instead of oscillations due to numerical inaccuracy. We state all following equations in the Lagrangian, nonconservation form.
 
 \begin{figure}
     \begin{center}
@@ -123,7 +123,7 @@ As is common for SPH discretizations, we will elect the Lagrangian view since it
             \caption{Eulerian view}
         \end{subfigure}
     \end{center}
-    \caption{A field quantity $A$ in one dimension is shown at some time $t$ and a later time $t+\Delta t$ where the distribution of $A$ has changed due to some diffusive process and the quantity was advected in positive $x$-direction. In the Lagrangian view, changes in a quantity $A$ are evaluated at the advected position $\vek{x}_i$ at any point in time and only the local derivative is needed to describe the change in $A$. In the Eulerian view there are two reasons for $A$ at a point $\vek{x}$ fixed in space to change: the local derivative due to the diffusive process and the convective derivative due to the advection of the quantity with the velocity field.}
+    \caption{A field quantity $A$ in one dimension is shown at some time $t$ and a later time $t+\Delta t$ where the distribution of $A$ has changed due to some diffusive process and the quantity was advected in positive $x$-direction. In the Lagrangian view, changes in a quantity $A$ are evaluated at the advected position $\vek{x}_i$ at any point in time and only the local derivative is needed to describe the change in $A$ at $\vek{x}$. In the Eulerian view there are two reasons for $A$ at a point $\vek{x}$ fixed in space to change: the local derivative due to the diffusive process and the convective derivative due to the advection of the quantity with the velocity field.}
     \label{fig:lagrange-euler-1d}
 \end{figure}
 
@@ -186,7 +186,7 @@ This derivation goes as follows \autocite*{continuum-intro}:
       & \overset{\forall\mathcal{V}}{\Longrightarrow} \frac{D\rho}{D t} + \rho \left(\nabla \cdot  \vek{v}\right) = 0          & \textit{integral holds for all $\mathcal{V}$}
 \end{align}
 
-This use of the Reynolds Transport Theorem is very similar to the derivation that follows in \autoref{sec:momentum-equation}, which is why this alternative formulation was stated.
+This use of the Reynolds Transport Theorem is very similar to the derivation that follows in \autoref{sec:momentum-equation}, which is why this alternative derivation was stated.
 
 \section{The Cauchy Momentum Equation}\label{sec:momentum-equation}
 
@@ -205,7 +205,7 @@ Then, we use Newton's second law, best known in its form $F=m\vek{a}$, to assert
 \begin{equation}
     \int_\mathcal{V} \rho\frac{D\vek{v}}{Dt} \,dV = \oint_\mathcal{\partial V}\vek{t}\,dS + \rho\vek{b}^{ext}
 \end{equation}
-One can define the \emphasis{Cauchy stress tensor} $\mat{T}$ (sometimes referred to as $\mat{\sigma}$) for the material such that it satisfies $\mat{T}\vek{n} = \vek{t}$\autocite*{continuum-intro}. Then, the divergence theorem may be applied again and the total forces acting on the fluid element written as:
+One can define the \emphasis{Cauchy stress tensor} $\mat{T}$ (sometimes referred to as $\mat{\sigma}$) for the material such that it satisfies\autocite*{continuum-intro} $\mat{T}\vek{n} = \vek{t}$. Then, the divergence theorem may be applied again and the total forces acting on the fluid element can be written as:
 \begin{equation}\label{eq:momentum-total-forces}
     \int_\mathcal{V}\nabla\cdot\mat{T}\,dV + \rho\vek{b}^{ext}
 \end{equation}
@@ -255,9 +255,9 @@ $\mat{D}$ is referred to as the \emphasis{rate of deformation tensor} and $\mat{
 
 This decomposition is convenient since the spin tensor does not contribute to viscosity  and only the rate of deformation tensor may be focused on. Note that since the deviatoric stress $\mat{V}$ we are trying to approximate is symmetric, and it only makes sense to use the symmetric component of the velocity gradient to model it.
 
-Intuitively, the spin tensor encodes the rotational component of the velocity gradient, and a steadily rotating fluid (where $\mat{D}=\mat{0}$) is like a rigid body rotation: the relative positions of the fluid elements do not change, only their orientation with respect to a fixed reference frame, and therefore there is no friction. There is a vector $\vek{\omega}$ such that for any $\vek{v}$ it holds that $\mat{W}\vek{v} = \vek{\omega} \times \vek{v}$, where $\vek{\omega}$ points in the axis of rotation with a length of the angular velocity \autocite*{continuum-intro}. This is why the spin tensor is closely related to the vorticity tensor $2\mat{W}$\autocite*{continuum-intro}. In fact, enforcing that viscosity shall not affect the rotational component of velocity gradients and preserving accurate vorticity is key to accurately simulating turbulences in incompressible flows and conserving angular momentum \autocite*{vorticity-micropolar}.
+Intuitively, the spin tensor encodes the rotational component of the velocity gradient, and a steadily rotating fluid (where $\mat{D}_{ij}=0$) is like a rigid body rotation: the relative positions of the fluid elements do not change, only their orientation with respect to a fixed reference frame, and therefore there is no friction. There is a vector $\vek{\omega}$ such that for any $\vek{v}$ it holds that $\mat{W}\vek{v} = \vek{\omega} \times \vek{v}$, where $\vek{\omega}$ points in the axis of rotation with a length of the angular velocity \autocite*{continuum-intro}. This is why the spin tensor is closely related to the vorticity tensor $2\mat{W}$\autocite*{continuum-intro}. In fact, enforcing that viscosity shall not affect the rotational component of velocity gradients and preserving accurate vorticity is key to accurately simulating turbulences in incompressible flows and conserving angular momentum \autocite*{vorticity-micropolar}.
 
-Focusing further on the rate of deformation tensor, assumption \ref{enum:ns-vis-prop-rate-of-deform} can now fully be appreciated. One defining characteristic of Newtonian fluids is the assumption dating back to Isaac Newton that viscosity depends \textit{linearly} on the rate of deformation tensor \autocite*{anderson}. This means that terms of an order higher than linear may be neglected for small velocity gradients\autocite*{incompressible-flow-volker} and constant terms cannot occur since shear stress is only proportional to the rate of deformation, not the state thereof\autocite*{continuum-intro}: if a shear stress is applied to a fluid it will eventually continuously deform at some non-zero rate but will remain in that deformed state if the stress is removed, unlike purely elastic materials\autocite*{continuum-intro}. In other words $\mat{V}$ must vanish when the velocity is homogeneous since there is no friction in that case \autocite*{incompressible-flow-volker}.
+Focusing further on the rate of deformation tensor, assumption \ref{enum:ns-vis-prop-rate-of-deform} can now fully be appreciated. One defining characteristic of Newtonian fluids is the assumption dating back to Isaac Newton that viscosity depends \textit{linearly} on the rate of deformation tensor \autocite*{anderson}. This means that terms of an order higher than linear may be neglected for small velocity gradients\autocite*{incompressible-flow-volker} and constant terms cannot occur since shear stress is only proportional to the rate of deformation, not deformation itself\autocite*{continuum-intro}: if a shear stress is applied to a fluid it will eventually continuously deform at some non-zero rate but will remain in that deformed state if the stress is removed, unlike purely elastic materials\autocite*{continuum-intro}. In other words $\mat{V}$ must vanish when the velocity is homogeneous since there is no friction in that case \autocite*{incompressible-flow-volker}.
 
 We now know that for incompressible fluids $\mat{V}$ is of the form \autocite*{incompressible-flow-volker}:
 \begin{align}
@@ -278,7 +278,7 @@ With the constitutive relation in hand, the Cauchy momentum equation can be revi
     \label{eq:ns-deriv-step-2}\rho\frac{D\vek{v}}{Dt} & = \nabla\cdot (-p\mat{1}) + \mu\nabla\cdot\left((\nabla \vek{v}) + (\nabla \vek{v})^T\right)+\rho\vek{b}^{ext}                                                           & \textit{$\nabla\cdot$ is linear}                                                        \\
     \label{eq:ns-deriv-step-3}\frac{D\vek{v}}{Dt}     & = -\frac{1}{\rho}\nabla p + \nu\nabla\cdot\left((\nabla \vek{v}) + (\nabla \vek{v})^T\right)+\vek{b}^{ext}                                                               & \textit{$\nabla\cdot (-p\mat{1}) = -\nabla p$, divide by $\rho$}                        \\
     \label{eq:ns-deriv-step-4}\frac{D\vek{v}}{Dt}     & = -\frac{1}{\rho}\nabla p + \nu\left(\underbrace{\nabla\cdot(\nabla \vek{v})}_{=\Laplace\vek{v}} + \underbrace{\nabla\cdot(\nabla \vek{v})^T}_{=0} \right)+\vek{b}^{ext} & \textit{$\nabla\cdot$ is linear}                                                        \\
-    \label{eq:ns-deriv-step-5}\frac{D\vek{v}}{Dt}     & = -\frac{1}{\rho}\nabla p + \nu\Laplace\vek{v}+\vek{b}^{ext}                                                                                                             & \square
+    \label{eq:ns-deriv-step-5}\frac{D\vek{v}}{Dt}     & = -\frac{1}{\rho}\nabla p + \nu\Laplace\vek{v}+\vek{b}^{ext}                                                                                                             &
 \end{align}
 
 A few things of note happen in this derivation:
@@ -311,7 +311,7 @@ Although the momentum equation typically takes centre stage when discussing the 
 When incompressibility is strongly enforced, the continuity equation is a constraint on the momentum equation that $p$ can be chosen to fulfil, making it a Lagrange multiplier to the equation\autocite*{tutorial}. Since strongly enforced incompressibility generally requires solving a system to solve the Poisson equation for pressure and can be more involved, a more straightforward first approach is to employ an \emphasis{Equation of State} to couple pressure to known quantities. Such an equation of state can be thought of intuitively as relating strain and stress, or a deformation of a material and the potential caused by this deformation, the negative gradient of which is a force. In this case a deviation of the fluid from its rest density $\rho_0$ or volume $V_0$ causes a pressure potential, the negative gradient of which is a pressure force that counteracts the deformation, in this case compression, as demonstrated in the hydrostatic case.\\
 
 
-There are many such equations of state to choose from. While this choice indeed encodes different physical assumption about the fluid, choice at times appears to be rather motivated by discretization and implementation details for practical reasons than general physical principles. The equation of state should be chosen with the goal of low compressibility and well-behavedness of the system in mind and options include:
+There are many such equations of state to choose from. While this choice indeed encodes different physical assumption about the fluid, the choice often appears to be motivated by implementation details and practical reasons rather than general physical principles. The equation of state should be chosen with the goal of low compressibility and well-behavedness of the system in mind and options include:
 
 
 \begin{enumerate}
@@ -324,7 +324,7 @@ Option \ref{enum:eos-clamping} in particular is used to penalize relative deviat
 \begin{equation}\label{eq:state-equation}
     p=\max\left(0, k\left(\frac{\rho}{\rho_0}-1\right)\right)
 \end{equation}
-was chosen by inserting $\gamma=1$ into option \ref{enum:eos-murnaghan}.
+was chosen by inserting $\gamma=1$ into option \ref{enum:eos-murnaghan} and applying clamping.
 
 
 While the equation of state does allow the computation of the unknown pressure, it does not appear to help close the Navier-Stokes equations, since the problem was only pushed back to the seemingly arbitrary choice or some parameter $k$ representing stiffness. It is important to note that this parameter does not however govern the magnitude of pressure per se, but only the compressibility of the fluid\autocite*{tutorial}, where larger values of $k$ yield higher incompressibility but also higher pressure accelerations and therefore demand a higher resolution of time discretization to remain numerically stable\autocite*{tutorial} and satisfy the Courant-Friedrichs-Lewy condition\autocite*{pcisph}, decreasing computational efficiency. In order to ensure that the assumption of incompressibility made in the derivation of the Navier-Stokes momentum equations hold, a sufficiently large stiffness $k$ should be chosen for a given setting, such that compressibility becomes negligible.

@@ -236,7 +236,7 @@
 \begin{titlepage}
   \pagestyle{empty}
 
-  % \AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{images/title/titlesim.jpg}}
+  \AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{images/title/titlesim.jpg}}
 
   \begin{center}
     \Huge\textbf{Equation of State Solvers for Smoothed Particle Hydrodynamics}\\
@@ -246,7 +246,7 @@
     \begin{figure*}[h!]
       \centering
       \resizebox{10cm}{!}{$\frac{D\vek{v}}{Dt} = -\frac{1}{\rho} \nabla p + \nu \Laplace \vek{v} +\vek{b}^{ext}$}
-      \caption*{The Navier-Stokes momentum equation for incompressible flow. This tile page itself is used as a simulation domain in which this equation is solved, highlighting the solver's ability to handle complex boundary conditions and resolve details while maintaining low levels of compression (here: $\rho^{max}_{err}<0.1\%$ for $N>250k$ particles).}
+      \caption{The Navier-Stokes momentum equation for incompressible flow. This title page itself is used as a simulation domain in which this equation is solved, highlighting the solver's ability to handle complex boundary conditions and resolve details while maintaining low levels of compression (here: $\rho^{max}_{err}<0.1\%$ for $N>250k$ particles).}
       % \caption{Colour coded velocity field of a simulation with 250000 particles, where the solver handles
       %   complex boundary conditions, turbulent flow at low viscosity and a pronounced free surface with less than
       %   0.1\% compression. \cite{ray-optics-book}}

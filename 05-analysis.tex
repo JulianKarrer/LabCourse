@@ -1,11 +1,14 @@
 
 \chapter{Analysis}\label{chp:analysis}
 
+Having derived the governing equations, discretized them, established initial conditions, boundary conditions and solvers that propagate solutions through time, the description of the implemented solvers has concluded and what is left to discuss is the impact of some design choices made along the way. In particular, the impact of non-uniform masses on the behaviour of the fluid will be discussed in the following, as well as the oscillation that results from having chosen density invariance as the source term for pressure computations. Lastly, the stability of the simulation is discussed in terms of the stiffness parameter $k$ that has been left unspecified, as well as time step size and viscosity.
+
+
 \section{Impact of Jittered Masses on Viscosity and Structure}
 
 A particularly interesting observation that ties the topic of lattices, random jitter and uniform densities together is the fact that for a uniform initial density combined with a jitter, the mass of the particles is necessarily non-uniform and varies pseudo-randomly. This actually appears to lead to defects in the formation of the crystalline structures that otherwise naturally form, as seen in \autoref{fig:natural-hexagons}, resulting instead in a more amorphous structure. This could have desirable effects, such as increasing isotropy or perhaps reducing undesired viscosity. Intuitively, a particle in a crystalline structure may be expected to require more energy to be moved along an arbitrary direction, than if it had settled into a less rigid structure.
 
-To test this hypothesis, a scene very similar to the Taylor-Green vortex was used, where fluid is initialized at rest density using some lattice as described above, but given a varying degree of pseudo-random jitter in the initial positions. The fluid is contained in a box with no gravity, where all viscosities are in this case set to zero in order to measure only the undesired loss in kinetic energy inherent to the simulation method. The particles are initialized with a velocity that varies according to a sine and cosine function of positions $\vek{x}_i$ such that four opposing vortices form in each of the four quadrants of a $[0;2\pi]^2$ domain, using in this case\autocite*{taylor-green-arxiv}:
+To test this hypothesis, a scene very similar to the Taylor-Green vortex was used, where fluid is initialized at rest density using some lattice as described above, but given a varying degree of pseudo-random jitter in the initial positions. The fluid is contained in a box with no gravity, where all viscosities are in this case set to zero in order to measure only the undesired loss in kinetic energy inherent to the simulation method. The particles are initialized with a velocity that varies according to a sine and cosine function of initial positions $\vek{x}_i(t_0)$ such that four opposing vortices form in each of the four quadrants of a $[0;2\pi]^2$ domain, using in this case\autocite*{taylor-green-arxiv}:
 
 \begin{equation}
   \vek{v}(t=0)_i = 2\begin{pmatrix}
@@ -13,7 +16,7 @@ To test this hypothesis, a scene very similar to the Taylor-Green vortex was use
     -\cos(x_i) \sin(y_i)
   \end{pmatrix}
 \end{equation}
-where $\vek{x}_i = (x_i, y_i)^T$. The setting is visualized in \autoref{fig:taylor-green-vortex}, where colour-coded particles are advected.
+where $\vek{x}_i(t_0) = (x_i, y_i)^T$. The setting is visualized in \autoref{fig:taylor-green-vortex}, where colour-coded particles are advected.
 
 \begin{figure}
   \centering
@@ -29,7 +32,7 @@ where $\vek{x}_i = (x_i, y_i)^T$. The setting is visualized in \autoref{fig:tayl
   \label{fig:taylor-green-vortex}
 \end{figure}
 
-The rate at which the velocity of the Taylor-Green vortex on a periodic domain decays in relation to the viscosity of a fluid is analytically known to be\autocite*{taylor-green-arxiv} in $\mathcal{O}\br{e^{-\nu t}}$. Despite the exact analytic solution not holding in this instance since periodic boundaries are not applied, the scenario still allows the comparison of decay of the average kinetic energy in the system for different initial samplings of the fluid, where a slower decay is more desirable in reaching lower effective viscosities. A $\frac{1}{N}E_{kin}(t)$ curve can be plotted for different initial sampling lattices and amounts of jitter in conjunction with uniform initial density as described in \autoref*{sec:equilibrate-density}, which is shown in \autoref{fig:taylor-green-result}
+The rate at which the velocity of the Taylor-Green vortex on a periodic domain decays in relation to the viscosity of a fluid is analytically known to be\autocite*{taylor-green-arxiv} in $\mathcal{O}\br{e^{-\nu t}}$. Despite the exact analytic solution not holding in this instance since periodic boundaries are not applied, the scenario still allows the comparison of decay of the average kinetic energy in the system for different initial samplings of the fluid, where a slower decay is more desirable in reaching lower effective viscosities. A $\frac{1}{N}E_{kin}(t)$ curve can be plotted for different initial sampling lattices and amounts of jitter in conjunction with uniform initial density as described in \autoref{sec:equilibrate-density}, which is shown in \autoref{fig:taylor-green-result}
 
 
 \begin{figure}
@@ -71,7 +74,7 @@ The rate at which the velocity of the Taylor-Green vortex on a periodic domain d
   \end{tikzpicture}
 
   \caption*{\begin{tiny}$\nu=\nu_2=0, k=1000, h=0.033, \lambda=0.1, N=90500K, \vec{x}\in[0;2\pi]^2, v_{x_0} = 2\sin (x)\cos (y), v_{y,0} = -2\cos (x)\sin (y), \rho_0 = 1$ \texttt{SplitSPH}\end{tiny}}
-  \caption{Time evolution of $E_{kin}$ in Taylor-Green vortex for varying amounts of initial jitter and initial sampling lattices. As the initial Jitter approaches a standard deviation of 5\% of the particle spacing $h$, there is a continuous decrease in undesired viscosity. The hexagonal lattice being the most stable in many a sense is detrimental in this case, where to achieve low viscosities, a small jitter and an initial square-lattice sampling appear more effective.}
+  \caption{Time evolution of $\frac{1}{N}E_{kin}$ in Taylor-Green vortex for varying amounts of initial jitter and initial sampling lattices. As the initial Jitter approaches a standard deviation of 5\% of the particle spacing $h$, there is a continuous decrease in undesired viscosity. The hexagonal lattice being the most stable in many a sense is detrimental in this case, where to achieve low viscosities, a small jitter and an initial square-lattice sampling appear more effective.}
   \label{fig:taylor-green-result}
 \end{figure}
 
@@ -87,23 +90,27 @@ The rate at which the velocity of the Taylor-Green vortex on a periodic domain d
   \end{equation}
   where the sum is over the $n_k$ nearest neighbours $k\neq l$ to the particle of index $k$ determined through a Delaunay triangulation, $\Theta_{k,l}$ is the angle between particles $k,l$ measured from an arbitrary, fixed axis and the usual particle index $i$ was avoided to not cause confusion with the imaginary unit in the exponent \autocite*{nature-psi-6-bond-orientational}. Generally, the $\Psi_x$ metric shows how close to perfect $x$-atic symmetry the local environment is, which is why the hexatic $\Psi_6$ metric was chosen for this two-dimensional case where the hexagon is the unique closest packing and six nearest neighbours are indeed the most frequent result of a Delaunay triangulation of the particle positions for all simulation runs. The value $0 \leq \abs{\Psi_6} \leq 1$ is maximized for a hexagonal grid and decreases as the material becomes less ordered\autocite*{nature-psi-6-bond-orientational}, where magnitude expresses regularity or how 'well-packed' the arrangement is\autocite*{nicer-psi-6-bond-orientational}, while the complex number itself also encodes a phase or orientation of the structure.
 
-  If there was a relation between jittered masses, lower viscosity and preventing crystal structures, one would expect the average magnitude of the bond orientation parameter $\Psi_6^{avg} = \frac{1}{N}\sum_i \abs{\Psi_6^i}$ to decrease as the jitter increases and the material becomes more disorderly. To test this, $\Psi_6^{avg}$ was measured at $t=30$ for all the configurations in \autoref{fig:taylor-green-result}, as long as possible after the initialization:
+  If there was a relation between jittered masses, lower viscosity and preventing crystal structures, one would expect the average magnitude of the bond orientation parameter $\Psi_6^{avg} = \frac{1}{N}\sum_i \abs{\Psi_6^i}$ to decrease as the jitter increases and the material becomes more disorderly. To test this, $\Psi_6^{avg}$ was measured at $t=30$ for all the configurations in \autoref{fig:taylor-green-result}, long after the initialization, with results shown in table \ref{tbl:hexatic-order}.
 
-  \begin{center}
-    \begin{tabular}{|c | c | c || c|}
-      \hline
-      Lattice   & Time & Jitter $\sigma$ & $\Psi_6^{avg}$ \\
-      \hline\hline
-      Hexagonal & t=0  & 0               & 0.973          \\\hline
-      Hexagonal & t=30 & 0               & 0.522          \\\hline
-      Hexagonal & t=30 & 0.01h           & 0.511          \\\hline
-      Hexagonal & t=30 & 0.05h           & 0.459          \\\hline
-      Square    & t=30 & 0.01h           & 0.478          \\\hline
-      Square    & t=30 & 0.05h           & 0.444          \\\hline
-    \end{tabular}
-
-  \end{center}
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tabular}{|c | c | c || c|}
+        \hline
+        Lattice   & Time & Jitter $\sigma$ & $\Psi_6^{avg}$ \\
+        \hline\hline
+        Hexagonal & t=0  & 0               & 0.973          \\\hline
+        Hexagonal & t=30 & 0               & 0.522          \\\hline
+        Hexagonal & t=30 & 0.01h           & 0.511          \\\hline
+        Hexagonal & t=30 & 0.05h           & 0.459          \\\hline
+        Square    & t=30 & 0.01h           & 0.478          \\\hline
+        Square    & t=30 & 0.05h           & 0.444          \\\hline
+      \end{tabular}
+      \caption{The average bond orientational parameter $\Psi_6^{avg}$ is shown for different initial samplings and amounts of jitter. The $t=0$ entry highlights how a hexagonal structure maximizes this value, while increasing jitter results in lower values, even at $t=30$.}
+      \label{tbl:hexatic-order}
+    \end{center}
+  \end{figure}
 \end{samepage}
+
 
 As can be seen, irrespective of which lattice is used to sample the fluid, there are more defects, less order and therefore lower values of $\Psi_6^{avg}$ as the jitter increases, even long after the initial conditions should have no more bearing on the behaviour of the fluid. This further suggests that the combination of jitter and solving for uniform density could indeed make the discretization more isotropic and help decrease unwelcome viscosity. On the other hand, especially for small kernel support radii, the SPH approximation quality might suffer from excessive particle disorder.
 
@@ -122,7 +129,7 @@ Just to further drive home the point that order decreases as particle masses var
   \label{fig:jitter-vornoi-tesselation}
 \end{figure}
 
-In sources on melting of condensed matter in two dimensions, the hexatic phase is frequently examined, creating a continuous middle ground between the solid and liquid phases and bearing a surface-level resemblance to the structures seen in \autoref{fig:natural-hexagons} - it might be interesting to draw from knowledge about these physical processes in order to combat undesired viscosity in SPH fluid simulation and reach higher Reynolds numbers, analysing for example the time evolution of translational and orientational order throughout a simulation and how masses and kernel support radii that vary per particle or resampling of fields can influence these phenomena - however those analyses are not conducted in this report.
+In sources on melting of condensed matter in two dimensions, the hexatic phase is frequently examined, creating a continuous middle ground between the solid and liquid phases and bearing a surface-level resemblance to the structures seen in \autoref{fig:natural-hexagons} - it might be interesting to draw from knowledge about these physical processes in order to combat undesired viscosity in SPH fluid simulation and reach higher effective Reynolds numbers, analysing for example the time evolution of translational and orientational order throughout a simulation and how masses and kernel support radii that vary per particle or resampling of fields can influence these phenomena - however those analyses are not conducted in this report.
 
 
 \newpage
@@ -130,7 +137,7 @@ In sources on melting of condensed matter in two dimensions, the hexatic phase i
 By choosing a density invariance term in the formulation of the fluid solvers instead of the velocity divergence, the fluid can be expected to oscillate about its rest density for the non-iterative solvers \texttt{SplitSPH} and \texttt{EOSSPH} instead of exhibiting volume drift.
 
 
-The iterative solver behaves somewhat similarly, but does not oscillate about the rest density in a sinusoidal fashion since incompressibility is more strongly enforced with a density error threshold that the average density does not significantly exceed, resulting in peaks of the oscillations in density being cut off. To make the \texttt{IterSPH} solver more comparable, a fixed amount of iterations can be used, $l_{iter}=l_{min}=l_{max}=3$ in this case, which makes the oscillation regular but disables any error thresholds or guarantees.
+The iterative solver behaves somewhat similarly, but does not oscillate about the rest density in a sinusoidal fashion since incompressibility is more strongly enforced with a density error threshold that the average density does not significantly exceed, resulting in peaks of the oscillations in density being cut off. To make the \texttt{IterSPH} solver more comparable, a fixed amount of iterations can be used, $l=l_{min}=l_{max}=3$ and $l=2$ respectively in this case, which makes the oscillation regular but disables any error thresholds or guarantees.
 
 One can analyse the behaviour of this oscillating error using a simple column of water in a tall, rectangular container, since it is known that this configuration would ideally result in a perfectly still fluid that does not oscillate. The width of the container has little bearing on the magnitude of the error, which is why a narrow and tall configuration is preferred in order to analyse the same effect using fewer particles and therefore less computation time. Both the amplitude and the frequency of this oscillation can be found to depend on the stiffness parameter $k$ that governs incompressibility in the equation of state. In this section, the influence of $k$ on the magnitude of the error and the frequency of the oscillation are analysed. The setting and the oscillation are shown in \autoref{fig:oscillating-column}
 
@@ -183,7 +190,7 @@ One can analyse the behaviour of this oscillating error using a simple column of
 
 The effect can be thought of as an oscillation due to the fact that particles at the top of the column are still in free fall when the bottom particles first experience contact forces - the stiffer the fluid, the faster the shock within it propagates and the quicker the particles at the top of the column are accelerated back up, where gravity takes over and the cycle continues, albeit with smaller and smaller amplitude.
 
-In order to conduct the analysis, the measured density according to \autoref{eq:density-sph} can be averaged across all particles to obtain $\rho_{avg}(t) = \frac{1}{N}\sum_i \rho_i(t)$, and the rest density subtracted to obtain the average density error $\Delta \rho(t) = \rho_{avg}(t)-\rho_0$, which oscillates about zero. This is done for a simulation running with a specified, fixed time step $\Delta t$; the CFL-condition is not used in favour of obtaining a regular sampling of the $\Delta \rho(t)$-Curve which can be more easily subjected to a discrete Fourier transform to analyse the frequency of the oscillation. In the following, a time step size of $\Delta t = 0.0002s$ is used, which is a conservative estimate of the $\Delta t$ required by the CFL condition. This means that $\Delta \rho(t)$ is sampled at $5000Hz$ and the frequency:
+In order to conduct the analysis, the measured density according to \autoref{eq:density-sph} can be averaged across all particles to obtain $\rho_{avg}(t) = \frac{1}{N}\sum_i \rho_i(t)$, and the rest density subtracted to obtain the average density error $\Delta \rho(t) = \rho_{avg}(t)-\rho_0$, which ideally oscillates about zero. This is done for a simulation running with a specified, fixed time step $\Delta t$; the CFL-condition is not used in favour of obtaining a regular sampling of the $\Delta \rho(t)$-Curve which can be more easily subjected to a discrete Fourier transform to analyse the frequency of the oscillation. In the following, a time step size of $\Delta t = 0.0002s$ is used, which is a conservative estimate of the $\Delta t$ required by the CFL condition. This means that $\Delta \rho(t)$ is sampled at $5000Hz$ and the frequency:
 \begin{equation}
   f_{peak}=\argmax_{f}\mathcal{F}\br{\Delta \rho(t)} = \argmax_{f}\Delta\rho'(f)
 \end{equation}
@@ -211,27 +218,35 @@ with maximum contribution to the spectrum of the oscillation is plotted against 
         % ymode=log,
       ]
 
-      \addplot [color=Spectral0, thick] table [x=k, y=EOSSPHhighvis, col sep=comma] {k_to_freq.csv};
+      \addplot [color=Spectral2, thick] table [x=k, y=EOSSPHhighvis, col sep=comma] {k_to_freq.csv};
       \addlegendentry{\texttt{EOSSPH}, $\nu=10^{-2}$}
-      \addplot [color=Spectral2, dashed] table [x=k, y=EOSSPHlowvis, col sep=comma] {k_to_freq.csv};
+      \addplot [color=Spectral3, dashed] table [x=k, y=EOSSPHlowvis, col sep=comma] {k_to_freq.csv};
       \addlegendentry{\texttt{EOSSPH}, $\nu=10^{-3}$}
 
-      \addplot [color=Spectral3, thick] table [x=k, y=SplitSPHhighvis, col sep=comma] {k_to_freq.csv};
+      \addplot [color=black, thick, dotted] table [x=k, y=SplitSPHhighvis, col sep=comma] {k_to_freq.csv};
       \addlegendentry{\texttt{SplitSPH}, $\nu=10^{-2}$}
-      \addplot [color=Spectral7, dashed] table [x=k, y=SplitSPHlowvis, col sep=comma] {k_to_freq.csv};
-      \addlegendentry{\texttt{SplitSPH}, $\nu=10^{-3}$}
+      % \addplot [color=Spectral5, dashed] table [x=k, y=SplitSPHlowvis, col sep=comma] {k_to_freq.csv};
+      % \addlegendentry{\texttt{SplitSPH}, $\nu=10^{-3}$}
+
+      \addplot [color=Spectral6, thick] table [x=k, y=IterSPHhighvis2, col sep=comma] {k_to_freq.csv};
+      \addlegendentry{\texttt{IterSPH}, $l=2,\nu=10^{-2}$}
+      % \addplot [color=Spectral7, dashed] table [x=k, y=IterSPHlowvis2, col sep=comma] {k_to_freq.csv};
+      % \addlegendentry{\texttt{IterSPH}, $l=2,\nu=10^{-3}$}
 
       \addplot [color=Spectral8, thick] table [x=k, y=IterSPHhighvis, col sep=comma] {k_to_freq.csv};
-      \addlegendentry{\texttt{IterSPH}, $\nu=10^{-2}$}
-      \addplot [color=Spectral10, dashed] table [x=k, y=IterSPHlowvis, col sep=comma] {k_to_freq.csv};
-      \addlegendentry{\texttt{IterSPH}, $\nu=10^{-3}$}
+      \addlegendentry{\texttt{IterSPH}, $l=3,\nu=10^{-2}$}
+      % \addplot [color=Spectral10, dashed] table [x=k, y=IterSPHlowvis, col sep=comma] {k_to_freq.csv};
+      % \addlegendentry{\texttt{IterSPH}, $l=3,\nu=10^{-3}$}
+
       \addplot [color=red] table [x=k, y=prediction, col sep=comma] {k_to_freq.csv};
-      \addlegendentry{Prediction}
+      \addlegendentry{Prediction $l=3$ }
+      \addplot [color=red, dashed] table [x=k, y=prediction2, col sep=comma] {k_to_freq.csv};
+      \addlegendentry{Prediction $l=2$ }
 
     \end{axis}
   \end{tikzpicture}
   \caption*{\begin{tiny}$\nu_2=0.001, h=0.02, \Delta t = 0.0002s, N=1572, \rho_0 = 1, \gamma_1=1, \gamma_2=0.5$, Hexagonal sampling with $\sigma=0.015h$\end{tiny}}
-  \caption{The frequency $f_{peak}$ with maximum contribution to the oscillation of the function $\Delta\rho (t)$ is plotted against the stiffness parameter $k$ that governs incompressibility. The frequency of oscillation continuously increases as $k$ increases. The four lowest curves, corresponding to all \texttt{EOSSPH} and \texttt{SplitSPH} simulations, all overlap.}
+  \caption{The frequency $f_{peak}$ with maximum contribution to the oscillation of the function $\Delta\rho (t)$ is plotted against the stiffness parameter $k$ that governs incompressibility. The frequency of oscillation continuously increases as $k$ increases. The curves of the \texttt{EOSSPH} and \texttt{SplitSPH} simulations all overlap and so do all curves that differ only in viscosity, so only a selection of such curves was plotted.}
   \label{fig:freq-peak-k}
 \end{figure}
 
@@ -253,13 +268,13 @@ and therefore $f_{peak} \propto \sqrt{k}$, which would explain the shape of the 
 The graph also clearly shows that the oscillation is \textit{not affected} by viscosity, with simulations that differ in $\nu$ by an order of magnitude exactly overlapping, and that operator splitting \textit{also does not affect} the result at all. This further evidences that the oscillation frequency depends on the numerical speed of sound and not any of the other factors mentioned. The only solver with a differing curve is the iterative solver: for this solver, one would expect the numerical speed of sound to be higher, since there are multiple iterations per time step that may propagate information, or accelerations, from neighbouring particle to neighbouring particle - this makes intuitive sense, since the iterative solver achieves a higher effective incompressibility, which has been shown to be linked to the numerical speed of sound in \autoref{eq:newton-laplace}.
 
 
-One could speculate that within some low bound of $l_{iter}$, where repeated neighbourhood calculations are not necessary, the number of iterations could have a nearly linear relationship with the stiffness $k$, the square root of which was assumed above to be proportional to the frequency of oscillation - if this were true, one would expect the iterative solver with $l_{iter}=3$ to have a higher frequency of oscillation by a factor of $\sqrt{l_{iter}}=\sqrt{3}$.
-To test this hypothesis, the average of the four curves using a single-iteration solver in \autoref{fig:freq-peak-k} was taken, a square root function fitted to this average using the Levenberg-Marquardt algorithm for least squares regression\footnote{Implemented in SciPy Optimize: Curve Fit \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html}} and then multiplied by $\sqrt{3}$ to yield the red line shown in \autoref{fig:freq-peak-k} as the \textit{Prediction}. This curve describes what would be expected to happen if the hypotheses made in this section were true, meaning:
+One could speculate that within some low bound of $l_{iter}$, where repeated neighbourhood calculations are not necessary, the number of iterations could have a nearly linear relationship with the stiffness $k$, the square root of which was assumed above to be proportional to the frequency of oscillation - if this were true, one would expect the iterative solver with $l_{iter}=2$ to have a higher frequency of oscillation by a factor of $\sqrt{l_{iter}}=\sqrt{2}$ and similarly for $l=3$.
+To test this hypothesis, the average of the four curves using a single-iteration solver as seen in \autoref{fig:freq-peak-k} was taken (\texttt{EOSSPH}, \texttt{SplitSPH} for $\nu=10^{-2}, \nu-10^{-3}$ respectively), a square root function fitted to this average using the Levenberg-Marquardt algorithm for least squares regression\footnote{Implemented in SciPy Optimize: Curve Fit \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html}} and then multiplied by $\sqrt{l_{iter}}$ to yield the red line and dashed red line shown in \autoref{fig:freq-peak-k} as the \textit{Prediction}. These curves describe what would be expected to happen if the hypotheses made in this section were true, meaning:
 \begin{enumerate}
   \item $f_{peak}\propto\sqrt{k}$
   \item  $k\propto l_{iter}$
 \end{enumerate}
-and matches the experimental values for the $l=3$ solver remarkably well, suggesting that stiffness may indeed be almost linear in the number of iterations for such solvers, at least up to some small, fixed number of iterations.
+and matches the experimental values for both the $l=2$ and the $l=3$ iterative solvers remarkably well, suggesting that stiffness may indeed be almost linear in the number of iterations for such solvers, at least up to some small, fixed number of iterations.
 
 \horizontalspacer
 
@@ -272,7 +287,7 @@ Note that $\Delta\rho (t)$ should oscillate about zero, so the integral should b
 
 Here, the data shows that a greater stiffness coefficient $k$ results in less density error, which makes sense since compressions for higher $k$ result in greater pressure forces that correct the compression.
 
-The graph also shows how increasing the stiffness $k$ yields diminishing returns, further motivating the use of iterative solvers as a way to improve simulation quality, since simply increasing the stiffness used in a single iteration per time step might become unfeasible. The iterative solver with three iterations achieves a much smaller value of $f_0$ across all coefficients $k$.
+The graph also shows how increasing the stiffness $k$ yields diminishing returns, further motivating the use of iterative solvers as a way to improve simulation quality, since simply increasing the stiffness used in a single iteration per time step might become unfeasible. The iterative solver achieves a much smaller value of $f_0$ across all coefficients $k$, with higher iteration counts further decreasing the error, but once again an increase in iteration count appears to yield diminishing returns.
 
 In this instance, the single-iteration solvers with and without operator splitting again show the same behaviour, with viscosity once more playing no role in the oscillation for the measured range of parameters. Operator splitting, while perhaps effective in reducing some kinds of errors and improving robustness and stability, does not have an impact on the type of error under consideration in this scenario.
 
@@ -307,31 +322,63 @@ At some point, when increasing $k$, instability might occur if the time step siz
       \addplot [color=Spectral2, dashed] table [x=k, y=EOSSPHlowvis, col sep=comma] {k_to_error.csv};
       \addlegendentry{\texttt{EOSSPH}, $\nu=10^{-3}$}
 
-      \addplot [color=Spectral3, thick] table [x=k, y=SplitSPHhighvis, col sep=comma] {k_to_error.csv};
+      \addplot [color=Spectral4, thick] table [x=k, y=SplitSPHhighvis, col sep=comma] {k_to_error.csv};
       \addlegendentry{\texttt{SplitSPH}, $\nu=10^{-2}$}
-      \addplot [color=Spectral7, dashed] table [x=k, y=SplitSPHlowvis, col sep=comma] {k_to_error.csv};
+      \addplot [color=Spectral6, dashed] table [x=k, y=SplitSPHlowvis, col sep=comma] {k_to_error.csv};
       \addlegendentry{\texttt{SplitSPH}, $\nu=10^{-3}$}
 
-      \addplot [color=Spectral8, thick] table [x=k, y=IterSPHhighvis, col sep=comma] {k_to_error.csv};
-      \addlegendentry{\texttt{IterSPH}, $\nu=10^{-2}$}
+
+      \addplot [color=Spectral7, thick] table [x=k, y=IterSPHhighvis2, col sep=comma] {k_to_error.csv};
+      \addlegendentry{\texttt{IterSPH}, $l=2,\nu=10^{-2}$}
+      \addplot [color=Spectral8, dashed] table [x=k, y=IterSPHlowvis2, col sep=comma] {k_to_error.csv};
+      \addlegendentry{\texttt{IterSPH}, $l=2,\nu=10^{-3}$}
+
+      \addplot [color=Spectral9, thick] table [x=k, y=IterSPHhighvis, col sep=comma] {k_to_error.csv};
+      \addlegendentry{\texttt{IterSPH}, $l=3,\nu=10^{-2}$}
       \addplot [color=Spectral10, dashed] table [x=k, y=IterSPHlowvis, col sep=comma] {k_to_error.csv};
-      \addlegendentry{\texttt{IterSPH}, $\nu=10^{-3}$}
+      \addlegendentry{\texttt{IterSPH}, $l=3,\nu=10^{-3}$}
 
     \end{axis}
   \end{tikzpicture}
   \caption*{\begin{tiny}$\nu_2=0.001, h=0.02, \Delta t = 0.0002s, N=1572, \rho_0 = 1, \gamma_1=1, \gamma_2=0.5$, Hexagonal sampling with $\sigma=0.015h$\end{tiny}}
-  \caption{The zero frequency $f_0$ or integral of the function $\Delta\rho (t)$ is plotted against the stiffness parameter $k$ that governs incompressibility. As the stiffness increases, the total error sharply decreases. The viscosity and whether operator splitting is applied has no impact on the single-iteration solvers \texttt{EOSSPH} and \texttt{SplitSPH}, the curves of which all overlap. The \texttt{IterSPH} solver with three iterations achieves a lower total error across all $k$.}
+  \caption{The zero frequency $f_0$ or integral of the function $\Delta\rho (t)$ is plotted against the stiffness parameter $k$ that governs incompressibility. As the stiffness increases, the total error sharply decreases. The viscosity and whether operator splitting is applied has no impact on the single-iteration solvers \texttt{EOSSPH} and \texttt{SplitSPH}, the curves of which all overlap. The \texttt{IterSPH} solver with achieves a lower total error across all $k$, with higher iteration counts resulting in lower errors but seemingly yielding diminishing returns.}
   \label{fig:error-to-k}
 \end{figure}
 
 \newpage
 
 \section{Stability as a Function of Viscosity, Stiffness and Time Step Size}
-The setting described in \autoref{sec:oscillations}, where a column of water at rest is simulated, can also be used to analyse the stability of the simulation. Once again, the fact that the water ought to be at rest and therefore the analytic solution is trivially known can be used to measure an error $\epsilon$ relative to that solution for each of the solvers presented in \autoref{chp:solvers}. It has already been discussed that higher stiffness $k$ can lead to better simulation accuracy, but it has not yet been shown that a choice of $k$ that is too large for a given time step size $\lambda$ can lead to unstable behaviour with erratically moving particles and unphysical behaviour. Ideally, the average kinetic energy of the fluid particles $E_{kin}(t) = \frac{1}{N}\sum_i m_i \dist{\vek{v}_i(t)}^2$ is at zero, or very close to it, for the resting water column shown in \autoref{fig:oscillating-column}. Instabilities can be detected by the kinetic energy being considerably higher than expected and repeatedly spiking, which is measured in the following using the logarithm of the average \emphasis{action} of the particles, assuming a potential energy of zero:
+The setting described in \autoref{sec:oscillations}, where a column of water at rest is simulated, can also be used to analyse the stability of the simulation. Once again, the fact that the water ought to be at rest and therefore the analytic solution is trivially known can be used to measure an error $\epsilon$ relative to that solution for each of the solvers presented in \autoref{chp:solvers}. It has already been discussed that higher stiffness $k$ can lead to better simulation accuracy, but it has not yet been shown that a choice of $k$ that is too large for a given time step size $\lambda$ can lead to unstable behaviour with erratically moving particles and unphysical behaviour. Ideally, the average kinetic energy of the fluid particles $E_{kin}(t) = \frac{1}{N}\sum_i m_i \dist{\vek{v}_i(t)}^2$ is at zero, or very close to it, for the resting water column shown in \autoref{fig:oscillating-column}. Instabilities can be detected by the kinetic energy being considerably higher than expected and repeatedly spiking, which is measured in the following using the logarithm of the average time integral of kinetic energy of the particles, or assuming a potential energy of zero, the logarithm of the average action:
 \begin{equation}\label{eq:action-log-error}
   \epsilon = \log_{10}\br{\int_{10s}^{20s} E_{kin}(t) \,dt}
 \end{equation}
-where the first 10 seconds are discarded to make sure that any movement due to unfortunate initial conditions and the oscillations measured in \autoref{sec:oscillations} have subsided, the state of the particles is somewhat equilibrated, and instabilities are responsible for any remaining, significant amounts of kinetic energy. The time integration in \autoref{eq:action-log-error} is implemented using the trapezoidal rule and the logarithm is taken to account for an unstable simulation potentially having multiple orders of magnitude more kinetic energy than a stable simulation in this scenario. The results are shown in \autoref{fig:stability-k-lambda}.
+where the first 10 seconds are discarded to make sure that any movement due to unfortunate initial conditions and the oscillations measured in \autoref{sec:oscillations} have subsided, the state of the particles is somewhat equilibrated, and instabilities are responsible for any remaining, significant amounts of kinetic energy. The time integration in \autoref{eq:action-log-error} is implemented using the trapezoidal rule and the logarithm is taken to account for an unstable simulation potentially having multiple orders of magnitude more kinetic energy than a stable simulation in this scenario. The scenario for one set of parameters and varying solvers is shown in \autoref{fig:stability-increasing}, while the results of the analysis are shown in \autoref{fig:stability-k-lambda}.
+
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[t]{0.1\textwidth}
+    \centering
+    \includegraphics*[width=\textwidth]{images/stability/eos.jpg}
+    \caption{\small{\texttt{EOSSPH}}}
+  \end{subfigure}
+  \hspace*{0.1\textwidth}
+  \begin{subfigure}[t]{0.1\textwidth}
+    \centering
+    \includegraphics*[width=\textwidth]{images/stability/split.jpg}
+    \caption{\small{\texttt{SplitSPH}}}
+  \end{subfigure}
+  \hspace*{0.1\textwidth}
+  \begin{subfigure}[t]{0.1\textwidth}
+    \centering
+    \includegraphics*[width=\textwidth]{images/stability/iter.jpg}
+    \caption{\small{\texttt{IterSPH}}}
+  \end{subfigure}
+
+  \caption*{\begin{tiny}$\lambda=0.1, \nu=0.0001, \nu_2=0.001, h=0.02, N=1572, \rho_0 = 1, \gamma_1=1, \gamma_2=0.5$, Hexagonal sampling with $\sigma=0.015h$\end{tiny}}
+  \caption{The exact same setting with the same parameters is shown at $t=5s$ for different solvers, showcasing how operator splitting can increase stability and the iterative solver further improves this. The magnitudes of velocities are colour-coded.}
+  \label{fig:stability-increasing}
+\end{figure}
 
 \input{05b-figure-stability.tex}
 
@@ -342,4 +389,8 @@ The \texttt{EOSSPH} and \texttt{SplitSPH} solvers behave as one might expect, wi
 
 \horizontalspacer
 
+The same analysis can be made for varying viscosity $\nu$ and stiffness $k$. Once again, the iterative solver produces uninteresting data since it is stable across the entire range of parameters. The results for the two remaining solvers are shown in \autoref{fig:stability-k-nu}.
+
 \input{05c-figure-stability-vis.tex}
+
+This graph reveals that for the \texttt{EOSSPH} solver, an increase in viscosity can improve stability, at least up to a certain value of $\nu$, while very inviscid fluids are more challenging to simulate stably. More interestingly this does not seem to apply as much to the solver with operator splitting, which shows an error gradient exclusively in the $k$-direction. This might be due to the fact that the viscosity in the tested parameter range is not large enough for inaccurate viscous forces to cause instability, which leaves only the pressure forces as a possible reason for instability. These pressure forces correct a predicted density when operator splitting is used, where increased viscosity affects the predicted density, but appears to have less influence on the instabilities resulting from inaccurately correcting these predicted densities - although there are too few data points to be conclusive. It might be interesting to further examine this behaviour by checking if the opposite is true for operator splitting that integrates pressure forces first and viscosity afterwards, to check if for such a solver stiffness becomes less relevant for stability if the viscosity is sufficiently high.

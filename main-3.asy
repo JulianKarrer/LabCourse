@@ -44,8 +44,8 @@ return 0.0;
 // }
 // draw(graph(gauss,-2,2),green,"$\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$");
 
-draw(graph(w,-2,2),heavyred,"$W(\vek{x}, h)$");
-draw(graph(dw,-2,2),heavyblue,"$||{\nabla W(\vek{x}, h)}||$");
+draw(graph(w,-2,2),heavyred,"$W(\vek{x},\hbar)$");
+draw(graph(dw,-2,2),heavyblue,"$||{\nabla W(\vek{x}, \hbar)}||$");
 
 xaxis("$\frac{\dist{\vek{x}}}{h}$",Bottom,RightTicks);
 yaxis("",Left,LeftTicks(trailingzero));

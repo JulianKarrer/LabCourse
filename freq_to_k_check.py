@@ -29,7 +29,7 @@ with open('k_to_freq.csv', 'r') as file:
     #     print(val)
 
     params, _ = opt.curve_fit(model_sqrt, values["k"], avg_curve)
-    predicted = [np.sqrt(3) * model_sqrt(x, params[0], params[1])
+    predicted = [np.sqrt(2) * model_sqrt(x, params[0], params[1])
                  for x in values["k"]]
 
     print("PRED--------")

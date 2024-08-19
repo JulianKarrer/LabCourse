@@ -53,6 +53,8 @@ eossph_vis = parse_html(
     "/home/julian/Code/stoked2d/analysis/plot_stability_int_k_nu_SESPH_1723603157.html")
 splitsph_vis = parse_html(
     "/home/julian/Code/stoked2d/analysis/plot_stability_int_k_nu_SplittingSESPH_1723607502.html")
+itersph_vis = parse_html(
+    "/home/julian/Code/stoked2d/analysis/plot_stability_int_k_nu_IterSESPH_1723614769.html")
 
 
 # FIRST FIGURE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -198,6 +200,7 @@ result = r"""
     \end{tikzpicture}
 
   \end{subfigure}
+  \caption*{\begin{tiny}$\nu=10^{-4}, \nu_2=10^{-3}, h=0.02, N=1572, \rho_0 = 1, \gamma_1=1, \gamma_2=0.5, l_{min}=5, l_{max}=300$, Hexagonal sampling with $\sigma=0.015h$\end{tiny}}
   \caption{The error $\epsilon$ (\autoref{eq:action-log-error}) in the kinetic energy of the resting water column is plotted for different parameters of time step size $\lambda\in[0,1]$ and stiffness $k\in[500,1500]$ for $5\times 5$ datapoints. Each row shows one solver, where the left column are contour plots and the right column shows the same values in 3D for better visual clarity. The mapping from values to colours is shown in the bar at the bottom.}
   \label{fig:stability-k-lambda}
 \end{figure}
@@ -273,27 +276,8 @@ result = r"""
     \end{tikzpicture}
 
   \end{subfigure}
-  \begin{subfigure}[t]{\textwidth}
-    \centering
-    \begin{tikzpicture}
-      \begin{axis}[
-          hide axis,
-          scale only axis,
-          height=0pt,
-          width=0pt,
-          colormap name=Spectral_r,
-          colorbar horizontal,
-          point meta min="""+str(minimum)+r""",
-          point meta max="""+str(maximum)+r""",
-          colorbar style={
-              width=0.5\textwidth,
-            }]
-        \addplot [draw=none] coordinates {(0,0)};
-      \end{axis}
-    \end{tikzpicture}
-
-  \end{subfigure}
-  \caption{The error $\epsilon$ (\autoref{eq:action-log-error}) is plotted for different parameters of time step size $\lambda\in[0,1]$ and viscosity $\nu\in[10^{-3}, 2\cdot10^{-2}]$ for $5\times 5$ datapoints. The mapping from values to colours is shown in the bar at the bottom.}
+  \caption*{\begin{tiny}$\lambda=0.1, \nu_2=10^{-3}, h=0.02, N=1572, \rho_0 = 1, \gamma_1=1, \gamma_2=0.5$, Hexagonal sampling with $\sigma=0.015h$\end{tiny}}
+  \caption{The error $\epsilon$ (\autoref{eq:action-log-error}) is plotted for different parameters of time step size $\lambda\in[0,1]$ and viscosity $\nu\in[10^{-4}, 2\cdot10^{-3}]$ for $5\times 5$ datapoints. The mapping from values to colours is the same as in \autoref{fig:stability-k-lambda}.}
   \label{fig:stability-k-nu}
 \end{figure}
 """

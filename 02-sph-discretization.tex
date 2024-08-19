@@ -19,16 +19,16 @@ The discretization chosen here makes use of \emphasis{Smoothed Particle Hydrodyn
 
 Since the Lagrangian framework tends to favour discretizing the continuum itself over the space it exists within, regions of the continuum are here represented by so-called particles with a singular position that represent some volume or, equivalently in the incompressible case with homogeneous density, mass. It is important to keep in mind that the word \textit{particle} in this context refers not to a physical, elementary particle or a spherical object, but rather an abstract representation of a discrete, shapeless parcel of the continuum.
 
-SPH can be derived by considering that these particles represent a sampling of the continuous fluid domain at singular points and can be expressed as Dirac-$\delta$ distributions weighted by some quantity. The $\delta$-distribution can be defined as a normalized:
+SPH can be derived by considering that these particles represent a sampling of the continuous fluid domain at singular points and can be expressed as Dirac-$\delta$ distributions weighted by some quantity. The $\delta$-distribution can be defined as being normalized:
 \begin{equation}
   \int \delta(\vek{x}) \,dV = 1
 \end{equation}
-and obeying $\vek{x}\neq \vek{0} \Longrightarrow \delta(\vek{x}) = 0$. This results in a distribution that is zero everywhere but at a singularity at the origin, where a spike of undefined height shoots up and only the integral of the distribution across that spike is a well-defined function ($\delta$ itself is a \textit{generalized function}, not one in the analytic sense\autocite*{signal-processing-falaschi}). The Dirac-$\delta$ can be thought of as the limit of a Gaussian distribution as the variance approaches zero and the distribution becomes ever higher and narrower\autocite{tutorial}, or as the limit of a box of fixed unit area as the width of the box approaches zero.\\
+and obeying $\vek{x}\neq \vek{0} \Longrightarrow \delta(\vek{x}) = 0$. This results in a distribution that is zero everywhere but at a singularity at the origin, where a spike of undefined height shoots up and only the integral of the distribution across that spike is a well-defined function ($\delta$ itself is a \textit{generalized function}, not one in the analytic sense\autocite*{signal-processing-falaschi}). The Dirac-$\delta$ can be thought of as the limit of a Gaussian distribution as the variance approaches zero and the distribution becomes ever higher and narrower\autocite{tutorial}.\\
 For this distribution representing the particles, the identity holds that for any continuous, compactly supported function $A(\vek{x})$\autocite{tutorial}:
 \begin{equation}\label{eq:conv-identity}
   A(\vek{x}) = (A * \delta)(\vek{x}) = \int A(\vek{x}') \delta(\vek{x}-\vek{x}')dV'
 \end{equation}
-or the convolution of $A$ with $\delta$ is $A$ itself. This identity can be explained from the perspective of Fourier analysis, where the $\delta$ can be defined as the constant unit function in Fourier space and therefore $\delta = \mathcal{F}^{-1}(1)$. Since the convolution theorem applies, it then holds that a convolution in the spatial domain is equivalent to a multiplication in the frequency domain and vice-versa, resulting in a multiplication by one in the case of the convolution with a $\delta$-distribution real space, and therefore an identity.
+or the convolution of $A$ with $\delta$ is $A$ itself. This identity can be explained from the perspective of Fourier analysis, where the $\delta$ can be defined as the constant unit function in Fourier space and therefore $\delta = \mathcal{F}^{-1}(1)$. Since the convolution theorem applies, it then holds that a convolution in the spatial domain is equivalent to a multiplication in the transformed domain and vice-versa, resulting in a multiplication by one in the case of the convolution with a $\delta$-distribution real space, and therefore an identity.
 
 The key insight to SPH is that the $\delta$-distribution can be approximated by a more well-behaved function with desirable properties such as smoothness, while approximately retaining the above identity. Such a function is referred to in SPH as a \emphasis{kernel function} $W$, \textit{smoothing kernel}\autocite*{tutorial} or \textit{broadening function}\autocite*{sph-lucy-77}, since it broadens and smooths out the Dirac-$\delta$ distribution. With this, one can then derive\autocite*{tutorial}:
 \begin{align}
@@ -38,11 +38,11 @@ The key insight to SPH is that the $\delta$-distribution can be approximated by 
              & = \int \frac{A(\vek{x}')}{\rho(\vek{x}')} W(\vek{x}-\vek{x}') \underbrace{\rho(\vek{x}')dV'}_{=dm'} & \text{multiply by $\frac{\rho(\vek{x}')}{\rho(\vek{x}')}=1$}                                            \\\label{eq:sph-derivation-sum-approx}
              & \approx \sum_{\vek{x}_j\in\mathcal{S}} A_j \frac{m_j}{\rho_j} W(\vek{x}-\vek{x}_j)                  & \text{approximate Integral with discrete samples}
 \end{align}
-where subscripts denote the position where a quantity is evaluated as in $A_j := A(\vek{x}_j)$ and $\mathcal{S}$ is a set of fluid samples. This leads to the general SPH approximation for any field quantity $A$\autocite*{tutorial}:
+where subscripts denote the position where a quantity is evaluated as in $A_j := A(\vek{x}_j)$ and $\mathcal{S}$ is a set of fluid samples. This leads to the general SPH approximation for any field quantity\autocite*{tutorial} $A$:
 \begin{equation}\label{eq:sph-any-quantity}
   A_i = \sum_j A_j \frac{m_j}{\rho_j} W_{ij}
 \end{equation}
-where the sample set $\mathcal{S}$ is implicit in the notation and $W_{ij} := W(\vek{x}_i-\vek{x}_j)$. $\frac{m_j}{\rho_j} = V_j$ can be seen as the fluid volume that sample $j$ represents.
+where the sample set $\mathcal{S}$ is implicit in the notation and $W_{ij} := W(\vek{x}_i-\vek{x}_j)$. The term $\frac{m_j}{\rho_j} = V_j$ can be seen as the fluid volume that sample $j$ represents.
 
 Note in particular that the mass density:
 \begin{equation}\label{eq:density-sph}
@@ -60,30 +60,30 @@ such that the gradient of a field can conveniently be computed simply by evaluat
 \newpage
 \section{Kernel Functions and Properties}
 
-So far it has been left unspecified what form exactly the kernel function $W$ takes, although some of its required properties were alluded to. Furthermore, $W$ is often parameterized in its support radius and smoothing length, which we will assume to be equal in the following and name $h$, yielding $W(\vek{x}_{ij}, h)$, where $\vek{x}_{ij} = \vek{x}_i-\vek{x}_j$. Properties of this function shall be enumerated in the following\autocite*{tutorial}:
+So far it has been left unspecified what form exactly the kernel function $W$ takes, although some of its required properties were alluded to. Furthermore, $W$ is often parameterized in its support radius $\hbar$ and smoothing length, which we will assume to be equal in the following, yielding $W(\vek{x}_{ij}, \hbar)$, where $\vek{x}_{ij} = \vek{x}_i-\vek{x}_j$. Properties of this function shall be enumerated in the following\autocite*{tutorial}:
 
 \begin{description}
-  \item[Normalization] $\int_\mathcal{V} W(\vek{x}_{ij}, h) d\vek{x}_j = 1$\\
+  \item[Normalization] $\int_\mathcal{V} W(\vek{x}_{ij}, \hbar) d\vek{x}_j = 1$\\
         is required for the approximation to be consistent.
-  \item[Dirac-$\boldsymbol{\delta}$ Condition] $\lim_{h\rightarrow 0} W(\vek{x}_{ij}, h) = \delta(h)$ \\
+  \item[Dirac-$\boldsymbol{\delta}$ Condition] $\lim_{\hbar\rightarrow 0} W(\vek{x}_{ij}, \hbar) = \delta(\vek{x}_{ij})$ \\
         is the motivation for the scheme in the first place and required for $A=(A * \delta)=(A * W)$ to hold in the limit.
-  \item[Compact Support] $\forall \dist{\vek{x}_{ij}} > \hbar: W(\vek{x}_{ij}, h) = 0$\\
+  \item[Compact Support] $\forall \dist{\vek{x}_{ij}} > \hbar: W(\vek{x}_{ij}, \hbar) = 0$\\
         reduces the SPH sum from $\mathcal{O}(n^2)$-complexity in $n$ particles to potentially $\mathcal{O}(n)$
   \item[Sufficient Smoothness] $W \in C^n, n\geq 2$\\
         it is desirable for the first few derivatives of $W$ to be continuous for discretizations such as in \autoref{eq:sph-nabla-any-quantity} to be viable and for second order partial differential equations to be handled with ease\autocite*{tutorial}
-  \item[Positivity] $\forall \vek{x}_{ij}: W(\vek{x}_{ij}, h) \geq 0$\\
-        while negative values of the kernel are permitted\autocite*{sph-lucy-77} and even desired in rare cases such as when modelling surface tension\autocite*{surface-tension-akinci-2013}, they are typically avoided since they might yield unphysical results at suboptimal sampling for quantities that should not be negative like mass, density, volume etc.
-  \item[Symmetry] $W(\vek{x}_{ij}, h) = W(\vek{x}_{ji}, h)$\\
-        is typically desired, even if just for lack of better assumptions about the structure of the interpolated field - indeed most kernels are spherically symmetric and only depend on the distance $\dist{\vek{x}_{ij}}$ between two points, which is especially valid when the interpolated field is assumed to be approximately isotropic.
+  \item[Positivity] $\forall \vek{x}_{ij}: W(\vek{x}_{ij}, \hbar) \geq 0$\\
+        while negative values of the kernel are permitted\autocite*{sph-lucy-77} and even desired in some cases such as when modelling surface tension\autocite*{surface-tension-akinci-2013}, they are typically avoided since they might yield unphysical results at suboptimal sampling for quantities that should not be negative like mass, density, volume etc.
+  \item[Symmetry] $W(\vek{x}_{ij}, \hbar) = W(\vek{x}_{ji}, \hbar)$\\
+        is typically desired, even if just for lack of better assumptions about the structure of the interpolated field - indeed most kernels are spherically symmetric and only depend on the distance $\dist{\vek{x}_{ij}}$ between two points, which is especially valid when the interpolated field is assumed to be approximately isotropic on scales of the order of $\hbar$.
 \end{description}
 
-Note that the two required properties in this case, the normalization and $\delta$-condition, correspond to the two approximations made in the derivation in \autoref{eq:sph-derivation-kernel-approx} and \autoref{eq:sph-derivation-sum-approx} of the derivation of SPH: the approximation is valid as the number of samples in the kernel support goes to infinity, making the discretization of the integral exact, and as the kernel support goes to zero, making the convolution with the kernel function an exact identity\autocite*{sph-lucy-77}. It is sometimes noted that SPH can not guarantee 0-th order consistency for arbitrary samplings, however 0-th and 1st order consistency are in fact achieved if the conditions\autocite{tutorial}:
+Note that the two required properties in this case, the normalization and $\delta$-condition, correspond to the two approximations made in \autoref{eq:sph-derivation-kernel-approx} and \autoref{eq:sph-derivation-sum-approx} of the derivation of SPH: the approximation is valid as the number of samples in the kernel support goes to infinity, making the discretization of the integral exact, and as the kernel support goes to zero, making the convolution with the kernel function an exact identity\autocite*{sph-lucy-77}. It is sometimes noted that SPH can not guarantee 0-th order consistency for arbitrary samplings, however 0-th and 1st order consistency are in fact achieved if the conditions\autocite{tutorial}:
 \begin{align}\label{eq:sph-consistency-conditions}
   \sum_j \frac{m_j}{\rho_j} W_{ij}=1 &  & \sum_j \frac{m_j}{\rho_j} (\vek{x}_j-\vek{x}_i)W_{ij}=1
 \end{align}
 hold, which can be enforced if desired by a normalization and a matrix inversion respectively \autocite*{price-2012}, although this is often not required for plausible results.
 
-Further, note that if spherical symmetry is not enforced, a kernel may be constructed that linearly interpolates quantities along the Cartesian coordinate axes, compact to not just a sphere but a box within that sphere, and that this kernel may be evaluated on a regular grid, yielding the finite difference method - if different kernels may be used at different positions, other Eulerian methods may be constructed in the same fashion. Whether SPH is therefore a generalization of grid-based methods or if the lack of the symmetry condition reduces the definition of 'SPH' to meaninglessness is a purely taxonomic question, but it underlines the expressivity of the SPH framework.
+Further, note that if spherical symmetry is not enforced, a kernel may be constructed that linearly interpolates quantities along the Cartesian coordinate axes, compact to not just a sphere but a box within that sphere, and that this kernel may be evaluated on a regular grid, yielding the finite difference method. Whether SPH is therefore a generalization of grid-based methods or if the lack of the symmetry condition reduces the definition of 'SPH' to meaninglessness is a purely taxonomic question, but it underlines the expressivity of the SPH framework.
 
 \horizontalspacer
 
@@ -98,7 +98,7 @@ The last property is an interesting connection to the uncertainty principle, whi
 
 Another perspective on the usefulness of the Gaussian and SPH in general is given by a probabilistic perspective on the problem. Interestingly, the original authors of SPH independently derive it from a stochastic point of view\autocite*{sph-lucy-77}\autocite*{sph-monaghan-gingold-77}, both groups even referencing the same book on Monte Carlo techniques\autocite*{hammersley-monte-carlo}.
 
-Suppose fluid samples representing equal masses are independently sampled from a distribution proportional to the mass density of a fluid of homogeneous density. It then holds that the mass density can be approximated by counting the number of samples within some volume $\mathcal{V}$ around a point of interest $\vek{x}$ and normalizing the result\autocite{smoothed-density-parzen-62}. It is equally valid to define certaincompactly supported kernel functions to weigh the samples by and sum them instead of simply counting the samples in $\mathcal{V}$ with some indicator function, potentially smoothing out the approximated field\autocite*{smoothed-density-parzen-62}. The resulting integral\autocite*{sph-monaghan-gingold-77} $\rho_{est}(\vek{x}) = \int_{\vek{x}_j\in\mathcal{V}} W(\vek{x}-\vek{x_j})\rho(\vek{x}_j)\,d\vek{x}_j$ can then be approximated by a Monte-Carlo estimator over discrete samples $\vek{x}_j$ drawn from a distribution $\rho' \propto \rho$, yielding the SPH method\autocite*{sph-monaghan-gingold-77}. Again, it is natural to model the kernel $W$ to a Gaussian by invoking the central limit theorem to argue that the measured number of samples in the volume, and by proxy the estimated density, is distributed normally around the true density as this process is repeated.
+Suppose fluid samples representing equal masses are independently sampled from a distribution proportional to the mass density of a fluid of homogeneous density. It then holds that the mass density can be approximated by counting the number of samples within some volume $\mathcal{V}$ around a point of interest $\vek{x}$ and normalizing the result\autocite{smoothed-density-parzen-62}. It is equally valid to define certain compactly supported kernel functions to weigh the samples by and sum those weighted contributions instead of simply counting the samples in $\mathcal{V}$ with an indicator function, such that the weight functions potentially smooth out the approximated field\autocite*{smoothed-density-parzen-62}. The resulting integral\autocite*{sph-monaghan-gingold-77} $\rho_{est}(\vek{x}) = \int_{\vek{x}_j\in\mathcal{V}} W(\vek{x}-\vek{x_j})\rho(\vek{x}_j)\,d\vek{x}_j$ can then be approximated by a Monte-Carlo estimator over discrete samples $\vek{x}_j$ drawn from a distribution $\rho' \propto \rho$, yielding the SPH method\autocite*{sph-monaghan-gingold-77}. Again, it is natural to model the kernel $W$ to a Gaussian by invoking the central limit theorem to argue that the measured number of samples in the volume, and by proxy the estimated density, is distributed normally around the true density as this process is repeated.
 
 \horizontalspacer
 
@@ -106,21 +106,21 @@ A very commonly used kernel that mimics the Gaussian in shape but has compact su
 is fast to evaluate by virtue of being a polynomial is the \emphasis{cubic spline kernel} or $M_4$ Schoenberg B-spline\autocite*{price-2012}\autocite*{teschner-lecture}:
 \begin{align}
   \label{eq:kernel-function}
-  W(\vek{x}, h)        & = \frac{\alpha}{4h^d}\begin{cases}
-                                                (2-q)^3 -4(1-q)^3 & 0\leq q<1 \\
-                                                (2-q)^3           & 1\leq q<2 \\
-                                                0                 & q \geq 2
-                                              \end{cases}                                   \\\label{eq:kernel-function-nabla}
-  \nabla W(\vek{x}, h) & = \frac{\alpha}{4h^d} \frac{\vek{x}}{\dist{\vek{x}}h}\begin{cases}
-                                                                                -3(2-q)^2+12(1-q)^2 & 0\leq q<1 \\
-                                                                                -3(2-q)^2           & 1\leq q<2 \\
-                                                                                0                   & q \geq 2
-                                                                              \end{cases}
+  W(\vek{x}, \hbar)        & = \frac{\alpha}{4h^d}\begin{cases}
+                                                    (2-q)^3 -4(1-q)^3 & 0\leq q<1 \\
+                                                    (2-q)^3           & 1\leq q<2 \\
+                                                    0                 & q \geq 2
+                                                  \end{cases}                                   \\\label{eq:kernel-function-nabla}
+  \nabla W(\vek{x}, \hbar) & = \frac{\alpha}{4h^d} \frac{\vek{x}}{\dist{\vek{x}}h}\begin{cases}
+                                                                                    -3(2-q)^2+12(1-q)^2 & 0\leq q<1 \\
+                                                                                    -3(2-q)^2           & 1\leq q<2 \\
+                                                                                    0                   & q \geq 2
+                                                                                  \end{cases}
 \end{align}
 where $q:=\frac{\dist{\vek{x}}}{h}$ is the distance normalized to a particle spacing $h$, it holds that $\hbar=2h$, $d$ is the number of dimensions and $\alpha$ is a dimensionality-dependent constant which is $\frac{2}{3}$ for 1D, $\frac{10}{7 \pi}$ for 2D and $\frac{1}{\pi}$ for 3D\autocite*{price-2012}. The kernel can also be written branchlessly (and implemented as such) as\autocite*{teschner-lecture}:
 \begin{align}
-  W(\vek{x}, h)        & = \alpha \left[\max\left(0\,,\, 2-q\right)^3 -4\max\left(0\,,\, 1-q\right)^3 \right]                                    \\
-  \nabla W(\vek{x}, h) & = \alpha \frac{\vek{x}}{\dist{\vek{x}}h} \left[-3\max\left(0\,,\, 2-q\right)^2 +12\max\left(0\,,\, 1-q\right)^2 \right]
+  W(\vek{x}, \hbar)        & = \alpha \left[\max\left(0\,,\, 2-q\right)^3 -4\max\left(0\,,\, 1-q\right)^3 \right]                                    \\
+  \nabla W(\vek{x}, \hbar) & = \alpha \frac{\vek{x}}{\dist{\vek{x}}h} \left[-3\max\left(0\,,\, 2-q\right)^2 +12\max\left(0\,,\, 1-q\right)^2 \right]
 \end{align}
 
 This kernel function and its first derivative are illustrated in \autoref{fig:kernel-function}.
@@ -162,8 +162,8 @@ This kernel function and its first derivative are illustrated in \autoref{fig:ke
         //   }
     // draw(graph(gauss,-2,2),green,"$\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$");
 
-    draw(graph(w,-2,2),heavyred,"$W(\vek{x}, h)$");
-    draw(graph(dw,-2,2),heavyblue,"$||{\nabla W(\vek{x}, h)}||$");
+    draw(graph(w,-2,2),heavyred,"$W(\vek{x},\hbar)$");
+    draw(graph(dw,-2,2),heavyblue,"$||{\nabla W(\vek{x}, \hbar)}||$");
 
     xaxis("$\frac{\dist{\vek{x}}}{h}$",Bottom,RightTicks);
     yaxis("",Left,LeftTicks(trailingzero));
